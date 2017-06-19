@@ -5,7 +5,6 @@
         <title>Celeste</title>
         <link href="../../Files/img/favicon2.png" rel="icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
         <!-- CSS Part Start-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/stylesheet.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
