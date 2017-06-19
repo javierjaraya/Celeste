@@ -14,15 +14,18 @@
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
         <!-- CSS Part End-->
         <!-- JS Part Start-->
-        <script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>
-        <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>        -->
+        <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
+        <!-- <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>-->
+        <!-- <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script> -->
         <script type="text/javascript" src="../../Files/js/colorbox/jquery.colorbox-min.js"></script>
         <script type="text/javascript" src="../../Files/js/tabs.js"></script>
         <script type="text/javascript" src="../../Files/js/jquery.easing-1.3.min.js"></script>
-        <script type="text/javascript" src="../../Files/js/cloud_zoom.js"></script>
-        <script type="text/javascript" src="../../Files/js/custom.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/cloud_zoom.js"></script>-->
+        <!--<script type="text/javascript" src="../../Files/js/custom.js"></script>-->
         <script type="text/javascript" src="../../Files/js/jquery.dcjqaccordion.js"></script>
+        <script type="text/javascript" src="../../Files/js/jquery.validate.js"></script>
+
         <!-- JS Part End-->
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
@@ -107,7 +110,7 @@
                                     <input  type="radio"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
                                     <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar mis Datos</a>
                                 </div>
-                                <input type="hidden" id="accion" name="accion" value="">
+                                <input type="hidden" id="accion" name="accion" value="AGREGAR">
                                 <input type="hidden" id="idPerfil" name="idPerfil" value="3">
                             </form>
                         </div>
@@ -115,38 +118,31 @@
                 </div>
                 <script type="text/javascript">
 
-                    $(function () {
-                    });
                     function validar() {
                         return true;
                     }
+
                     function guardarCliente() {
-                        document.getElementById("accion").value = "AGREGAR";
-//                        if (validar()) {
-                        //console.log("validado");
-                        $('#fmusuario').form('submit', {
+                        $.ajax({
+                            type: "POST",
                             url: "../Servlet/administrarUsuario.php",
-                            onSubmit: function () {
-                                return $(this).form('validate');
-                            },
+                            data: $("#fmusuario").serialize(),
                             success: function (result) {
                                 console.log(result);
                                 var result = eval('(' + result + ')');
                                 if (result.errorMsg) {
                                     $.messager.alert('Error', result.errorMsg);
                                 } else {
-                                    $.messager.show({
-                                        title: 'Aviso',
-                                        msg: result.mensaje
-                                    });
-                                    window.location = "iniciarSesion.php";
+
                                 }
+                                $.messager.show({
+                                    title: 'Aviso',
+                                    msg: result.mensaje
+                                });
+                                window.location = "iniciarSesion.php";
                             }
                         });
-//                        }
                     }
-
-
                 </script>
                 <!--Middle Part End-->
                 <?php include("footer.php"); ?>

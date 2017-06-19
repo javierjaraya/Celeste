@@ -20,6 +20,7 @@ if ($accion != null) {
         $direccion = htmlspecialchars($_REQUEST['direccionUsuario']);
         $clave = htmlspecialchars($_REQUEST['contrasenaUsuario']);
         $idPerfil = htmlspecialchars($_REQUEST['idPerfil']);
+        
         $object = $control->getUsuarioByID($run);
         if (($object->getRun() == null || $object->getRun() == "")) {
             $usuario = new UsuarioDTO();
