@@ -26,6 +26,7 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />        
         <link rel="stylesheet" type="text/css" href="../../Files/css/glyphicon.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/notificaciones.css" />
+        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/datatables/css/jquery.dataTables.css">
         <!-- Bootstrap 3.3.6 -->
         <!--        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />-->
         <!-- CSS Part End-->
@@ -44,7 +45,10 @@ if (isset($_SESSION["autentificado"])) {
         <!--<script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>-->
         <!-- Usabilidad -->
         <script src="../../Files/js/notificaciones.js"></script>
+        <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <!-- JS Part End-->
+       
+        
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
         <div class="main-wrapper">

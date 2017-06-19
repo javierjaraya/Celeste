@@ -1,3 +1,14 @@
+<?php
+session_start();
+$idPerfil = 3;
+$nombre = "Visitante";
+if (isset($_SESSION["autentificado"])) {
+    if ($_SESSION["autentificado"] == "SI") {
+        $idPerfil = $_SESSION["idPerfil"];
+        $nombre = $_SESSION["nombre"];
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,7 +47,7 @@
         <script src="../../Files/js/notificaciones.js"></script>
         <script src="../../Files/js/ValidaCamposFormulario.js"></script>
         <script src="../../Files/js/validarut.js"></script>
-         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <!-- JS Part End-->
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
@@ -75,7 +86,7 @@
                     <div class="cajaFormulario" style=" padding: 3%; align-content: center;">
                         <h2 class="TextoTituloFormulario" style="border: orangered 1px solid; border-radius: 15px; text-align: center ; padding: 1%"><strong>FORMULARIO DE REGISTRO</strong></h2><br><br>
                         <div style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
-                            <legend class="TextoTituloFormulario" ><strong>COMPLETA TUS DATOS PERSONALES</strong> </legend>  <a style="float: right">(*) Campos Obligatorios</a><br><br>
+                            <legend class="TextoTituloFormulario" ><strong>COMPLETAR DATOS PERSONALES</strong> </legend>  <a style="float: right">(*) Campos Obligatorios</a><br><br>
                             <hr style="border: orangered 1px solid;"> <br><br>
                             <div id="alert"></div>
                             <form id="fmusuario" method="post" >
@@ -111,6 +122,14 @@
                                     <input class="inputFormulario" id="direccionUsuario" name="direccionUsuario" type="text"><br><br>
                                 </div>
                                 <div class="divformulario">
+                                    <label class="TextoFormulario" for="idPerfil">Perfil de Usuario (*)</label>
+                                    
+                                        <select  class="input-xlarge focused" id="idPerfil" name="idPerfil" required style="height: 32px; width: 286px">
+                                            <option value="-1">Seleccionar...</option>
+                                        </select>
+                                    
+                                </div> 
+                                <div class="divformulario">
                                     <label class="TextoFormulario" for="contrasenaUsuario"><strong>Contraseña (*)</strong></label>
                                     <input class="inputFormulario" type="password" id="contrasenaUsuario" name="contrasenaUsuario" placeholder="Ingrese una clave entre 4 y 8 digitos"><br><br>
                                 </div>
@@ -120,10 +139,9 @@
                                 </div>
                                 <div style="text-align: center">
                                     <input  type="radio"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
-                                    <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar mis Datos</a>
+                                    <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar Usuario</a>
                                 </div>
                                 <input type="hidden" id="accion" name="accion" value="AGREGAR">
-                                <input type="hidden" id="idPerfil" name="idPerfil" value="2">
                             </form>
                         </div>
                     </div>

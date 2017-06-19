@@ -4,7 +4,7 @@
     <li><a href="historialDeCompra.php">Historial de Compras</a></li>
     <li><a href="administrarCategorias.php">Categorias</a></li>
     <li><a href="administrarProductos.php">Productos</a></li>
-    <li><a href="administrarUsuarios.php">Usuarios</a></li>
+    <li><a href="registrarUsuarioAdministrador.php">Usuarios</a></li>
     <li><a href="administrarReportes.php">Reportes</a></li>
     <li><a href="miPerfil.php">Mi Perfil</a></li>
 </ul>
