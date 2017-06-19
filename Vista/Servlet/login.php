@@ -9,7 +9,7 @@ $success = true;
 $mensajes;
 $pagina = "";
 if (($run != null || $run != "") && ($clave != null || $clave != "")) {
-    $run = substr($run, 0, -1);
+    //$run = substr($run, 0, -1); //ELIMINA DIGITO VERIFICADOR
     $usuario = $control->getUsuarioByID($run);
     if ($usuario->getRun() == $run) {
         if ($usuario->getClave() == $clave) {
@@ -26,14 +26,14 @@ if (($run != null || $run != "") && ($clave != null || $clave != "")) {
                 $_SESSION["nombre"] = $nombres[0] . " " . $apellidos[0];
                 $_SESSION["sexo"] = $usuario->getSexo();
 
-                if ($perfil->getIdPerfil() == 1) {//Visitante
-                    $pagina = "Vista/Layout/index.php";
+                if ($perfil->getIdPerfil() == 1) {//Administrador
+                    $pagina = "index.php";
                 }
-                if ($perfil->getIdPerfil() == 2) {//Usuario
-                    $pagina = "Vista/Layout/index.php";
+                if ($perfil->getIdPerfil() == 2) {//Cliente
+                    $pagina = "index.php";
                 }
-                if ($perfil->getIdPerfil() == 3) {//Administrador
-                    $pagina = "Vista/Layout/index.php";
+                if ($perfil->getIdPerfil() == 3) {//Visitante
+                    $pagina = "index.php";
                 }
                 $success = true;
                 $mensajes = "Iniciando...";

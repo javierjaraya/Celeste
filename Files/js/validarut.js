@@ -2,12 +2,10 @@
 // Validador de Rut
 // Descargado desde http://www.juque.cl/
 //
-function revisarDigito(dvr)
-{
+function revisarDigito(dvr) {
     dv = dvr + ""
-    if (dv != '0' && dv != '1' && dv != '2' && dv != '3' && dv != '4' && dv != '5' && dv != '6' && dv != '7' && dv != '8' && dv != '9' && dv != 'k' && dv != 'K')
-    {
-        alert("Debe ingresar un digito verificador valido");
+    if (dv != '0' && dv != '1' && dv != '2' && dv != '3' && dv != '4' && dv != '5' && dv != '6' && dv != '7' && dv != '8' && dv != '9' && dv != 'k' && dv != 'K') {
+        //alert("Debe ingresar un digito verificador valido");
         window.document.form1.rut.focus();
         window.document.form1.rut.select();
         return false;
@@ -15,12 +13,10 @@ function revisarDigito(dvr)
     return true;
 }
 
-function revisarDigito2(crut)
-{
+function revisarDigito2(crut) {
     largo = crut.length;
-    if (largo < 2)
-    {
-        alert("Debe ingresar el rut completo")
+    if (largo < 2) {
+        //alert("Debe ingresar el rut completo")
         window.document.form1.rut.focus();
         window.document.form1.rut.select();
         return false;
@@ -39,8 +35,7 @@ function revisarDigito2(crut)
     suma = 0
     mul = 2
 
-    for (i = rut.length - 1; i >= 0; i--)
-    {
+    for (i = rut.length - 1; i >= 0; i--) {
         suma = suma + rut.charAt(i) * mul
         if (mul == 7)
             mul = 2
@@ -84,7 +79,7 @@ function Rut(texto)
     {
         if (texto.charAt(i) != "0" && texto.charAt(i) != "1" && texto.charAt(i) != "2" && texto.charAt(i) != "3" && texto.charAt(i) != "4" && texto.charAt(i) != "5" && texto.charAt(i) != "6" && texto.charAt(i) != "7" && texto.charAt(i) != "8" && texto.charAt(i) != "9" && texto.charAt(i) != "k" && texto.charAt(i) != "K")
         {
-            $.messager.alert('Alerta', "El valor ingresado no corresponde a un R.U.T valido");
+            //$.messager.alert('Alerta', "El valor ingresado no corresponde a un R.U.T valido");
             return false;
         }
     }
@@ -106,8 +101,7 @@ function Rut(texto)
             j++;
             dtexto = dtexto + invertido.charAt(i);
             cnt = 1;
-        }
-        else
+        } else
         {
             dtexto = dtexto + invertido.charAt(i);
             cnt++;

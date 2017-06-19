@@ -7,31 +7,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <!-- CSS Part Start-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/stylesheet.css" />
-        <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
+        <!--<link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />-->
         <link rel="stylesheet" type="text/css" href="../../Files/js/colorbox/colorbox.css" media="screen" />
         <!--<link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
-        <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="../../Files/css/glyphicon.css" />
+        <link rel="stylesheet" type="text/css" href="../../Files/css/notificaciones.css" />
+        <!--         Bootstrap 3.3.6 
+                <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />-->
         <!-- CSS Part End-->
-        
+
         <!-- JS Part Start-->
         <!--<script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>        -->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <!-- <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>-->
         <!-- <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script> -->
         <script type="text/javascript" src="../../Files/js/colorbox/jquery.colorbox-min.js"></script>
-        <script type="text/javascript" src="../../Files/js/tabs.js"></script>
-        <script type="text/javascript" src="../../Files/js/jquery.easing-1.3.min.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/tabs.js"></script>-->
+        <!--<script type="text/javascript" src="../../Files/js/jquery.easing-1.3.min.js"></script>-->
         <!--<script type="text/javascript" src="../../Files/js/cloud_zoom.js"></script>-->
         <!--<script type="text/javascript" src="../../Files/js/custom.js"></script>-->
-        <script type="text/javascript" src="../../Files/js/jquery.dcjqaccordion.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/jquery.dcjqaccordion.js"></script>-->
         <script type="text/javascript" src="../../Files/js/jquery.validate.js"></script>
         <!-- Bootstrap 3.3.6 -->
-        <script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>
+        <!--<script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>-->
         <!-- Usabilidad -->
-        <script src="../../Files/js/usabilidad.js"></script>
-
+        <script src="../../Files/js/notificaciones.js"></script>
+        <script src="../../Files/js/ValidaCamposFormulario.js"></script>
+        <script src="../../Files/js/validarut.js"></script>
         <!-- JS Part End-->
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
@@ -59,7 +62,7 @@
                 ?>
 
             </div>
-            
+
             <div id="menu"><span>Menu</span>
                 <!--Top Navigation Start-->
                 <?php include("../Menus/menuVisitante.php"); ?>
@@ -76,7 +79,7 @@
                             <form id="fmusuario" method="post" >
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="runUsuario"><strong>Run (*)</strong></label>
-                                    <input class="inputFormulario" id="runUsuario" name="runUsuario" type="text" placeholder="112223337"><br><br>
+                                    <input class="inputFormulario" id="runUsuario" name="runUsuario" type="text" placeholder="112223337" onkeyup="eliminarCaracteres()"><br><br>
                                 </div>
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="nombresUsuario"><strong>Nombres (*)</strong></label>
@@ -118,37 +121,16 @@
                                     <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar mis Datos</a>
                                 </div>
                                 <input type="hidden" id="accion" name="accion" value="AGREGAR">
-                                <input type="hidden" id="idPerfil" name="idPerfil" value="3">
+                                <input type="hidden" id="idPerfil" name="idPerfil" value="2">
                             </form>
                         </div>
                     </div>
                 </div>
                 <script type="text/javascript">
 
-                    function validar() {
-                        var runUsuario = $("#runUsuario").val();
-                        var nombresUsuario = $("#nombresUsuario").val();
-                        var apellidosUsuario = $("#apellidosUsuario").val();
-                        var emailUsuario = $("#emailUsuario").val();
-                        var sexo = $("#sexo").val();
-                        var telefonoUsuario = $("#telefonoUsuario").val();
-                        var direccionUsuario = $("#direccionUsuario").val();
-                        var contrasenaUsuario = $("#contrasenaUsuario").val();
-                        var contrasenaRepetidaUsuario = $("#contrasenaRepetidaUsuario").val();
-                        var TerminosyCondiciones = $("#TerminosyCondiciones").val();
-
-                        if (runUsuario == "") {
-                            notificacion("Debe ingresar el tipo de curso", 'danger', 'alert');
-                            location.href = "#alert";
-                            return false;
-                        }
-                        notificacion("MENSAJE DE PRUEBA", 'success', 'alert');
-                        return true;
-                    }
-
                     function guardarCliente() {
-                        if (validar()) {
-                            /*$.ajax({
+                        if (validarUsuario()) {
+                            $.ajax({
                                 type: "POST",
                                 url: "../Servlet/administrarUsuario.php",
                                 data: $("#fmusuario").serialize(),
@@ -156,17 +138,13 @@
                                     console.log(result);
                                     var result = eval('(' + result + ')');
                                     if (result.errorMsg) {
-                                        $.messager.alert('Error', result.errorMsg);
+                                        notificacion(result.errorMsg, 'danger', 'alert');
                                     } else {
-
+                                        notificacion(result.mensaje, 'success', 'alert');
+                                        window.location = "iniciarSesion.php";
                                     }
-                                    $.messager.show({
-                                        title: 'Aviso',
-                                        msg: result.mensaje
-                                    });
-                                    window.location = "iniciarSesion.php";
                                 }
-                            });*/
+                            });
                         }
                     }
                 </script>

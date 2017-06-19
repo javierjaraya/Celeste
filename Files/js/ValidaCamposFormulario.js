@@ -17,32 +17,31 @@ function validarUsuario() {
                                         if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
                                             return true;
                                         } else {
-                                            $.messager.alert("Alerta", "Las contraseñas no coinciden");
+                                            notificacion("Las contraseñas no coinciden", "warning" , "alert");
                                         }
                                     } else {
-                                        $.messager.alert("Alerta", "La contraseña debe tener minimo 4 caracteres");
+                                        notificacion("La contraseña debe tener minimo 4 caracteres", "warning" , "alert");
                                     }
                                 } else {
-                                    $.messager.alert("Alerta", "El telefono contiene caracteres no validos");
+                                    notificacion("El telefono contiene caracteres no validos", "warning" , "alert");
                                 }
                             } else {
-                                $.messager.alert("Alerta", "Debe ingresar una telefono de contacto con al menos 6 digitos");
+                                notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning" , "alert");
                             }
                         } else {
-                            $.messager.alert("Alerta", "Debe ingresar una direccion");
+                            notificacion("Debe ingresar una direccion", "warning" , "alert");
                         }
                     } else {
-                        $.messager.alert("Alerta", "Debe ingresar un email");
-                    }
-               
+                        notificacion("Debe ingresar un email", "warning" , "alert");
+                    }               
             } else {
-                $.messager.alert("Alerta", "Debe ingresar sus apellidos");
+                notificacion("Debe ingresar sus apellidos", "warning" , "alert");
             }
         } else {
-            $.messager.alert("Alerta", "Debe ingresar sus nombres");
+            notificacion("Debe ingresar sus nombres", "warning" , "alert");
         }
     } else {
-        $.messager.alert("Alerta", "El run ingresado no es valido");
+        notificacion("El run ingresado no es valido", "warning" , "alert");
     }
     return false;
 }
