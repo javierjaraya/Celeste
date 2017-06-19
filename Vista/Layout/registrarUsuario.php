@@ -36,7 +36,7 @@
         <script src="../../Files/js/notificaciones.js"></script>
         <script src="../../Files/js/ValidaCamposFormulario.js"></script>
         <script src="../../Files/js/validarut.js"></script>
-         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <!-- JS Part End-->
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
@@ -98,7 +98,7 @@
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="sexo"><strong>Sexo (*)&nbsp;&nbsp;&nbsp; </strong></label>
                                     <label class="checkbox" >
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input  type="radio" id="sexoM" name="sexo" value="Masculino">&nbsp;<a class="TextoFormulario">Masculino</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input  type="radio" id="sexoM" name="sexo" value="Masculino" checked="checked" >&nbsp;<a class="TextoFormulario">Masculino</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input  type="radio" id="sexoF" name="sexo" value="Femenino" >&nbsp;<a class="TextoFormulario">Femenino</a>
                                     </label><br><br>
                                 </div>
@@ -119,7 +119,7 @@
                                     <input class="inputFormulario" type="password" id="contrasenaRepetidaUsuario" name="contrasenaRepetidaUsuario" placeholder="Repita su Clave"><br><br>
                                 </div>
                                 <div style="text-align: center">
-                                    <input  type="radio"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
+                                    <input  type="checkbox"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
                                     <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar mis Datos</a>
                                 </div>
                                 <input type="hidden" id="accion" name="accion" value="AGREGAR">
@@ -131,22 +131,26 @@
                 <script type="text/javascript">
 
                     function guardarCliente() {
-                        if (validarUsuario()) {
-                            $.ajax({
-                                type: "POST",
-                                url: "../Servlet/administrarUsuario.php",
-                                data: $("#fmusuario").serialize(),
-                                success: function (result) {
-                                    console.log(result);
-                                    var result = eval('(' + result + ')');
-                                    if (result.errorMsg) {
-                                        notificacion(result.errorMsg, 'danger', 'alert');
-                                    } else {
-                                        notificacion(result.mensaje, 'success', 'alert');
-                                        window.location = "iniciarSesion.php";
+                        if (document.getElementById('TerminosyCondiciones').checked){
+                            if (validarUsuario()) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "../Servlet/administrarUsuario.php",
+                                    data: $("#fmusuario").serialize(),
+                                    success: function (result) {
+                                        console.log(result);
+                                        var result = eval('(' + result + ')');
+                                        if (result.errorMsg) {
+                                            notificacion(result.errorMsg, 'danger', 'alert');
+                                        } else {
+                                            notificacion(result.mensaje, 'success', 'alert');
+                                            window.location = "iniciarSesion.php";
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
+                        }else{
+                            notificacion('Primero debe aceptar los términos y condiciones', 'warning', 'alert');
                         }
                     }
                 </script>

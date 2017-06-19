@@ -62,17 +62,19 @@ if (isset($_SESSION["autentificado"])) {
                     </form>
                 </div>
                 <!--Mini Cart Start-->
-                Bienvenido/a:
-                <?php
-                if (isset($_SESSION['nombre'])) {
+                <div style="text-align: right">
+                <h8>Bienvenido/a:</h8>
+                  <?php
+                if ($nombre != "Visitante") {
                     echo $_SESSION['nombre'];
                     ?>
-                    <a href="loginOFF.php">cerrar sesion</a>
+                    <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
                     <?php
                 } else {
                     echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
                 }
                 ?>
+                    </div>
 
             </div>
 
@@ -92,7 +94,7 @@ if (isset($_SESSION["autentificado"])) {
                             <form id="fmusuario" method="post" >
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="runUsuario"><strong>Run (*)</strong></label>
-                                    <input class="inputFormulario" id="runUsuario" name="runUsuario" type="text" placeholder="112223337" onkeyup="eliminarCaracteres()"><br><br>
+                                    <input class="inputFormulario" id="runUsuario" name="runUsuario" type="text" placeholder="Ingrese su run sin puntos ni guión. ej: 112223337" onkeyup="eliminarCaracteres()"><br><br>
                                 </div>
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="nombresUsuario"><strong>Nombres (*)</strong></label>
@@ -109,7 +111,7 @@ if (isset($_SESSION["autentificado"])) {
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="sexo"><strong>Sexo (*)&nbsp;&nbsp;&nbsp; </strong></label>
                                     <label class="checkbox" >
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input  type="radio" id="sexoM" name="sexo" value="Masculino">&nbsp;<a class="TextoFormulario">Masculino</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input  type="radio" id="sexoM" name="sexo" value="Masculino" checked="checked" >&nbsp;<a class="TextoFormulario">Masculino</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input  type="radio" id="sexoF" name="sexo" value="Femenino" >&nbsp;<a class="TextoFormulario">Femenino</a>
                                     </label><br><br>
                                 </div>
@@ -122,12 +124,9 @@ if (isset($_SESSION["autentificado"])) {
                                     <input class="inputFormulario" id="direccionUsuario" name="direccionUsuario" type="text"><br><br>
                                 </div>
                                 <div class="divformulario">
-                                    <label class="TextoFormulario" for="idPerfil">Perfil de Usuario (*)</label>
-                                    
-                                        <select  class="input-xlarge focused" id="idPerfil" name="idPerfil" required style="height: 32px; width: 286px">
-                                            <option value="-1">Seleccionar...</option>
-                                        </select>
-                                    
+                                    <label class="TextoFormulario" for="idPerfil"><strong>Perfil de Usuario (*)</strong></label>                                    
+                                    <select  class="inputFormulario" id="idPerfil" name="idPerfil" required style=" width: 428.73px">                                        
+                                    </select><br><br>                                    
                                 </div> 
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="contrasenaUsuario"><strong>Contraseña (*)</strong></label>
@@ -135,11 +134,10 @@ if (isset($_SESSION["autentificado"])) {
                                 </div>
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="contrasenaRepetidaUsuario"><strong>Repetir Contraseña (*) </strong></label>
-                                    <input class="inputFormulario" type="password" id="contrasenaRepetidaUsuario" name="contrasenaRepetidaUsuario" placeholder="Repita su Clave"><br><br>
+                                    <input class="inputFormulario" type="password" id="contrasenaRepetidaUsuario" name="contrasenaRepetidaUsuario" placeholder="Repita la Clave"><br><br>
                                 </div>
                                 <div style="text-align: center">
-                                    <input  type="radio"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
-                                    <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar Usuario</a>
+                                    <a id="boton" onclick="guardarUsuario()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar Usuario</a>
                                 </div>
                                 <input type="hidden" id="accion" name="accion" value="AGREGAR">
                             </form>
@@ -147,8 +145,10 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
                 <script type="text/javascript">
-
-                    function guardarCliente() {
+                    $(function () {
+                        cargarPerfiles();
+                    });
+                    function guardarUsuario() {
                         if (validarUsuario()) {
                             $.ajax({
                                 type: "POST",
@@ -161,12 +161,25 @@ if (isset($_SESSION["autentificado"])) {
                                         notificacion(result.errorMsg, 'danger', 'alert');
                                     } else {
                                         notificacion(result.mensaje, 'success', 'alert');
-                                        window.location = "iniciarSesion.php";
+                                        window.location = "iniciarSesion.php";//cambiar
                                     }
                                 }
                             });
                         }
                     }
+                    function cargarPerfiles() {
+                        var url_json = '../Servlet/administrarPerfil.php?accion=LISTADO';
+                        $.getJSON(
+                                url_json,
+                                function (datos) {
+                                    $.each(datos, function (k, v) {
+                                        var contenido = "<option value='" + v.idPerfil + "'>" + v.nombrePerfil + "</option>";
+                                        $("#idPerfil").append(contenido);
+                                    });
+                                }
+                        );
+                    }
+
                 </script>
                 <!--Middle Part End-->
                 <?php include("footer.php"); ?>

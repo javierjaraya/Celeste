@@ -47,8 +47,8 @@ if (isset($_SESSION["autentificado"])) {
         <script src="../../Files/js/notificaciones.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <!-- JS Part End-->
-       
-        
+
+
     </head>
     <body background="../../Files/img/fondoflor1.jpg">
         <div class="main-wrapper">
@@ -62,18 +62,19 @@ if (isset($_SESSION["autentificado"])) {
                     </form>
                 </div>
                 <!--Mini Cart Start-->
-                Bienvenido/a:
-                <?php
-                if ($nombre != "Visitante") {
-                    echo $_SESSION['nombre'];
-                    ?>
-                    <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
+                <div style="text-align: right">
+                    <h8>Bienvenido/a:</h8>
                     <?php
-                } else {
-                    echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
-                }
-                ?>
-
+                    if ($nombre != "Visitante") {
+                        echo $_SESSION['nombre'];
+                        ?>
+                        <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
+                        <?php
+                    } else {
+                        echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
+                    }
+                    ?>
+                </div>
             </div>
 
             <div id="menu"><span>Menu</span>
