@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-06-2017, 22:58:34
+    Author     : Joseline Cisternas
+*/
+
+#content{    
+    padding-top: 3%;
+    background-color: #red;
+}
+.TextoTituloFormulario{
+    color: black;
+    
+}
+.TextoFormulario {
+    color: black;
+}
+.inputFormulario {
+    width: 40%;
+    color: black;
+}
+.divformulario {
+  margin: .4em 0;
+}
+div label {
+  width: 20%;
+  padding-left: 10%;
+  float: left;
+}
