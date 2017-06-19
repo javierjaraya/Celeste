@@ -10,19 +10,26 @@
         <link rel="stylesheet" type="text/css" href="../../Files/css/stylesheet.css" />        
         <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../Files/js/colorbox/colorbox.css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />
+        <!--<link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />
         <!-- CSS Part End-->
         <!-- JS Part Start-->
-        <script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>
-        <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>-->
+        <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>-->
+        <!--<script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script>-->
         <script type="text/javascript" src="../../Files/js/colorbox/jquery.colorbox-min.js"></script>
         <script type="text/javascript" src="../../Files/js/tabs.js"></script>
         <script type="text/javascript" src="../../Files/js/jquery.easing-1.3.min.js"></script>
-        <script type="text/javascript" src="../../Files/js/cloud_zoom.js"></script>
-        <script type="text/javascript" src="../../Files/js/custom.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/cloud_zoom.js"></script>-->
+        <!--<script type="text/javascript" src="../../Files/js/custom.js"></script>-->
         <script type="text/javascript" src="../../Files/js/jquery.dcjqaccordion.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Usabilidad -->
+        <script src="../../Files/js/usabilidad.js"></script>
         <!-- JS Part End-->
     </head>
     <body background="../../Files/img/fondoflor1.jpg">

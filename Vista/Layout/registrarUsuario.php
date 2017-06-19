@@ -10,9 +10,12 @@
         <link rel="stylesheet" type="text/css" href="../../Files/css/stylesheet.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../Files/js/colorbox/colorbox.css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />
+        <!--<link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />
         <!-- CSS Part End-->
+        
         <!-- JS Part Start-->
         <!--<script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>        -->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
@@ -25,6 +28,10 @@
         <!--<script type="text/javascript" src="../../Files/js/custom.js"></script>-->
         <script type="text/javascript" src="../../Files/js/jquery.dcjqaccordion.js"></script>
         <script type="text/javascript" src="../../Files/js/jquery.validate.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Usabilidad -->
+        <script src="../../Files/js/usabilidad.js"></script>
 
         <!-- JS Part End-->
     </head>
@@ -53,7 +60,7 @@
                 ?>
 
             </div>
-
+            
             <div id="menu"><span>Menu</span>
                 <!--Top Navigation Start-->
                 <?php include("../Menus/menuVisitante.php"); ?>
@@ -66,6 +73,7 @@
                         <div style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
                             <legend class="TextoTituloFormulario" ><strong>COMPLETA TUS DATOS PERSONALES</strong> </legend>  <a style="float: right">(*) Campos Obligatorios</a><br><br>
                             <hr style="border: orangered 1px solid;"> <br><br>
+                            <div id="alert"></div>
                             <form id="fmusuario" method="post" >
                                 <div class="divformulario">
                                     <label class="TextoFormulario" for="runUsuario"><strong>Run (*)</strong></label>
@@ -119,29 +127,48 @@
                 <script type="text/javascript">
 
                     function validar() {
+                        var runUsuario = $("#runUsuario").val();
+                        var nombresUsuario = $("#nombresUsuario").val();
+                        var apellidosUsuario = $("#apellidosUsuario").val();
+                        var emailUsuario = $("#emailUsuario").val();
+                        var sexo = $("#sexo").val();
+                        var telefonoUsuario = $("#telefonoUsuario").val();
+                        var direccionUsuario = $("#direccionUsuario").val();
+                        var contrasenaUsuario = $("#contrasenaUsuario").val();
+                        var contrasenaRepetidaUsuario = $("#contrasenaRepetidaUsuario").val();
+                        var TerminosyCondiciones = $("#TerminosyCondiciones").val();
+
+                        if (runUsuario == "") {
+                            notificacion("Debe ingresar el tipo de curso", 'danger', 'alert');
+                            location.href = "#alert";
+                            return false;
+                        }
+                        notificacion("MENSAJE DE PRUEBA", 'success', 'alert');
                         return true;
                     }
 
                     function guardarCliente() {
-                        $.ajax({
-                            type: "POST",
-                            url: "../Servlet/administrarUsuario.php",
-                            data: $("#fmusuario").serialize(),
-                            success: function (result) {
-                                console.log(result);
-                                var result = eval('(' + result + ')');
-                                if (result.errorMsg) {
-                                    $.messager.alert('Error', result.errorMsg);
-                                } else {
+                        if (validar()) {
+                            /*$.ajax({
+                                type: "POST",
+                                url: "../Servlet/administrarUsuario.php",
+                                data: $("#fmusuario").serialize(),
+                                success: function (result) {
+                                    console.log(result);
+                                    var result = eval('(' + result + ')');
+                                    if (result.errorMsg) {
+                                        $.messager.alert('Error', result.errorMsg);
+                                    } else {
 
+                                    }
+                                    $.messager.show({
+                                        title: 'Aviso',
+                                        msg: result.mensaje
+                                    });
+                                    window.location = "iniciarSesion.php";
                                 }
-                                $.messager.show({
-                                    title: 'Aviso',
-                                    msg: result.mensaje
-                                });
-                                window.location = "iniciarSesion.php";
-                            }
-                        });
+                            });*/
+                        }
                     }
                 </script>
                 <!--Middle Part End-->
