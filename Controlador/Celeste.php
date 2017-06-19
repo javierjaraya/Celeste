@@ -57,6 +57,10 @@ class Celeste {
     public function getCategoriaByID($idCategoria) {
         return $this->categoriaDAO->findByID($idCategoria);
     }
+    
+    public function getCategoriaByNombre($nombreCategoria) {
+        return $this->categoriaDAO->findByNombre($nombreCategoria);
+    }
 
     public function getCategoriaLikeAtrr($cadena) {
         return $this->categoriaDAO->findLikeAtrr($cadena);

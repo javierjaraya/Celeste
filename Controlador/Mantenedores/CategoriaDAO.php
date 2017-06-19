@@ -46,6 +46,19 @@ class CategoriaDAO{
         $this->conexion->desconectar();
         return $categoria;
     }
+    
+    public function findByNombre($nombreCategoria) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM categoria WHERE  nombreCategoria =  '".$nombreCategoria."' ";
+        $result = $this->conexion->ejecutar($query);
+        $categoria = new CategoriaDTO();
+        while ($fila = $result->fetch_row()) {
+            $categoria->setIdCategoria($fila[0]);
+            $categoria->setNombreCategoria($fila[1]);
+        }
+        $this->conexion->desconectar();
+        return $categoria;
+    }
 
     public function findLikeAtrr($cadena) {
         $this->conexion->conectar();
@@ -66,8 +79,8 @@ class CategoriaDAO{
 
     public function save($categoria) {
         $this->conexion->conectar();
-        $query = "INSERT INTO categoria (idCategoria,nombreCategoria)"
-                . " VALUES ( ".$categoria->getIdCategoria()." , '".$categoria->getNombreCategoria()."' )";
+        $query = "INSERT INTO categoria (nombreCategoria)"
+                . " VALUES ( '".$categoria->getNombreCategoria()."' )";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;

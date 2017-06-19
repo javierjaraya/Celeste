@@ -10,14 +10,12 @@ if ($accion != null) {
         $categorias = $control->getAllCategorias();
         $json = json_encode($categorias);
         echo $json;
-    } else if ($accion == "AGREGAR") {
-        $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
+    } else if ($accion == "AGREGAR") {        
         $nombreCategoria = htmlspecialchars($_REQUEST['nombreCategoria']);
 
-        $object = $control->getCategoriaByID($idCategoria);
+        $object = $control->getCategoriaByNombre($nombreCategoria);
         if (($object->getIdCategoria() == null || $object->getIdCategoria() == "")) {
             $categoria = new CategoriaDTO();
-            $categoria->setIdCategoria($idCategoria);
             $categoria->setNombreCategoria($nombreCategoria);
 
             $result = $control->addCategoria($categoria);
@@ -31,7 +29,7 @@ if ($accion != null) {
                 echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
             }
         } else {
-            echo json_encode(array('errorMsg' => 'El o la categoria ya existe, intento nuevamente.'));
+            echo json_encode(array('errorMsg' => 'La categoria ya existe, intento con otro nombre.'));
         }
     } else if ($accion == "BORRAR") {
         $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
