@@ -8,10 +8,10 @@
 
         <!-- CSS Part Start-->
         <link rel="stylesheet" type="text/css" href="../../Files/css/stylesheet.css" />
-        <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../Files/js/colorbox/colorbox.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />
         <!-- CSS Part End-->
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>
