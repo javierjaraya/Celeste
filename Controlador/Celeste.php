@@ -162,6 +162,10 @@ class Celeste {
         return $this->perfilDAO->findLikeAtrr($cadena);
     }
 
+    public function getIdProducoDisponible() {
+        return $this->productoDAO->idDisponible();
+    }
+
     public function getAllProductos() {
         return $this->productoDAO->findAll();
     }
@@ -180,6 +184,10 @@ class Celeste {
 
     public function getProductoByID($idProducto) {
         return $this->productoDAO->findByID($idProducto);
+    }
+
+    public function getProductoByNombre($nombreProducto) {
+        return $this->productoDAO->getProductoByNombre($nombreProducto);
     }
 
     public function getProductoLikeAtrr($cadena) {

@@ -11,15 +11,19 @@ if ($accion != null) {
         $json = json_encode($productos);
         echo $json;
     } else if ($accion == "AGREGAR") {
-        $idProducto = htmlspecialchars($_REQUEST['idProducto']);
         $nombreProducto = htmlspecialchars($_REQUEST['nombreProducto']);
         $descripcionProducto = htmlspecialchars($_REQUEST['descripcionProducto']);
         $stock = htmlspecialchars($_REQUEST['stock']);
         $precio = htmlspecialchars($_REQUEST['precio']);
         $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+        $imagen = $_FILES['imagen'];
 
-        $object = $control->getProductoByID($idProducto);
+        $object = $control->getProductoByNombre($nombreProducto);
         if (($object->getIdProducto() == null || $object->getIdProducto() == "")) {
+            $result;
+            $resultImagen;
+            $idProducto = $control->getIdProducoDisponible();
+
             $producto = new ProductoDTO();
             $producto->setIdProducto($idProducto);
             $producto->setNombreProducto($nombreProducto);
@@ -28,16 +32,45 @@ if ($accion != null) {
             $producto->setPrecio($precio);
             $producto->setIdSubCategoria($idSubCategoria);
 
-            $result = $control->addProducto($producto);
+            if (validarTamaños($imagen, 10000000) == true) {
+                $result = $control->addProducto($producto);
+
+                $subirImagen = new SubirImagen("../../Files/img/Productos/");
+                $fecha = date("Y") . date("m") . date("d") . date("H") . date("i") . date("s" . $i);
+                $nombreImagen = $subirImagen->asignaNombre($imagen['type'], "producto_" . $fecha);
+                $subirImagen->setName($nombreImagen);
+                $subirImagen->setMaximoSize(10000000); //10mb
+                //Subir imagen al servidor
+                $respuesta = $subirImagen->subirImagen($imagen);
+
+                if ($respuesta == true) {
+
+                    $imagen = new ImagenDTO();
+                    $imagen->setNombreImagen($nombreImagen);
+                    $imagen->setRutaImagen("Files/img/Fotografias/" . $nombreImagen);
+                    $imagen->setIdProducto($idProducto);
+
+                    $valor = ($imagen["size"] / 1024) / 1024;
+                    $tamaño = round($valor, 2, PHP_ROUND_HALF_UP);
+
+                    //registrar imagen a la BD
+                    $resultImagen = $control->addImagen($imagen); //Registramos la imagen en la BD
+                }
+            }
 
             if ($result) {
-                echo json_encode(array(
-                    'success' => true,
-                    'mensaje' => "Producto ingresada correctamente"
-                ));
+                if ($resultImagen) {
+                    echo json_encode(array(
+                        'success' => true,
+                        'mensaje' => "Producto ingresada correctamente"
+                    ));
+                } else {
+                    echo json_encode(array('errorMsg' => 'Ha ocurrido un error al subir la imagen'));
+                }
             } else {
-                echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+                echo json_encode(array('errorMsg' => 'Ha ocurrido un error al registrar el producto.'));
             }
+            
         } else {
             echo json_encode(array('errorMsg' => 'El o la producto ya existe, intento nuevamente.'));
         }
@@ -69,13 +102,13 @@ if ($accion != null) {
         $precio = htmlspecialchars($_REQUEST['precio']);
         $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
 
-            $producto = new ProductoDTO();
-            $producto->setIdProducto($idProducto);
-            $producto->setNombreProducto($nombreProducto);
-            $producto->setDescripcionProducto($descripcionProducto);
-            $producto->setStock($stock);
-            $producto->setPrecio($precio);
-            $producto->setIdSubCategoria($idSubCategoria);
+        $producto = new ProductoDTO();
+        $producto->setIdProducto($idProducto);
+        $producto->setNombreProducto($nombreProducto);
+        $producto->setDescripcionProducto($descripcionProducto);
+        $producto->setStock($stock);
+        $producto->setPrecio($precio);
+        $producto->setIdSubCategoria($idSubCategoria);
 
         $result = $control->updateProducto($producto);
         if ($result) {
@@ -87,4 +120,20 @@ if ($accion != null) {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
         }
     }
+}
+
+function validarTamaños($imagenes, $tamañoMaximo) {
+    $validar = true;
+    if ($imagenes["name"][0]) {
+        for ($i = 0; $i < count($imagenes["name"]); $i++) {
+            if ($imagenes["size"][$i] <= $tamañoMaximo) {
+                //Imagen con tamaño permitido
+            } else {
+                $validar = false;
+            }
+        }
+    } else {
+        $validar = false;
+    }
+    return $validar;
 }

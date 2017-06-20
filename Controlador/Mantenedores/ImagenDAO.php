@@ -72,8 +72,8 @@ class ImagenDAO{
 
     public function save($imagen) {
         $this->conexion->conectar();
-        $query = "INSERT INTO imagen (idImagen,nombreImagen,rutaImagen,idProducto)"
-                . " VALUES ( ".$imagen->getIdImagen()." , '".$imagen->getNombreImagen()."' , '".$imagen->getRutaImagen()."' ,  ".$imagen->getIdProducto()." )";
+        $query = "INSERT INTO imagen (nombreImagen,rutaImagen,idProducto)"
+                . " VALUES ( '".$imagen->getNombreImagen()."' , '".$imagen->getRutaImagen()."' ,  ".$imagen->getIdProducto()." )";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;

@@ -8,10 +8,22 @@ class ProductoDAO{
     public function ProductoDAO() {
         $this->conexion = new ConexionMySQL();
     }
+    
+    public function idDisponible() {
+        $this->conexion->conectar();
+        $query = "SELECT (IFNULL(max(idProducto),0)+1) as id FROM producto ";
+        $result = $this->conexion->ejecutar($query);
+        $id = 1;
+        while ($fila = $result->fetch_row()) {
+            $id = $fila[0];
+        }
+        $this->conexion->desconectar();
+        return $id;
+    }
 
     public function delete($idProducto) {
         $this->conexion->conectar();
-        $query = "DELETE FROM producto WHERE  idProducto =  ".$idProducto." ";
+        $query = "DELETE FROM producto WHERE idProducto =  ".$idProducto." ";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;
@@ -40,7 +52,7 @@ class ProductoDAO{
 
     public function findByID($idProducto) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM producto WHERE  idProducto =  ".$idProducto." ";
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE  idProducto =  ".$idProducto." ";
         $result = $this->conexion->ejecutar($query);
         $producto = new ProductoDTO();
         while ($fila = $result->fetch_row()) {
@@ -50,6 +62,39 @@ class ProductoDAO{
             $producto->setStock($fila[3]);
             $producto->setPrecio($fila[4]);
             $producto->setIdSubCategoria($fila[5]);
+            
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+            
+            $producto->setImagen($imagen);
+        }
+        $this->conexion->desconectar();
+        return $producto;
+    }
+    
+    public function findByNombre($nombreProducto) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE nombreProducto =  '".$nombreProducto."' ";
+        $result = $this->conexion->ejecutar($query);
+        $producto = new ProductoDTO();
+        while ($fila = $result->fetch_row()) {
+            $producto->setIdProducto($fila[0]);
+            $producto->setNombreProducto($fila[1]);
+            $producto->setDescripcionProducto($fila[2]);
+            $producto->setStock($fila[3]);
+            $producto->setPrecio($fila[4]);
+            $producto->setIdSubCategoria($fila[5]);
+            
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+            
+            $producto->setImagen($imagen);
         }
         $this->conexion->desconectar();
         return $producto;

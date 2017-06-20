@@ -6,6 +6,8 @@ class ProductoDTO {
     public $stock;
     public $precio;
     public $idSubCategoria;
+    
+    public $imagen;
 
     public function ProductoDTO(){
     }
@@ -56,6 +58,14 @@ class ProductoDTO {
 
     function setIdSubCategoria($idSubCategoria) {
         return $this->idSubCategoria = $idSubCategoria;
+    }
+    
+    function setImagen($imagen) {
+        return $this->imagen = $imagen;
+    }
+    
+    function getImagen(){
+        return $this->imagen;
     }
 
 }
