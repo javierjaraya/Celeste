@@ -1,7 +1,7 @@
 <?php include("header.php"); ?>
 
-<div class="col-md-12">
-    <h4 style="padding: 1%; border: orangered 1px solid; border-radius: 15px; text-align: center;" class="TextoTituloFormulario"><strong>INGRESE SUS DATOS PARA INICIAR SESIÓN</strong></h4>
+<div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center;  margin-bottom: 20px;">
+    <h4 class="TextoTituloFormulario"><strong>INGRESE SUS DATOS PARA INICIAR SESIÓN</strong></h4>
 </div>
 
 <div class="col-md-12" style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">      
@@ -9,28 +9,28 @@
         <div id="alert"></div>    
         <form id="fmlogin" class="form-horizontal">
             <div id="fmlogin" class="form-group">
-                <label for="inputRun" class="col-sm-2 control-label">Run</label>
-                <div class="col-sm-10">
+                <label for="inputRun" class="col-sm-4 control-label">Run</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="inputRun" name="inputRun" placeholder="112223337">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">Contraseña</label>
-                <div class="col-sm-10">
+                <label for="inputPassword" class="col-sm-4 control-label">Contraseña</label>
+                <div class="col-sm-6">
                     <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Contraseña">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-4 col-sm-8">
                     <div class="checkbox">
-                        <label>
+                        <label style="width: 200px;">
                             <a>Olvido su contraseña</a>                                
                         </label>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-4 col-sm-8">
                     <a onclick="validarLogin()" class="btn btn-warning">Ingresar</a>
                 </div>
             </div>

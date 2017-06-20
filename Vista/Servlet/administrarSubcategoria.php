@@ -10,15 +10,18 @@ if ($accion != null) {
         $subcategorias = $control->getAllSubcategorias();
         $json = json_encode($subcategorias);
         echo $json;
-    } else if ($accion == "AGREGAR") {
-        $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+    } else if ($accion == "LISTADO_BY_IDCATEGORIA") {
+        $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
+        $subcategorias = $control->getAllSubcategoriasByIdCategoria($idCategoria);
+        $json = json_encode($subcategorias);
+        echo $json;
+    } else if ($accion == "AGREGAR") {        
         $nombreSubCategoria = htmlspecialchars($_REQUEST['nombreSubCategoria']);
         $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
 
-        $object = $control->getSubcategoriaByID($idSubCategoria);
+        $object = $control->getSubcategoriaByNombre($nombreSubCategoria);
         if (($object->getIdSubCategoria() == null || $object->getIdSubCategoria() == "")) {
             $subcategoria = new SubcategoriaDTO();
-            $subcategoria->setIdSubCategoria($idSubCategoria);
             $subcategoria->setNombreSubCategoria($nombreSubCategoria);
             $subcategoria->setIdCategoria($idCategoria);
 

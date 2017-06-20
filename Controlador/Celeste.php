@@ -189,6 +189,10 @@ class Celeste {
     public function getAllSubcategorias() {
         return $this->subcategoriaDAO->findAll();
     }
+    
+    public function getAllSubcategoriasByIdCategoria($idCategoria) {
+        return $this->subcategoriaDAO->findAllByIdCategoria($idCategoria);
+    }
 
     public function addSubcategoria($subcategoria) {
         return $this->subcategoriaDAO->save($subcategoria);
@@ -204,6 +208,10 @@ class Celeste {
 
     public function getSubcategoriaByID($idSubCategoria) {
         return $this->subcategoriaDAO->findByID($idSubCategoria);
+    }
+    
+    public function getSubcategoriaByNombre($nombreSubCategoria) {
+        return $this->subcategoriaDAO->findByNombre($nombreSubCategoria);
     }
 
     public function getSubcategoriaLikeAtrr($cadena) {

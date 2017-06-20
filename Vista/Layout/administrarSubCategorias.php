@@ -1,15 +1,16 @@
-<?php include("header.php"); ?>
+<?php include("header.php");
+$idCategoria = $_REQUEST['idCategoria']; ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR CATEGORIAS DE PRODUCTOS</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR SUBCATEGORIAS DE PRODUCTOS</strong></h4>
 </div>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
     <div class="col-md-6">
-        <h5><strong>CATEGORIAS</strong></h5>
+        <h5><strong>SUBCATEGORIAS</strong></h5>
     </div>
     <div class="col-md-6">
-        <a onclick="agregarCategoria()" class="btn btn-warning btn-sm" style="float: right;">Agregar Categoria</a>
+        <a onclick="agregarSubcategoria()" class="btn btn-warning btn-sm" style="float: right;">Agregar Subcategoria</a>
     </div>
     <div class="col-md-12">
         <hr style="border: orangered 1px solid;">
@@ -25,7 +26,7 @@
                         <th style="width: 150px;">Accion</th>
                     </tr> 
                 </thead>
-                <tbody id="tablaCategorias">
+                <tbody id="tablaSubCategorias">
 
                 </tbody>
             </table>
@@ -50,18 +51,19 @@
                             <section class="col-md-12">
 
                                 <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="nombreCategoria">Nombre Categoria</label>
-                                    <input type="text" class="form-control col-md-12" id="nombreCategoria" name="nombreCategoria" aria-describedby="nombresStatus" placeholder="Nombre" >                                    
+                                    <label class="control-label col-md-12" for="nombreSubCategoria">Nombre Subcategoria</label>
+                                    <input type="text" class="form-control col-md-12" id="nombreSubCategoria" name="nombreSubCategoria" aria-describedby="nombresStatus" placeholder="Nombre" >                                    
                                 </div>
 
                                 <input type="hidden" value="" name="accion" id="accion">
-                                <input type="hidden" value="" name="idCategoria" id="idCategoria">
+                                <input type="hidden" value="" name="idSubCategoria" id="idSubCategoria">
+                                <input type="hidden" value="<?= $idCategoria ?>" name="idCategoria" id="idCategoria">
                             </section>                           
                         </section><!-- Fin Row-->
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                        <a class="btn btn-success" onclick="crearCategora()">Guardar</a>
+                        <a class="btn btn-success" onclick="crearSubcategora()">Guardar</a>
                     </div>
                 </form>
             </section>
@@ -91,7 +93,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger" onclick="confirmarBorrar()">Borrar</button>
-                    <input type="hidden" value="" id="idCategoriaEliminar" name="idCategoriaEliminar">
+                    <input type="hidden" value="" id="idSubCategoriaEliminar" name="idSubCategoriaEliminar">
                 </div>
             </section>
         </div>
@@ -100,25 +102,25 @@
 
 <script>
     $(function () {
-        cargarCategorias();
+        cargarSubcategorias();
     });
-    function cargarCategorias() {
-        $("#tablaCategorias").empty();
-        var url_json = '../Servlet/administrarCategoria.php?accion=LISTADO';
+    function cargarSubcategorias() {
+        var idCategoria = document.getElementById('idCategoria').value;        
+        $("#tablaSubCategorias").empty();
+        var url_json = '../Servlet/administrarSubcategoria.php?accion=LISTADO_BY_IDCATEGORIA&idCategoria=' + idCategoria;
         $.getJSON(
                 url_json,
                 function (datos) {
                     $.each(datos, function (k, v) {
                         var contenido = "<tr>";
-                        contenido += "<td>" + v.idCategoria + "</td>";
-                        contenido += "<td>" + v.nombreCategoria + "</td>";
+                        contenido += "<td>" + v.idSubCategoria + "</td>";
+                        contenido += "<td>" + v.nombreSubCategoria + "</td>";
                         contenido += "<td>";
-                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idCategoria + ")'></a>&nbsp;";
-                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idCategoria + ")  '></a>&nbsp;";
-                        contenido += "<a class='btn btn-info btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCategoria + ")'></a>";
+                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idSubCategoria + ")'></a>&nbsp;";
+                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idSubCategoria + ")  '></a>";
                         contenido += "</td>";
                         contenido += "</tr>";
-                        $("#tablaCategorias").append(contenido);
+                        $("#tablaSubCategorias").append(contenido);
                     });
                     $('#tabla').DataTable();
                 }
@@ -128,39 +130,40 @@
     function editar(id) {
         document.getElementById("fm").reset();
         document.getElementById('accion').value = "ACTUALIZAR";
-        document.getElementById('idCategoria').value = id;
-        $('#modalLabel').html("Editar Categoria");
+        document.getElementById('idSubCategoria').value = id;
+        $('#modalLabel').html("Editar Subcategoria");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE                                    
         rellenarFormulario(id);
     }
 
     function rellenarFormulario(id) {
-        var url_json = '../Servlet/administrarCategoria.php';
+        var url_json = '../Servlet/administrarSubcategoria.php';
         $.ajax({
             type: "POST",
             url: url_json,
-            data: 'accion=BUSCAR_BY_ID&idCategoria=' + id,
+            data: 'accion=BUSCAR_BY_ID&idSubCategoria=' + id,
             success: function (data) {
+                console.log(data);
                 var data = eval('(' + data + ')');
                 console.log(data);
-                document.getElementById('idCategoria').value = data.idCategoria;
-                document.getElementById('nombreCategoria').value = data.nombreCategoria;
+                document.getElementById('idSubCategoria').value = data.idSubCategoria;
+                document.getElementById('nombreSubCategoria').value = data.nombreSubCategoria;
             }
         });
     }
 
-    function agregarCategoria() {
+    function agregarSubcategoria() {
         document.getElementById("fm").reset();
         document.getElementById('accion').value = "AGREGAR";
-        $('#modalLabel').html("Crear Categoria");
+        $('#modalLabel').html("Crear Subcategoria");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE
     }
 
-    function crearCategora() {
-        if (document.getElementById('nombreCategoria').value != "") {
+    function crearSubcategora() {
+        if (document.getElementById('nombreSubCategoria').value != "") {
             $.ajax({
                 type: "POST",
-                url: "../Servlet/administrarCategoria.php",
+                url: "../Servlet/administrarSubcategoria.php",
                 data: $("#fm").serialize(),
                 success: function (result) {
                     var result = eval('(' + result + ')');
@@ -170,12 +173,12 @@
                     } else {
                         $('#dg-modela').modal('hide')
                         notificacion(result.mensaje, 'success', 'alert');
-                        cargarCategorias();
+                        cargarSubcategorias();
                     }
                 }
             });
         } else {
-            notificacion("Debe ingresar el nombre de la categoria", 'success', 'alert');
+            notificacion("Debe ingresar el nombre de la subcategoria", 'success', 'alert');
         }
     }
 
@@ -188,24 +191,20 @@
 
     function borrar(id) {
         confirmacion('Confirmacion', '¿Esta seguro?, una vez eliminado no se podran recuperar los datos.');
-        document.getElementById('idCategoriaEliminar').value = id;
+        document.getElementById('idSubCategoriaEliminar').value = id;
     }
 
     function confirmarBorrar() {
-        var id = document.getElementById('idCategoriaEliminar').value;
-        $.post('../Servlet/administrarCategoria.php?accion=BORRAR', {idCategoria: id}, function (result) {
+        var id = document.getElementById('idSubCategoriaEliminar').value;
+        $.post('../Servlet/administrarSubcategoria.php?accion=BORRAR', {idSubCategoria: id}, function (result) {
             if (result.success) {
                 $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
-                cargarCategorias();//Refrescamos la tabla
+                cargarSubcategorias();//Refrescamos la tabla
                 notificacion(result.mensaje, 'success', 'alert');
             } else {
                 notificacion(result.errorMsg, 'danger', 'alert');
             }
         }, 'json');
-    }
-    
-    function ver(idCategoria) {
-        window.location = "administrarSubCategorias.php?idCategoria="+idCategoria;
     }
 </script>
 <!--Middle Part End-->

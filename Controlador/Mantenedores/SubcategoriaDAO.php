@@ -34,10 +34,42 @@ class SubcategoriaDAO{
         $this->conexion->desconectar();
         return $subcategorias;
     }
+    
+    public function findAllByIdCategoria($idCategoria) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM subcategoria WHERE idCategoria =  ".$idCategoria." ";
+        $result = $this->conexion->ejecutar($query);
+        $i = 0;
+        $subcategorias = array();
+        while ($fila = $result->fetch_row()) {
+            $subcategoria = new SubcategoriaDTO();
+            $subcategoria->setIdSubCategoria($fila[0]);
+            $subcategoria->setNombreSubCategoria($fila[1]);
+            $subcategoria->setIdCategoria($fila[2]);
+            $subcategorias[$i] = $subcategoria;
+            $i++;
+        }
+        $this->conexion->desconectar();
+        return $subcategorias;
+    }
 
     public function findByID($idSubCategoria) {
         $this->conexion->conectar();
         $query = "SELECT * FROM subcategoria WHERE  idSubCategoria =  ".$idSubCategoria." ";
+        $result = $this->conexion->ejecutar($query);
+        $subcategoria = new SubcategoriaDTO();
+        while ($fila = $result->fetch_row()) {
+            $subcategoria->setIdSubCategoria($fila[0]);
+            $subcategoria->setNombreSubCategoria($fila[1]);
+            $subcategoria->setIdCategoria($fila[2]);
+        }
+        $this->conexion->desconectar();
+        return $subcategoria;
+    }
+    
+    public function findByNombre($nombreSubCategoria) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM subcategoria WHERE  nombreSubCategoria =  '".$nombreSubCategoria."' ";
         $result = $this->conexion->ejecutar($query);
         $subcategoria = new SubcategoriaDTO();
         while ($fila = $result->fetch_row()) {
@@ -69,8 +101,8 @@ class SubcategoriaDAO{
 
     public function save($subcategoria) {
         $this->conexion->conectar();
-        $query = "INSERT INTO subcategoria (idSubCategoria,nombreSubCategoria,idCategoria)"
-                . " VALUES ( ".$subcategoria->getIdSubCategoria()." , '".$subcategoria->getNombreSubCategoria()."' ,  ".$subcategoria->getIdCategoria()." )";
+        $query = "INSERT INTO subcategoria (nombreSubCategoria,idCategoria)"
+                . " VALUES ( '".$subcategoria->getNombreSubCategoria()."' ,  ".$subcategoria->getIdCategoria()." )";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;
