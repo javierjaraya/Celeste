@@ -104,6 +104,7 @@ $idCategoria = $_REQUEST['idCategoria']; ?>
     $(function () {
         cargarSubcategorias();
     });
+    var tabla = null;
     function cargarSubcategorias() {
         var idCategoria = document.getElementById('idCategoria').value;        
         $("#tablaSubCategorias").empty();
@@ -122,7 +123,24 @@ $idCategoria = $_REQUEST['idCategoria']; ?>
                         contenido += "</tr>";
                         $("#tablaSubCategorias").append(contenido);
                     });
-                    $('#tabla').DataTable();
+                    if (tabla == null) {
+                        tabla = $('#tabla').DataTable(
+                                {
+                                    "oLanguage": {
+                                        "oPaginate": {
+                                            "sNext": "Siguiente",
+                                            "sPrevious": "Anterior"
+                                        },
+                                        "sLengthMenu": "Mostrar _MENU_ Resultados",
+                                        "sSearch": "Buscar",
+                                        "sZeroRecords": "No se encontraron Resultados",
+                                        "sInfo": "Mostrar desde el _START_ hasta el _END_ de un total de _TOTAL_ Resultados",
+                                        "sInfoEmpty": "Mostrar desde el 0 Hasta el 0 de un total de 0 Resultados",
+                                        "sInfoFiltered": "(Filtrado desde un total de _MAX_ Resultados)"
+                                    },
+                                }
+                        );
+                    }
                 }
         );
     }

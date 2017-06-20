@@ -20,10 +20,11 @@ if ($accion != null) {
 
         $object = $control->getProductoByNombre($nombreProducto);
         if (($object->getIdProducto() == null || $object->getIdProducto() == "")) {
+            include_once("../../Util/SubirImagen.php");
+            
             $result;
             $resultImagen;
             $idProducto = $control->getIdProducoDisponible();
-
             $producto = new ProductoDTO();
             $producto->setIdProducto($idProducto);
             $producto->setNombreProducto($nombreProducto);
@@ -31,30 +32,27 @@ if ($accion != null) {
             $producto->setStock($stock);
             $producto->setPrecio($precio);
             $producto->setIdSubCategoria($idSubCategoria);
-
+            
             if (validarTamaños($imagen, 10000000) == true) {
                 $result = $control->addProducto($producto);
 
                 $subirImagen = new SubirImagen("../../Files/img/Productos/");
-                $fecha = date("Y") . date("m") . date("d") . date("H") . date("i") . date("s" . $i);
+                $fecha = date("Y") . date("m") . date("d") . date("H") . date("i") . date("s");
                 $nombreImagen = $subirImagen->asignaNombre($imagen['type'], "producto_" . $fecha);
-                $subirImagen->setName($nombreImagen);
+                $subirImagen->setName("producto_" . $fecha);
                 $subirImagen->setMaximoSize(10000000); //10mb
                 //Subir imagen al servidor
                 $respuesta = $subirImagen->subirImagen($imagen);
 
                 if ($respuesta == true) {
 
-                    $imagen = new ImagenDTO();
-                    $imagen->setNombreImagen($nombreImagen);
-                    $imagen->setRutaImagen("Files/img/Fotografias/" . $nombreImagen);
-                    $imagen->setIdProducto($idProducto);
-
-                    $valor = ($imagen["size"] / 1024) / 1024;
-                    $tamaño = round($valor, 2, PHP_ROUND_HALF_UP);
+                    $imagenProducto = new ImagenDTO();
+                    $imagenProducto->setNombreImagen($nombreImagen);
+                    $imagenProducto->setRutaImagen("Files/img/Productos/" . $nombreImagen);
+                    $imagenProducto->setIdProducto($idProducto);
 
                     //registrar imagen a la BD
-                    $resultImagen = $control->addImagen($imagen); //Registramos la imagen en la BD
+                    $resultImagen = $control->addImagen($imagenProducto); //Registramos la imagen en la BD
                 }
             }
 

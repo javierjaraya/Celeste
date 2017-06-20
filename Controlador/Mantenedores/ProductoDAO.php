@@ -31,7 +31,7 @@ class ProductoDAO{
 
     public function findAll() {
         $this->conexion->conectar();
-        $query = "SELECT * FROM producto";
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto ";
         $result = $this->conexion->ejecutar($query);
         $i = 0;
         $productos = array();
@@ -43,6 +43,15 @@ class ProductoDAO{
             $producto->setStock($fila[3]);
             $producto->setPrecio($fila[4]);
             $producto->setIdSubCategoria($fila[5]);
+            
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+            
+            $producto->setImagen($imagen);
+            
             $productos[$i] = $producto;
             $i++;
         }
@@ -124,7 +133,7 @@ class ProductoDAO{
     public function save($producto) {
         $this->conexion->conectar();
         $query = "INSERT INTO producto (idProducto,nombreProducto,descripcionProducto,stock,precio,idSubCategoria)"
-                . " VALUES ( ".$producto->getIdProducto()." , '".$producto->getNombreProducto()."' , '".$producto->getDescripcionProducto()."' ,  ".$producto->getStock()." ,  ".$producto->getPrecio()." ,  ".$producto->getIdSubCategoria()." )";
+                . " VALUES ( ".$producto->getIdProducto()." , '".$producto->getNombreProducto()."' , '".$producto->getDescripcionProducto()."' ,  ".$producto->getStock()." ,  ".$producto->getPrecio()." ,  ".$producto->getIdSubCategoria()." )";        
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;

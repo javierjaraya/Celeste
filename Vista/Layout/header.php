@@ -25,6 +25,7 @@ if (isset($_SESSION["autentificado"])) {
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
         <!-- JS Part End-->
 
         <!-- Bootstrap 3.3.6 -->

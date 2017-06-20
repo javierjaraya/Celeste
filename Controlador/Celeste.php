@@ -187,7 +187,7 @@ class Celeste {
     }
 
     public function getProductoByNombre($nombreProducto) {
-        return $this->productoDAO->getProductoByNombre($nombreProducto);
+        return $this->productoDAO->findByNombre($nombreProducto);
     }
 
     public function getProductoLikeAtrr($cadena) {

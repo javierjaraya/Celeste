@@ -78,14 +78,13 @@
                                     <input type="file" class="form-control col-md-12" id="imagen" name="imagen" aria-describedby="" placeholder="" >
                                 </div>
                                 <input type="hidden" value="" name="accion" id="accion">
-                                <input type="hidden" value="" name="idSubCategoria" id="idSubCategoria">
                             </section>                           
                         </section><!-- Fin Row-->
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
                         <a class="btn btn-warning" onclick="guardar()">Guardar</a>
-                    </div>
+                    </div>                    
                 </form>
             </section>
         </div>
@@ -95,16 +94,18 @@
 <script>
     $(function () {
         cargar();
+        cargarSubCategorias();
     });
+    var tabla = null;
     function cargar() {
         $("#contenidoTabla").empty();
         var url_json = '../Servlet/administrarProducto.php?accion=LISTADO';
         $.getJSON(
                 url_json,
                 function (datos) {
-                    $.each(datos, function (k, v) {
+                    $.each(datos, function (k, v) {                        
                         var contenido = "<tr>";
-                        contenido += "<td>" + v.rutaImagen + "</td>";
+                        contenido += "<td><img src='../../" + v.imagen.rutaImagen + "' width='50px' height='50px'></td>";
                         contenido += "<td>" + v.idProducto + "</td>";
                         contenido += "<td>" + v.nombreProducto + "</td>";
                         contenido += "<td>" + v.descripcionProducto + "</td>";
@@ -117,13 +118,30 @@
                         contenido += "</td>";
                         contenido += "</tr>";
                         $("#contenidoTabla").append(contenido);
-                    });
-                    $('#tabla').DataTable();
+                    });                    
+                    if (tabla == null) {
+                        tabla = $('#tabla').DataTable(
+                                {
+                                    "oLanguage": {
+                                        "oPaginate": {
+                                            "sNext": "Siguiente",
+                                            "sPrevious": "Anterior"
+                                        },
+                                        "sLengthMenu": "Mostrar _MENU_ Resultados",
+                                        "sSearch": "Buscar",
+                                        "sZeroRecords": "No se encontraron Resultados",
+                                        "sInfo": "Mostrar desde el _START_ hasta el _END_ de un total de _TOTAL_ Resultados",
+                                        "sInfoEmpty": "Mostrar desde el 0 Hasta el 0 de un total de 0 Resultados",
+                                        "sInfoFiltered": "(Filtrado desde un total de _MAX_ Resultados)"
+                                    },
+                                }
+                        );
+                    }
                 }
         );
     }
 
-    function cargar() {
+    function cargarSubCategorias() {
         $("#idSubCategoria").empty();
         $("#idSubCategoria").append("<option value='0'> Seleccionar </option>");
         var url_json = '../Servlet/administrarSubcategoria.php?accion=LISTADO';
@@ -170,25 +188,24 @@
 
     function guardar() {
         if (validar()) {
-            console.log("valido");
-            /*$.ajax({
-             type: "POST",
-             url: "../Servlet/administrarProducto.php",
-             data: $("#fm").serialize(),
-             success: function (result) {
-             var result = eval('(' + result + ')');
-             if (result.errorMsg) {
-             $('#dg-modela').modal('hide')
-             notificacion(result.errorMsg, 'danger', 'alert');
-             } else {
-             $('#dg-modela').modal('hide')
-             notificacion(result.mensaje, 'success', 'alert');
-             cargar();
-             }
-             }
-             });*/
-        } else {
-            console.log("invalido");
+            var url = "../Servlet/administrarProducto.php";
+            $('#fm').form('submit', {
+                url: url,
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    var result = eval('(' + result + ')');
+                    if (result.errorMsg) {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.errorMsg, 'danger', 'alert');
+                    } else {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.mensaje, 'success', 'alert');
+                        cargar();
+                    }
+                }
+            });
         }
     }
 
@@ -211,9 +228,24 @@
         } else if (document.getElementById("imagen").value == "") {
             notificacion("Debe seleccionar una imagen", 'warning', 'alert-modal');
             return false;
+        } else if (validarArchivo(document.getElementById("imagen").value) == false) {
+            notificacion("El archivo seleccionado no es un formato valido", 'warning', 'alert-modal');
+            return false;
         }
-
         return true;
+    }
+
+    function validarArchivo(archivo) {
+        extensiones_permitidas = new Array(".gif", ".jpg", ".png");
+        //recupero la extensión de este nombre de archivo 
+        extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+
+        for (var i = 0; i < extensiones_permitidas.length; i++) {
+            if (extensiones_permitidas[i] == extension) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function confirmacion(titulo, mensaje) {
