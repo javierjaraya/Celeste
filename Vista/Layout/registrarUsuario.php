@@ -33,6 +33,8 @@ if (isset($_SESSION["autentificado"])) {
 
         <!-- Usabilidad -->
         <script src="../../Files/js/notificaciones.js"></script>
+        <script src="../../Files/js/ValidaCamposFormulario.js"></script>
+        <script src="../../Files/js/validarut.js"></script>
 
     </head>
 
@@ -82,64 +84,84 @@ if (isset($_SESSION["autentificado"])) {
 
             <!-- CUERPO -->
             <div class="row">
-                <div class="container">
-                    
+                <div class="container">                    
                     <div class="col-md-12">
-
                         <div class="row"> 
-
-
-
-                            <div class="cajaFormulario" style=" padding: 3%; align-content: center;">
-                                <h2 class="TextoTituloFormulario" style="border: orangered 1px solid; border-radius: 15px; text-align: center ; padding: 1%"><strong>FORMULARIO DE REGISTRO</strong></h2><br><br>
+                            <div class="cajaFormulario" style=" padding: 1%; align-content: center;">
+                                <h4 class="TextoTituloFormulario" style="border: orangered 1px solid; border-radius: 15px; text-align: center ; padding: 1%;"><strong>FORMULARIO DE REGISTRO</strong></h4><br>
                                 <div style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
-                                    <legend class="TextoTituloFormulario" ><strong>COMPLETA TUS DATOS PERSONALES</strong> </legend>  <a style="float: right">(*) Campos Obligatorios</a><br><br>
-                                    <hr style="border: orangered 1px solid;"> <br><br>
+                                    <h7 class="TextoTituloFormulario" >COMPLETA TUS DATOS PERSONALES</h7><i style="float: right">(*) Campos Obligatorios</i>
+                                    <hr style="border: orangered 1px solid;"> <br>
                                     <div id="alert"></div>
-                                    <form id="fmusuario" method="post" >
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="runUsuario"><strong>Run (*)</strong></label>
-                                            <input class="inputFormulario" id="runUsuario" name="runUsuario" type="text" placeholder="112223337" onkeyup="eliminarCaracteres()"><br><br>
+                                    <form id="fmusuario" class="form-horizontal" method="post" >    
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="runUsuario">Run(*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control " id="runUsuario" name="runUsuario" type="text" placeholder="112223337" onkeyup="eliminarCaracteres()">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="nombresUsuario"><strong>Nombres (*)</strong></label>
-                                            <input class="inputFormulario" id="nombresUsuario" name="nombresUsuario" type="text"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="nombresUsuario">Nombres (*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="nombresUsuario" name="nombresUsuario" type="text">                                     
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="apellidosUsuario"><strong>Apellidos (*)</strong></label>
-                                            <input class="inputFormulario" id="apellidosUsuario" name="apellidosUsuario" type="text"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="apellidosUsuario">Apellidos (*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="apellidosUsuario" name="apellidosUsuario" type="text">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="emailUsuario"><strong>E-Mail (*)</strong></label>
-                                            <input class="inputFormulario" id="emailUsuario" name="emailUsuario" type="text" placeholder="ejemplo@celeste.cl"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="emailUsuario"><strong>E-Mail (*)</strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="emailUsuario" name="emailUsuario" type="text" placeholder="ejemplo@celeste.cl">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="sexo"><strong>Sexo (*)&nbsp;&nbsp;&nbsp; </strong></label>
-                                            <label class="checkbox" >
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input  type="radio" id="sexoM" name="sexo" value="Masculino" checked="checked" >&nbsp;<a class="TextoFormulario">Masculino</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input  type="radio" id="sexoF" name="sexo" value="Femenino" >&nbsp;<a class="TextoFormulario">Femenino</a>
-                                            </label><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="sexo">Sexo (*)</label>
+                                            <div class="col-sm-6">
+                                                <div class="col-md-3">
+                                                    <input  type="radio" id="sexoM" name="sexo" value="Masculino" checked="checked" >&nbsp;&nbsp;Masculino
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input  type="radio" id="sexoF" name="sexo" value="Femenino" >&nbsp;&nbsp;Femenino
+                                                </div>
+                                            </div>  
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="telefonoUsuario"><strong>Telefono (*)</strong></label>
-                                            <input class="inputFormulario" id="telefonoUsuario" name="telefonoUsuario" type="text" placeholder="Ej: 988776655"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="telefonoUsuario">Telefono (*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="telefonoUsuario" name="telefonoUsuario" type="text" placeholder="Ej: 988776655">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="direccionUsuario"><strong>Dirección (*)</strong></label>
-                                            <input class="inputFormulario" id="direccionUsuario" name="direccionUsuario" type="text"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="direccionUsuario">Dirección (*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="direccionUsuario" name="direccionUsuario" type="text">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="contrasenaUsuario"><strong>Contraseña (*)</strong></label>
-                                            <input class="inputFormulario" type="password" id="contrasenaUsuario" name="contrasenaUsuario" placeholder="Ingrese una clave entre 4 y 8 digitos"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="contrasenaUsuario">Contraseña (*)</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="password" id="contrasenaUsuario" name="contrasenaUsuario" placeholder="Ingrese una clave entre 4 y 8 digitos">
+                                            </div>
                                         </div>
-                                        <div class="divformulario">
-                                            <label class="TextoFormulario" for="contrasenaRepetidaUsuario"><strong>Repetir Contraseña (*) </strong></label>
-                                            <input class="inputFormulario" type="password" id="contrasenaRepetidaUsuario" name="contrasenaRepetidaUsuario" placeholder="Repita su Clave"><br><br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="contrasenaRepetidaUsuario"><strong>Repetir Contraseña (*) </strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="password" id="contrasenaRepetidaUsuario" name="contrasenaRepetidaUsuario" placeholder="Repita su Clave">
+                                            </div>
                                         </div>
                                         <div style="text-align: center">
                                             <input  type="checkbox"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
-                                            <a id="boton" onclick="guardarCliente()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Registrar mis Datos</a>
                                         </div>
+                                            <div class="form-group" style="text-align: center">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <a onclick="guardarCliente()" class="btn btn-warning"><i class="icon icon-next"> </i> Registrar mis Datos</a>
+                                                </div>
+                                            </div>
+
                                         <input type="hidden" id="accion" name="accion" value="AGREGAR">
                                         <input type="hidden" id="idPerfil" name="idPerfil" value="2">
                                     </form>
