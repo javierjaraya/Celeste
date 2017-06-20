@@ -10,7 +10,7 @@ if ($accion != null) {
         $categorias = $control->getAllCategorias();
         $json = json_encode($categorias);
         echo $json;
-    } else if ($accion == "AGREGAR") {        
+    } else if ($accion == "AGREGAR") {
         $nombreCategoria = htmlspecialchars($_REQUEST['nombreCategoria']);
 
         $object = $control->getCategoriaByNombre($nombreCategoria);
@@ -55,9 +55,9 @@ if ($accion != null) {
         $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
         $nombreCategoria = htmlspecialchars($_REQUEST['nombreCategoria']);
 
-            $categoria = new CategoriaDTO();
-            $categoria->setIdCategoria($idCategoria);
-            $categoria->setNombreCategoria($nombreCategoria);
+        $categoria = new CategoriaDTO();
+        $categoria->setIdCategoria($idCategoria);
+        $categoria->setNombreCategoria($nombreCategoria);
 
         $result = $control->updateCategoria($categoria);
         if ($result) {

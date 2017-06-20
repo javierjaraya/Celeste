@@ -1,30 +1,40 @@
 <?php include("header.php"); ?>
 
-<!--Middle Part Start-->
-<div id="content" style="">   
+<div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
+    <h4 class="TextoTituloFormulario"><strong>CATEGORIA</strong></h4>
+</div>
 
-    <div>
-        <div class="cajaFormulario" style=" padding: 3%; align-content: center;">
-            <h2 class="TextoTituloFormulario" style="border: orangered 1px solid; border-radius: 15px; text-align: center ; padding: 1%"><strong>AGREGAR CATEGORIA DE PRODUCTOS</strong></h2><br><br>
-            <div style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
-                <legend class="TextoTituloFormulario" ><strong>DATOS CATEGORIA</strong> </legend>  <a style="float: right">(*) Campos Obligatorios</a><br><br>
-                <hr style="border: orangered 1px solid;"> <br><br>
-                <div id="alert"></div>
-
-                <form id="fmcategoria" method="post" >
-                    <div class="divformulario">
-                        <label class="TextoFormulario" for="nombreCategoria"><strong>Nombre Categoria (*)</strong></label>
-                        <input class="inputFormulario" id="nombreCategoria" name="nombreCategoria" type="text" placeholder=""4><br><br>
-                    </div>
-                    <div style="text-align: center">                        
-                        <a id="boton" onclick="crearCategora()" class="button" style="margin: 20px"><i class="icon-lock"> </i> Crear Categoria</a>
-                    </div>
-                    <input type="hidden" id="accion" name="accion" value="AGREGAR">
-                </form>
-
+<div class="col-md-12" id="subContenedor" style="height: 250px; margin-bottom: 20px; padding: 5px; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 5px;">
+    <div class="col-md-8">
+        <h5><strong>CATEGORIAS</strong></h5>
+    </div>
+    <div class="col-md-4">
+        <a style="float: right">(*) Campos Obligatorios</a><br>
+    </div>
+    <div class="col-md-12">
+        <hr style="border: orangered 1px solid;">
+    </div>
+    <div id="alert"></div>
+    <br><br><br><br><br><br>
+    <form id="fmcategoria" class="form-horizontal">
+        <div class="form-group">            
+            <label  class="col-sm-4 control-label" for="nombreCategoria">Nombre Categoria (*)</label>
+            <div class="col-sm-6">
+                <input class="form-control" id="nombreCategoria" name="nombreCategoria" type="text" placeholder="">
             </div>
         </div>
-    </div>
+        <div class="form-group">  
+            <div class="col-sm-offset-4 col-sm-6">
+                <a id="boton" onclick="crearCategora()" class="btn btn-warning" style="margin: 20px">Crear Categoria</a>
+            </div>
+
+        </div>
+        <input type="hidden" id="accion" name="accion" value="AGREGAR">
+    </form>
+
+</div>
+</div>
+</div>
 
 </div>
 
@@ -47,7 +57,7 @@
                     }
                 }
             });
-        }else{
+        } else {
             notificacion("Debe ingresar el nombre de la categoria", 'success', 'alert');
         }
     }

@@ -1,10 +1,10 @@
 <?php include("header.php"); ?>
 
-<div class="12">
+<div class="col-md-12">
     <h4 style="padding: 1%; border: orangered 1px solid; border-radius: 15px; text-align: center;" class="TextoTituloFormulario"><strong>INGRESE SUS DATOS PARA INICIAR SESIÓN</strong></h4>
 </div>
 
-<div class="12" style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">      
+<div class="col-md-12" style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">      
     <div  class="row">
         <div id="alert"></div>    
         <form id="fmlogin" class="form-horizontal">
