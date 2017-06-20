@@ -31,7 +31,7 @@ if ($accion != null) {
             $usuario->setTelefono($telefono);
             $usuario->setSexo($sexo);
             $usuario->setDireccion($direccion);
-            $usuario->setClave($clave);
+            $usuario->setClave(md5($clave));
             $usuario->setIdPerfil($idPerfil);
 
             $result = $control->addUsuario($usuario);
@@ -68,15 +68,16 @@ if ($accion != null) {
         $json = json_encode($usuario);
         echo $json;
     } else if ($accion == "ACTUALIZAR") {
-        $run = htmlspecialchars($_REQUEST['run']);
-        $nombres = htmlspecialchars($_REQUEST['nombres']);
-        $apellidos = htmlspecialchars($_REQUEST['apellidos']);
-        $correoElectronico = htmlspecialchars($_REQUEST['correoElectronico']);
-        $telefono = htmlspecialchars($_REQUEST['telefono']);
+       $run = htmlspecialchars($_REQUEST['runUsuario']);
+        $nombres = htmlspecialchars($_REQUEST['nombresUsuario']);
+        $apellidos = htmlspecialchars($_REQUEST['apellidosUsuario']);
+        $correoElectronico = htmlspecialchars($_REQUEST['emailUsuario']);
+        $telefono = htmlspecialchars($_REQUEST['telefonoUsuario']);
         $sexo = htmlspecialchars($_REQUEST['sexo']);
-        $direccion = htmlspecialchars($_REQUEST['direccion']);
-        $clave = htmlspecialchars($_REQUEST['clave']);
+        $direccion = htmlspecialchars($_REQUEST['direccionUsuario']);
+       
         $idPerfil = htmlspecialchars($_REQUEST['idPerfil']);
+//        $clave = htmlspecialchars($_REQUEST['clave']);
 
             $usuario = new UsuarioDTO();
             $usuario->setRun($run);
@@ -86,14 +87,14 @@ if ($accion != null) {
             $usuario->setTelefono($telefono);
             $usuario->setSexo($sexo);
             $usuario->setDireccion($direccion);
-            $usuario->setClave($clave);
+//            $usuario->setClave(md5($clave));
             $usuario->setIdPerfil($idPerfil);
 
         $result = $control->updateUsuario($usuario);
         if ($result) {
             echo json_encode(array(
                 'success' => true,
-                'mensaje' => "Usuario actualizada correctamente"
+                'mensaje' => "Usuario actualizado correctamente"
             ));
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));

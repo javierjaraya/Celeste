@@ -202,7 +202,7 @@ if (isset($_SESSION["autentificado"])) {
                                                         notificacion(result.errorMsg, 'danger', 'alert');
                                                     } else {
                                                         notificacion(result.mensaje, 'success', 'alert');
-                                                        window.location = "iniciarSesion.php";
+                                                        window.location = "administrarUsuarios.php";
                                                     }
                                                 }
                                             });

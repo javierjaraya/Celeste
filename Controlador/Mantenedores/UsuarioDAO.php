@@ -103,7 +103,7 @@ class UsuarioDAO{
                 . "  telefono =  ".$usuario->getTelefono()." ,"
                 . "  sexo = '".$usuario->getSexo()."' ,"
                 . "  direccion = '".$usuario->getDireccion()."' ,"
-                . "  clave = '".$usuario->getClave()."' ,"
+//                . "  clave = '".$usuario->getClave()."' ,"
                 . "  idPerfil =  ".$usuario->getIdPerfil()." "
                 . " WHERE  run = '".$usuario->getRun()."' ";
         $result = $this->conexion->ejecutar($query);

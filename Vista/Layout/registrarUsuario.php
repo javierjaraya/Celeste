@@ -154,13 +154,13 @@ if (isset($_SESSION["autentificado"])) {
                                             </div>
                                         </div>
                                         <div style="text-align: center">
-                                            <input  type="checkbox"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a style="color: orangered"> términos y condiciones</a></i><br><br>
+                                            <input  type="checkbox"  id="TerminosyCondiciones" name="TerminosyCondiciones" value="Femenino" >&nbsp;<i class="TextoFormulario">Al registrarte estás aceptando los<a onclick="AbreTerminosyCondiciones()" style="color: orangered"> términos y condiciones</a></i><br><br>
                                         </div>
-                                            <div class="form-group" style="text-align: center">
-                                                <div class="col-sm-offset-2 col-sm-9">
-                                                    <a onclick="guardarCliente()" class="btn btn-warning"><i class="icon icon-next"> </i> Registrar mis Datos</a>
-                                                </div>
+                                        <div class="form-group" style="text-align: center">
+                                            <div class="col-sm-offset-2 col-sm-9">
+                                                <a onclick="guardarCliente()" class="btn btn-warning"><i class="icon icon-next"> </i> Registrar mis Datos</a>
                                             </div>
+                                        </div>
 
                                         <input type="hidden" id="accion" name="accion" value="AGREGAR">
                                         <input type="hidden" id="idPerfil" name="idPerfil" value="2">
@@ -168,7 +168,45 @@ if (isset($_SESSION["autentificado"])) {
                                 </div>
                             </div>
 
+                            <!-- DIALOGO MODAL-->
+                            <div class="modal fade bs-example-modal-md" id="dg-modela" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <section id="panel-modal">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <img id="logo-modal" src="../../Files/img/log.png" width="100px" style="float: left;">
+                                                <label class="titulo-modal" style="width: 350px; padding-top: 50px;"><h3 class="modal-title" id="modalLabel"></h3></label>
+                                            </div>
+                                            <form id="fm" method="POST" >
+                                                <div class="modal-body">
+                                                    <section class="row">                            
+                                                        <section class="col-md-12">
+                                                            <div id="nombresGroup" class="form-group has-feedback">
+                                                                Bienvenido a Celeste. Estos Términos y Condiciones regulan el acceso en Chile a nuestro sitio web y su uso por todo usuario o consumidor. 
+                                                                En este sitio podrás usar, sin costo alguno, nuestro software, para visitar y adquirir, si lo deseas, los productos y servicios que se exhiben aquí. 
+                                                                Te recomendamos leer atentamente estos términos y condiciones.                                   
+                                                            </div>
+
+                                                        </section>                           
+                                                    </section><!-- Fin Row-->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-default" data-dismiss="modal">Cerrar</a>
+                                                </div>
+                                            </form>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div><!-- END DIALOGO MODAL-->
+
                             <script type="text/javascript">
+                                function AbreTerminosyCondiciones() {
+//                                    document.getElementById("fm").reset();
+//                                    document.getElementById('accion').value = "AGREGAR";
+                                    $('#modalLabel').html("Terminos y Condiciones");
+                                    $('#dg-modela').modal(this)//CALL MODAL MENSAJE
+                                }
 
                                 function guardarCliente() {
                                     if (document.getElementById('TerminosyCondiciones').checked) {
