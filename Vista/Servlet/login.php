@@ -12,7 +12,7 @@ if (($run != null || $run != "") && ($clave != null || $clave != "")) {
     //$run = substr($run, 0, -1); //ELIMINA DIGITO VERIFICADOR
     $usuario = $control->getUsuarioByID($run);
     if ($usuario->getRun() == $run) {
-        if ($usuario->getClave() == $clave) {
+        if ($usuario->getClave() == md5($clave)) {
                 session_start();
                 //$nivel = $control->nivelFuncionariaRecienteByRun($run);
                 $perfil = $control->getPerfilByID($usuario->getIdPerfil());
