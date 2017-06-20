@@ -47,7 +47,7 @@ if (($run != null || $run != "") && ($clave != null || $clave != "")) {
     }
 } else {
     $success = false;
-    $mensajes = "Ninguna casilla puede estar vacÍa.";
+    $mensajes = "Ninguna casilla puede estar vacía.(".$clave.")";
 }
 echo json_encode(array(
     'success' => $success,
