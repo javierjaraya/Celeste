@@ -43,7 +43,7 @@ class UsuarioDAO{
 
     public function findByID($run) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM usuario WHERE  run = '".$run."' ";
+        $query = "SELECT u.run, u.nombres, u.apellidos, u.correoElectronico, u.telefono, u.sexo, u.direccion, u.clave, p.idPerfil, p.nombrePerfil FROM usuario u JOIN perfil p on u.idPerfil = p.idPerfil WHERE  run = '".$run."' ";
         $result = $this->conexion->ejecutar($query);
         $usuario = new UsuarioDTO();
         while ($fila = $result->fetch_row()) {
@@ -56,6 +56,7 @@ class UsuarioDAO{
             $usuario->setDireccion($fila[6]);
             $usuario->setClave($fila[7]);
             $usuario->setIdPerfil($fila[8]);
+            $usuario->setNombrePerfil($fila[9]);
         }
         $this->conexion->desconectar();
         return $usuario;

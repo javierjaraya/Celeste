@@ -8,7 +8,6 @@
     <h5><strong>USUARIOS</strong></h5>
     <hr style="border: orangered 1px solid;">
     <div id="alert"></div>
-<!--    <a onclick="agregarCategoria()" class="btn btn-warning btn-sm" style="margin-bottom: 5px"><i class="icon-lock"> </i> Agregar Categoria</a>-->
     <div class="table-responsive">
         <table id="tabla" class="table">
             <thead> 
@@ -27,7 +26,7 @@
     </div>
 </div>
 
-<!-- DIALOGO MODAL-->
+<!-- DIALOGO MODAL Editar-->
 <div class="modal fade bs-example-modal-md" id="dg-modela" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -103,15 +102,99 @@
                                 </section>                           
                             </section><!-- Fin Row-->
                         </div>
-
                         <div class="modal-footer">
                             <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
                             <a class="btn btn-warning" onclick="guardarUsuario()">Guardar</a>
                         </div>
                     </div>
                 </form>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- END DIALOGO MODAL-->
 
-
+<!-- DIALOGO MODAL FICHA-->
+<div class="modal fade bs-example-modal-md" id="dg-modela2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 200px; padding-top: 25px; text-align: center"><h4 class="modal-title" id="modalLabel2"></h4></label>
+                </div>
+                <form id="fm2" class="form-horizontal" method="POST" >
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row">                            
+                                <section class="col-md-12">
+                                    <div id="nombresGroup" class="form-group has-feedback">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="runUsuario2">Run</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control " id="runUsuario2" name="runUsuario2" type="text" placeholder="112223337" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="nombresUsuario2">Nombres</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="nombresUsuario2" name="nombresUsuario2" type="text">                                     
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="apellidosUsuario2">Apellidos</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="apellidosUsuario2" name="apellidosUsuario2" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="emailUsuario2"><strong>E-Mail</strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="emailUsuario2" name="emailUsuario2" type="text" placeholder="ejemplo@celeste.cl">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="sexo2">Sexo</label>
+                                            <div class="col-sm-8">
+                                                <div class="col-md-4">
+                                                    <input  type="radio" id="sexoM2" name="sexo2" value="Masculino" checked="checked" >&nbsp;&nbsp;Masculino
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input  type="radio" id="sexoF2" name="sexo2" value="Femenino" >&nbsp;&nbsp;Femenino
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="telefonoUsuario2">Telefono</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="telefonoUsuario2" name="telefonoUsuario2" type="text" placeholder="Ej: 988776655">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="direccionUsuario2">Dirección</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="direccionUsuario2" name="direccionUsuario2" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="nombrePerfil2">Perfil de Usuario</label>                                    
+                                            <div class="col-sm-6">                                      
+                                               <input class="form-control" id="nombrePerfil2" name="nombrePerfil2" type="text">
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                    <input type="hidden" value="" name="accion2" id="accion2">
+                                    <input type="hidden" value="" name="runVer" id="runVer">
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Salir</a>
+                        </div>
+                    </div>
+                </form>
             </section>
         </div>
     </div>
@@ -206,6 +289,37 @@
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE                                    
         rellenarFormulario(id);
     }
+    function ver(id) {
+        document.getElementById("fm2").reset();
+//        document.getElementById('accion').value = "ACTUALIZAR";
+        document.getElementById('runVer').value = id;
+        $('#modalLabel2').html("Ver Usuario");
+        $('#dg-modela2').modal(this)//CALL MODAL MENSAJE                                    
+        rellenarFormularioMostrar(id);
+    }
+    function rellenarFormularioMostrar(id) {
+        var url_json = '../Servlet/administrarUsuario.php';
+        $.ajax({
+            type: "POST",
+            url: url_json,
+            data: 'accion=BUSCAR_BY_ID&run=' + id,
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                document.getElementById('runUsuario2').value = data.run;
+                document.getElementById('nombresUsuario2').value = data.nombres;
+                document.getElementById('apellidosUsuario2').value = data.apellidos;
+                document.getElementById('emailUsuario2').value = data.correoElectronico;
+                if (data.sexo.localeCompare("F") == 0) {
+                    document.getElementById("sexoF2").checked = true;
+                } else {
+                    document.getElementById("sexoM2").checked = true;
+                }
+                document.getElementById('telefonoUsuario2').value = data.telefono;
+                document.getElementById('direccionUsuario2').value = data.direccion;
+                document.getElementById('nombrePerfil2').value = data.nombrePerfil;
+            }
+        });
+    }
     function rellenarFormulario(id) {
         var url_json = '../Servlet/administrarUsuario.php';
         $.ajax({
@@ -229,6 +343,7 @@
             }
         });
     }
+
     function cargarPerfiles() {
         var url_json = '../Servlet/administrarPerfil.php?accion=LISTADO';
         $.getJSON(
@@ -241,14 +356,6 @@
                 }
         );
     }
-
-//    function agregarCategoria() {
-//        document.getElementById("fm").reset();
-//        document.getElementById('accion').value = "AGREGAR";
-//        $('#modalLabel').html("Crear Categoria");
-//        $('#dg-modela').modal(this)//CALL MODAL MENSAJE
-//    }
-
     function guardarUsuario() {
 //        if (validar()) {
         $.ajax({
@@ -270,19 +377,16 @@
         });
 //        }
     }
-
     function confirmacion(titulo, mensaje) {
         document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
         $('#titulo-confirmacion').html(titulo);
         $('#contenedor-confirmacion').html(mensaje);
         $('#dg-confirmacion').modal(this)//CALL MODAL MENSAJE
     }
-
     function borrar(id) {
         confirmacion('Confirmacion', '¿Esta seguro?, una vez eliminado el usuario no se podrá recuperar.');
         document.getElementById('runUsuarioEliminar').value = id;
     }
-
     function confirmarBorrar() {
         var id = document.getElementById('runUsuarioEliminar').value;
         $.post('../Servlet/administrarUsuario.php?accion=BORRAR', {run: id}, function (result) {

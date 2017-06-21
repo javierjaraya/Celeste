@@ -1,5 +1,7 @@
 <?php
+
 class UsuarioDTO {
+
     public $run;
     public $nombres;
     public $apellidos;
@@ -9,8 +11,10 @@ class UsuarioDTO {
     public $direccion;
     public $clave;
     public $idPerfil;
+    public $nombrePerfil;
 
-    public function UsuarioDTO(){
+    public function UsuarioDTO() {
+        
     }
 
     function getRun() {
@@ -19,6 +23,14 @@ class UsuarioDTO {
 
     function setRun($run) {
         return $this->run = $run;
+    }
+
+    function getNombrePerfil() {
+        return $this->nombrePerfil;
+    }
+
+    function setNombrePerfil($nombrePerfil) {
+        $this->nombrePerfil = $nombrePerfil;
     }
 
     function getNombres() {
