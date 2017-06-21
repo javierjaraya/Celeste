@@ -81,6 +81,7 @@ li.home a span { background:url(../img/home-icon.png) center center no-repeat; d
 /********** Comented for Right Part End*******/
 
 /***********Category boxes **********/
+/*
 .box-category ul, .list-item { list-style: none; margin: 0; padding: 0; }
 .box-category > ul > li, .list-item > li { border-top: 1px solid #eee; display: block; position: relative; }
 .box-category > ul > li:first-child, .list-item > li:first-child { border-top:0; }
@@ -102,13 +103,14 @@ li.home a span { background:url(../img/home-icon.png) center center no-repeat; d
 .box-category > ul > li ul li a:hover, .list-item a:hover { margin-right: 16px; color:#F15A23; }
 .box-category > ul > li ul > li > a { text-decoration: none; }
 
-
+*/
 /******** category *********/
+/*
 .category-info { overflow: auto; margin-bottom: 20px; }
 .category-info .image { float: left; padding:0px; margin-right: 15px; }
 .category-list { overflow: auto; margin-bottom: 20px; }
 .category-list ul { float: left; width: 18%; margin-right:10px;}
-
+*/
 /************* Product ****************/
 .product-info { overflow:auto; margin-bottom: 20px; }
 .product-info > .left { float: left; margin-right: 15px; }
