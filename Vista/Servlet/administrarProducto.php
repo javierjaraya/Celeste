@@ -17,6 +17,7 @@ if ($accion != null) {
     } else if ($accion == "LISTADO_BY_ID_SUBCATEGORIA_PAGINACION") {
         include '../../Util/Paginacion.php'; //incluir el archivo de paginación
         $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+        $idCategoria = htmlspecialchars($_REQUEST['idCategoria']);
         $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? htmlspecialchars($_REQUEST['page']) : 1;
         $per_page = htmlspecialchars($_REQUEST['por_pagina']); //Cantidad de registros por pagina
         $order = htmlspecialchars($_REQUEST['orden']);
@@ -52,8 +53,8 @@ if ($accion != null) {
                     //echo json_encode($value);
 
                     echo "<div class='product-cuadro'>"
-                    . "<div class='imagen'><a href='#'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
-                    . "<div class='nombre'><a href='product.html'>" . $value->getNombreProducto() . "</a></div>"
+                    . "<div class='imagen'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getidProducto() . "'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
+                    . "<div class='nombre'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getidProducto() . "'>" . $value->getNombreProducto() . "</a></div>"
                     . "<div class='precio'>$" . number_format($value->getPrecio(), 0, ',', '.') . "</div>"
                     . "<div class='cart'>"
                     . "  <input type='button' value='Agregar al Carro' onclick='addToCart('40');' class='button'>"

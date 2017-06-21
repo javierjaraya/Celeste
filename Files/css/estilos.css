@@ -95,37 +95,26 @@ li.home a span { background:url(../img/home-icon.png) center center no-repeat; d
 #column-left .box-product .rating, #column-right .box-product .rating { float:left; margin-bottom:0px; }
 /********** Comented for Right Part End*******/
 
-/***********Category boxes **********/
-/*
-.box-category ul, .list-item { list-style: none; margin: 0; padding: 0; }
-.box-category > ul > li, .list-item > li { border-top: 1px solid #eee; display: block; position: relative; }
-.box-category > ul > li:first-child, .list-item > li:first-child { border-top:0; }
-.box-category .down { top: 6px; right: 0; position: absolute; cursor: pointer; width:16px; height:16px; padding: 2p; background: transparent url(../img/plus.png) 0px 0px no-repeat; opacity: 0.5; -moz-opacity: 0.5; }
-.box-category .down:hover { opacity: 1; -moz-opacity: 1;}
-.box-category ul li a, .list-item li a { padding: 5px 8px; display: block; }
-.box-category ul li.double a { display: inline-block; margin: 0; }
-.box-category ul li { position: relative; }
-.box-category > ul > li a.active + .down { background-position: 0px -16px; }
-.box-category > ul > li > a { color: #333; text-transform: uppercase; }
-.box-category > ul > li ul { display: none; padding-left: 10px; }
-.box-category > ul > li a.active { font-weight: bold; }
-.box-category > ul > li > a.active { margin-bottom:8px; }
-.box-category > ul > li a.active + ul { display: block; }
-.box-category a:hover, .list-item a:hover { background: #f9f9f9; text-decoration:none; }
-.box-category > ul > li ul li a:hover, .list-item a:hover, .box-category > ul > li > ul > li a.active {color:#F15A23; }
-.box-category > ul > li ul li { border-top: 1px dashed #eee; }
-.box-category > ul > li ul li a { margin-right: 16px; }
-.box-category > ul > li ul li a:hover, .list-item a:hover { margin-right: 16px; color:#F15A23; }
-.box-category > ul > li ul > li > a { text-decoration: none; }
 
-*/
-/******** category *********/
-/*
-.category-info { overflow: auto; margin-bottom: 20px; }
-.category-info .image { float: left; padding:0px; margin-right: 15px; }
-.category-list { overflow: auto; margin-bottom: 20px; }
-.category-list ul { float: left; width: 18%; margin-right:10px;}
-*/
+/******** breadcrumb **********/
+.breadcrumb-new {
+    color: #999;
+    margin-bottom: 0px;
+    background-color: #fff;
+}
+.breadcrumb-new a {
+    color: #999;
+    font-size: 11px;
+}
+.breadcrumb-new a, a:visited, a b {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+}
+.breadcrumb-new a:hover{
+    color: #333;
+    text-decoration: none;
+}
 
 /************ product filter ***************/
 .product-filter { border-bottom: 1px solid #E4E4E4; padding:5px; overflow: auto; line-height:27px; background-color:#F8F6F6; margin-bottom:20px;}

@@ -70,7 +70,7 @@ if (isset($_SESSION["autentificado"])) {
                 </div>
             </div>
             <!-- MENU -->
-            <div class="row" style="padding: 10px;">
+            <div class="row" style="padding-left: 10px; padding-right: 10px;">
 
                 <div id="menu"><span>Menu</span>
                     <!--Top Navigation Start-->

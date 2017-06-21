@@ -1,15 +1,14 @@
 <?php include("header.php"); ?>
 
 <?php
-
 $idSubCategoria = htmlspecialchars($_REQUEST['sub']);
 $subcategoria = $control->getSubcategoriaByID($idSubCategoria);
-
 ?>
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="box">
+        <div class="breadcrumb-new"> <a href="index.php">Home</a> » <a href="#"><?= $subcategoria->getNombreSubCategoria() ?></a></div>
+        <div class="box">            
             <!--<div class="box-heading"><span>Featured</span></div>-->
             <h1> <?= $subcategoria->getNombreSubCategoria() ?> </h1>
             <div class="product-filter">
@@ -49,9 +48,10 @@ $subcategoria = $control->getSubcategoriaByID($idSubCategoria);
 
     function load(page) {
         idSubCategoria = getParameterByName("sub");
+        idCategoria = getParameterByName("cat");
         por_pagina = document.getElementById("por_pagina").value;
         orden = document.getElementById("orden").value;
-        var parametros = {"accion": "LISTADO_BY_ID_SUBCATEGORIA_PAGINACION", "page": page, "por_pagina": por_pagina, "orden": orden, "idSubCategoria": idSubCategoria};
+        var parametros = {"accion": "LISTADO_BY_ID_SUBCATEGORIA_PAGINACION", "page": page, "por_pagina": por_pagina, "orden": orden, "idCategoria": idCategoria, "idSubCategoria": idSubCategoria};
         $("#loader").fadeIn('slow');
         $.ajax({
             url: '../Servlet/administrarProducto.php',
