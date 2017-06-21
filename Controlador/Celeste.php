@@ -177,6 +177,10 @@ class Celeste {
     public function getAllProductosBy_idSubCategoria($idSubCategoria) {
         return $this->productoDAO->findAllByIdSubCategoria($idSubCategoria);
     }
+    
+    public function getAllProductos_Limit_By_idSubCategoria($offset, $per_page, $idSubCategoria) {
+        return $this->productoDAO->findLimitByIdSubCategoria($offset, $per_page, $idSubCategoria);
+    }
 
     public function addProducto($producto) {
         return $this->productoDAO->save($producto);

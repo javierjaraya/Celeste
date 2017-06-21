@@ -1,5 +1,4 @@
 <?php
-
 include_once '../../Controlador/Celeste.php';
 
 $control = Celeste::getInstancia();
@@ -15,6 +14,52 @@ if ($accion != null) {
         $productos = $control->getAllProductosBy_idSubCategoria($idSubCategoria);
         $json = json_encode($productos);
         echo $json;
+    } else if ($accion == "LISTADO_BY_ID_SUBCATEGORIA_PAGINACION") {
+        include '../../Util/Paginacion.php'; //incluir el archivo de paginación
+        $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+        $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? htmlspecialchars($_REQUEST['page']) : 1;
+
+        $per_page = 10; //Cantidad de registros por pagina
+        $adjacents = 4; //brecha entre páginas después de varios adyacentes
+        $offset = ($page - 1) * $per_page;
+
+        $todos_los_productos = $control->getAllProductosBy_idSubCategoria($idSubCategoria);
+
+        $numrows = count($todos_los_productos); //Cantidad total de tuplas
+        $total_paginas = ceil($numrows / $per_page);
+        $reload = 'verProductos.php';
+
+        $productos = $control->getAllProductos_Limit_By_idSubCategoria($offset, $per_page, $idSubCategoria);
+
+        if ($numrows > 0) {
+            ?>
+            <div class="row" style="min-height: 350px;"> 
+                <?php
+                foreach ($productos as $value) {
+                    //echo json_encode($value);
+                    echo "<div class='col-md-3' style=' padding: 10px; border: orangered 1px solid; border-radius: 15px; text-align: center ; margin: 5px; box-shadow: 5px -9px 3px #000;'>";
+                    echo "<a href='' ><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='100px' height='100px'></a>";
+                    echo "<hr>";
+                    echo "<div class=''><a href=''>" . $value->getNombreProducto() . " </a></div>";
+                    echo "<div class='price'>$" . $value->getPrecio() . "</div>";                    
+                    echo "";
+                    echo "</div>";
+                }
+                ?>
+            </div>
+            <div class="table-pagination " style="text-align: center;">
+                <?php echo paginate($reload, $page, $total_paginas, $adjacents); ?>
+            </div>
+
+            <?php
+        } else {
+            ?>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>Aviso!!!</h4> No hay datos para mostrar
+            </div>
+            <?php
+        }
     } else if ($accion == "AGREGAR") {
         $nombreProducto = htmlspecialchars($_REQUEST['nombreProducto']);
         $descripcionProducto = htmlspecialchars($_REQUEST['descripcionProducto']);

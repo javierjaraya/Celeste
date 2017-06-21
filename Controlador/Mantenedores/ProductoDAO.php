@@ -89,6 +89,36 @@ class ProductoDAO{
         return $productos;
     }
 
+    public function findLimitByIdSubCategoria($offset, $per_page, $idSubCategoria) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE producto.idSubCategoria = ".$idSubCategoria ." LIMIT $offset,$per_page";
+        $result = $this->conexion->ejecutar($query);
+        $i = 0;
+        $productos = array();
+        while ($fila = $result->fetch_row()) {
+            $producto = new ProductoDTO();
+            $producto->setIdProducto($fila[0]);
+            $producto->setNombreProducto($fila[1]);
+            $producto->setDescripcionProducto($fila[2]);
+            $producto->setStock($fila[3]);
+            $producto->setPrecio($fila[4]);
+            $producto->setIdSubCategoria($fila[5]);
+            
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+            
+            $producto->setImagen($imagen);
+            
+            $productos[$i] = $producto;
+            $i++;
+        }
+        $this->conexion->desconectar();
+        return $productos;
+    }
+    
     public function findByID($idProducto) {
         $this->conexion->conectar();
         $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE  producto.idProducto =  ".$idProducto." ";
