@@ -16,11 +16,11 @@
                     if (count($subcategorias) > 0) {
                         echo "<li id='" . $cat->getIdCategoria() . "'>";
                         echo "<div class='link'><i class='fa fa-paint-brush'></i>" . $cat->getNombreCategoria() . "<i class='fa fa-chevron-down'></i></div>";
+                        echo "<ul class='submenu'>";
                         foreach ($subcategorias as $sub) {
-                            echo "<ul class='submenu'>";
                             echo "<li><a rel='nofollow' rel='noreferrer' href='verProductos.php?cat=" . $cat->getIdCategoria() . "&sub=" . $sub->getIdSubCategoria() . "'>" . $sub->getNombreSubCategoria() . "</a></li>";
-                            echo "</ul>";
                         }
+                        echo "</ul>";
                         echo "</li>";
                     }
                 }
