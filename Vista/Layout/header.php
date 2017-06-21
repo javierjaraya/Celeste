@@ -34,6 +34,8 @@ if (isset($_SESSION["autentificado"])) {
 
         <!-- Usabilidad -->
         <script src="../../Files/js/notificaciones.js"></script>
+        <script src="../../Files/js/ValidaCamposFormulario.js"></script>
+        <script src="../../Files/js/validarut.js"></script>
 
     </head>
 

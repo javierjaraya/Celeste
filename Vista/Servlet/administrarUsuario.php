@@ -63,7 +63,6 @@ if ($accion != null) {
         echo $json;
     } else if ($accion == "BUSCAR_BY_ID") {
         $run = htmlspecialchars($_REQUEST['run']);
-
         $usuario = $control->getUsuarioByID($run);
         $json = json_encode($usuario);
         echo $json;

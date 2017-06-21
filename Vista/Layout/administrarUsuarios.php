@@ -37,9 +37,10 @@
                     <label class="titulo-modal" style="width: 200px; padding-top: 25px; text-align: center"><h4 class="modal-title" id="modalLabel"></h4></label>
                 </div>
                 <form id="fm" class="form-horizontal" method="POST" >
-                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">                       
                         <div class="modal-body">
-                            <section class="row">                            
+                            <section class="row">
+                                <div id="alert-modal"></div>
                                 <section class="col-md-12">
                                     <div id="nombresGroup" class="form-group has-feedback">
                                         <div class="form-group">
@@ -131,56 +132,51 @@
                                 <section class="col-md-12">
                                     <div id="nombresGroup" class="form-group has-feedback">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="runUsuario2">Run</label>
+                                            <label class="col-sm-4 control-label" for="runUsuario2">Run:</label>
                                             <div class="col-sm-6">
                                                 <input class="form-control " id="runUsuario2" name="runUsuario2" type="text" placeholder="112223337" readonly="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="nombresUsuario2">Nombres</label>
+                                            <label class="col-sm-4 control-label" for="nombresUsuario2">Nombres:</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="nombresUsuario2" name="nombresUsuario2" type="text">                                     
+                                                <input class="form-control" id="nombresUsuario2" name="nombresUsuario2" type="text" readonly="true">                                     
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="apellidosUsuario2">Apellidos</label>
+                                            <label class="col-sm-4 control-label" for="apellidosUsuario2">Apellidos:</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="apellidosUsuario2" name="apellidosUsuario2" type="text">
+                                                <input class="form-control" id="apellidosUsuario2" name="apellidosUsuario2" type="text" readonly="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="emailUsuario2"><strong>E-Mail</strong></label>
+                                            <label class="col-sm-4 control-label" for="emailUsuario2"><strong>E-Mail:</strong></label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="emailUsuario2" name="emailUsuario2" type="text" placeholder="ejemplo@celeste.cl">
+                                                <input class="form-control" id="emailUsuario2" name="emailUsuario2" type="text" readonly="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="sexo2">Sexo</label>
-                                            <div class="col-sm-8">
-                                                <div class="col-md-4">
-                                                    <input  type="radio" id="sexoM2" name="sexo2" value="Masculino" checked="checked" >&nbsp;&nbsp;Masculino
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input  type="radio" id="sexoF2" name="sexo2" value="Femenino" >&nbsp;&nbsp;Femenino
-                                                </div>
+                                            <label class="col-sm-4 control-label" for="sexo2">Sexo:</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="sexo2" name="sexo2" type="text"  readonly="true">
                                             </div>  
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="telefonoUsuario2">Telefono</label>
+                                            <label class="col-sm-4 control-label" for="telefonoUsuario2">Telefono:</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="telefonoUsuario2" name="telefonoUsuario2" type="text" placeholder="Ej: 988776655">
+                                                <input class="form-control" id="telefonoUsuario2" name="telefonoUsuario2" type="text" readonly="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="direccionUsuario2">Dirección</label>
+                                            <label class="col-sm-4 control-label" for="direccionUsuario2">Dirección:</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="direccionUsuario2" name="direccionUsuario2" type="text">
+                                                <input class="form-control" id="direccionUsuario2" name="direccionUsuario2" type="text" readonly="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="nombrePerfil2">Perfil de Usuario</label>                                    
+                                            <label class="col-sm-4 control-label" for="nombrePerfil2">Perfil de Usuario:</label>                                    
                                             <div class="col-sm-6">                                      
-                                               <input class="form-control" id="nombrePerfil2" name="nombrePerfil2" type="text">
+                                                <input class="form-control" id="nombrePerfil2" name="nombrePerfil2" type="text" readonly="true">
                                             </div>
                                         </div>                                    
                                     </div>
@@ -189,7 +185,7 @@
                                 </section>                           
                             </section><!-- Fin Row-->
                         </div>
-                        
+
                         <div class="modal-footer">
                             <a class="btn btn-default" data-dismiss="modal">Salir</a>
                         </div>
@@ -235,7 +231,6 @@
     $(function () {
         cargarPerfiles();
         cargarUsuarios();
-
     });
     var tabla = null;
     function cargarUsuarios() {
@@ -279,7 +274,6 @@
                     }
                 }
         );
-
     }
     function editar(id) {
         document.getElementById("fm").reset();
@@ -310,10 +304,11 @@
                 document.getElementById('apellidosUsuario2').value = data.apellidos;
                 document.getElementById('emailUsuario2').value = data.correoElectronico;
                 if (data.sexo.localeCompare("F") == 0) {
-                    document.getElementById("sexoF2").checked = true;
+                    document.getElementById("sexo2").value = "Femenino";
                 } else {
-                    document.getElementById("sexoM2").checked = true;
+                    document.getElementById("sexo2").value = "Masculino";
                 }
+
                 document.getElementById('telefonoUsuario2').value = data.telefono;
                 document.getElementById('direccionUsuario2').value = data.direccion;
                 document.getElementById('nombrePerfil2').value = data.nombrePerfil;
@@ -357,25 +352,25 @@
         );
     }
     function guardarUsuario() {
-//        if (validar()) {
-        $.ajax({
-            type: "POST",
-            url: "../Servlet/administrarUsuario.php",
-            data: $("#fm").serialize(),
-            success: function (result) {
-                var result = eval('(' + result + ')');
-                if (result.errorMsg) {
-                    $('#dg-modela').modal('hide')
-                    notificacion(result.errorMsg, 'danger', 'alert');
-                } else {
-                    $('#dg-modela').modal('hide')
-                    notificacion(result.mensaje, 'success', 'alert');
-                    cargarUsuarios();
-                    // document.location = "administrarUsuarios.php";
+        if (validarUsuarioEditar()) {
+            $.ajax({
+                type: "POST",
+                url: "../Servlet/administrarUsuario.php",
+                data: $("#fm").serialize(),
+                success: function (result) {
+                    var result = eval('(' + result + ')');
+                    if (result.errorMsg) {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.errorMsg, 'danger', 'alert-modal');
+                    } else {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.mensaje, 'success', 'alert-modal');
+                        cargarUsuarios();
+                        // document.location = "administrarUsuarios.php";
+                    }
                 }
-            }
-        });
-//        }
+            });
+        }
     }
     function confirmacion(titulo, mensaje) {
         document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
@@ -392,7 +387,7 @@
         $.post('../Servlet/administrarUsuario.php?accion=BORRAR', {run: id}, function (result) {
             if (result.success) {
                 $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
-                cargarUsuarios();//Refrescamos la tabla
+                cargarUsuarios(); //Refrescamos la tabla
                 notificacion(result.mensaje, 'success', 'alert');
             } else {
                 notificacion(result.errorMsg, 'danger', 'alert');
