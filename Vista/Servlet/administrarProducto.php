@@ -18,8 +18,21 @@ if ($accion != null) {
         include '../../Util/Paginacion.php'; //incluir el archivo de paginación
         $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
         $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? htmlspecialchars($_REQUEST['page']) : 1;
+        $per_page = htmlspecialchars($_REQUEST['por_pagina']); //Cantidad de registros por pagina
+        $order = htmlspecialchars($_REQUEST['orden']);
 
-        $per_page = 10; //Cantidad de registros por pagina
+        if ($order == "Defecto") {
+            $order = "";
+        } else if ($order == "A-Z") {
+            $order = " ORDER BY producto.nombreProducto ASC";
+        } else if ($order == "Z-A") {
+            $order = " ORDER BY producto.nombreProducto DESC ";
+        } else if ($order == "Menor-Mayor") {
+            $order = " ORDER BY producto.precio ASC ";
+        } else if ($order == "Mayor-Menor") {
+            $order = " ORDER BY producto.precio DESC ";
+        }
+
         $adjacents = 4; //brecha entre páginas después de varios adyacentes
         $offset = ($page - 1) * $per_page;
 
@@ -29,25 +42,27 @@ if ($accion != null) {
         $total_paginas = ceil($numrows / $per_page);
         $reload = 'verProductos.php';
 
-        $productos = $control->getAllProductos_Limit_By_idSubCategoria($offset, $per_page, $idSubCategoria);
+        $productos = $control->getAllProductos_Limit_By_idSubCategoria($offset, $per_page, $order, $idSubCategoria);
 
         if ($numrows > 0) {
             ?>
-            <div class="row" style="min-height: 350px;"> 
+            <div class="row" style="min-height: 350px; padding-left: 20px; padding-bottom: 20px; padding-right: 20px; "> 
                 <?php
                 foreach ($productos as $value) {
                     //echo json_encode($value);
-                    echo "<div class='col-md-3' style=' padding: 10px; border: orangered 1px solid; border-radius: 15px; text-align: center ; margin: 5px; box-shadow: 5px -9px 3px #000;'>";
-                    echo "<a href='' ><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='100px' height='100px'></a>";
-                    echo "<hr>";
-                    echo "<div class=''><a href=''>" . $value->getNombreProducto() . " </a></div>";
-                    echo "<div class='price'>$" . $value->getPrecio() . "</div>";                    
-                    echo "";
-                    echo "</div>";
+
+                    echo "<div class='product-cuadro'>"
+                    . "<div class='imagen'><a href='#'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
+                    . "<div class='nombre'><a href='product.html'>" . $value->getNombreProducto() . "</a></div>"
+                    . "<div class='precio'>$" . number_format($value->getPrecio(), 0, ',', '.') . "</div>"
+                    . "<div class='cart'>"
+                    . "  <input type='button' value='Agregar al Carro' onclick='addToCart('40');' class='button'>"
+                    . "</div>"
+                    . "</div>";
                 }
                 ?>
             </div>
-            <div class="table-pagination " style="text-align: center;">
+            <div class="table-pagination " style="text-align: center; height: 60px;">
                 <?php echo paginate($reload, $page, $total_paginas, $adjacents); ?>
             </div>
 
