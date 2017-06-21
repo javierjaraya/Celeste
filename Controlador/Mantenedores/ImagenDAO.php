@@ -50,6 +50,21 @@ class ImagenDAO{
         $this->conexion->desconectar();
         return $imagen;
     }
+    
+    public function findByIdProducto($idProducto) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM imagen WHERE  idProducto =  ".$idProducto." ";
+        $result = $this->conexion->ejecutar($query);
+        $imagen = new ImagenDTO();
+        while ($fila = $result->fetch_row()) {
+            $imagen->setIdImagen($fila[0]);
+            $imagen->setNombreImagen($fila[1]);
+            $imagen->setRutaImagen($fila[2]);
+            $imagen->setIdProducto($fila[3]);
+        }
+        $this->conexion->desconectar();
+        return $imagen;
+    }
 
     public function findLikeAtrr($cadena) {
         $this->conexion->conectar();

@@ -10,6 +10,11 @@ if ($accion != null) {
         $productos = $control->getAllProductos();
         $json = json_encode($productos);
         echo $json;
+    } else if ($accion == "LISTADO_BY_ID_SUBCATEGORIA") {
+        $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+        $productos = $control->getAllProductosBy_idSubCategoria($idSubCategoria);
+        $json = json_encode($productos);
+        echo $json;
     } else if ($accion == "AGREGAR") {
         $nombreProducto = htmlspecialchars($_REQUEST['nombreProducto']);
         $descripcionProducto = htmlspecialchars($_REQUEST['descripcionProducto']);
@@ -21,7 +26,7 @@ if ($accion != null) {
         $object = $control->getProductoByNombre($nombreProducto);
         if (($object->getIdProducto() == null || $object->getIdProducto() == "")) {
             include_once("../../Util/SubirImagen.php");
-            
+
             $result;
             $resultImagen;
             $idProducto = $control->getIdProducoDisponible();
@@ -32,7 +37,7 @@ if ($accion != null) {
             $producto->setStock($stock);
             $producto->setPrecio($precio);
             $producto->setIdSubCategoria($idSubCategoria);
-            
+
             if (validarTamaños($imagen, 10000000) == true) {
                 $result = $control->addProducto($producto);
 
@@ -68,12 +73,14 @@ if ($accion != null) {
             } else {
                 echo json_encode(array('errorMsg' => 'Ha ocurrido un error al registrar el producto.'));
             }
-            
         } else {
             echo json_encode(array('errorMsg' => 'El o la producto ya existe, intento nuevamente.'));
         }
     } else if ($accion == "BORRAR") {
         $idProducto = htmlspecialchars($_REQUEST['idProducto']);
+
+        $imagen = $control->getImagenByIdProducto($idProducto);
+        unlink("../../Files/img/Productos/" . $imagen->getNombreImagen());
 
         $result = $control->removeProducto($idProducto);
         if ($result) {
@@ -93,12 +100,15 @@ if ($accion != null) {
         $json = json_encode($producto);
         echo $json;
     } else if ($accion == "ACTUALIZAR") {
+        $imagenRemplazada = htmlspecialchars($_REQUEST['imagenRemplazada']);
         $idProducto = htmlspecialchars($_REQUEST['idProducto']);
         $nombreProducto = htmlspecialchars($_REQUEST['nombreProducto']);
         $descripcionProducto = htmlspecialchars($_REQUEST['descripcionProducto']);
         $stock = htmlspecialchars($_REQUEST['stock']);
         $precio = htmlspecialchars($_REQUEST['precio']);
         $idSubCategoria = htmlspecialchars($_REQUEST['idSubCategoria']);
+        $idImagen = htmlspecialchars($_REQUEST['idImagen']);
+        $imagen = $_FILES['imagen'];
 
         $producto = new ProductoDTO();
         $producto->setIdProducto($idProducto);
@@ -109,6 +119,36 @@ if ($accion != null) {
         $producto->setIdSubCategoria($idSubCategoria);
 
         $result = $control->updateProducto($producto);
+
+        if ($imagenRemplazada == "TRUE") {
+            include_once("../../Util/SubirImagen.php");
+
+            if (validarTamaños($imagen, 10000000) == true) {
+
+                $subirImagen = new SubirImagen("../../Files/img/Productos/");
+                $fecha = date("Y") . date("m") . date("d") . date("H") . date("i") . date("s");
+                $nombreImagen = $subirImagen->asignaNombre($imagen['type'], "producto_" . $fecha);
+                $subirImagen->setName("producto_" . $fecha);
+                $subirImagen->setMaximoSize(10000000); //10mb
+                //Subir imagen al servidor
+                $respuesta = $subirImagen->subirImagen($imagen);
+
+                if ($respuesta == true) {
+
+                    $imagenProducto = new ImagenDTO();
+                    $imagenProducto->setNombreImagen($nombreImagen);
+                    $imagenProducto->setRutaImagen("Files/img/Productos/" . $nombreImagen);
+                    $imagenProducto->setIdProducto($idProducto);
+
+                    //registrar imagen a la BD
+                    $imagenAnterior = $control->getImagenByID($idImagen);
+                    unlink("../../Files/img/Productos/" . $imagenAnterior->getNombreImagen());
+                    $control->removeImagen($idImagen);
+                    $resultImagen = $control->addImagen($imagenProducto); //Registramos la imagen en la BD
+                }
+            }
+        }
+
         if ($result) {
             echo json_encode(array(
                 'success' => true,

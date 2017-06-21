@@ -1,5 +1,8 @@
-<?php include("header.php");
-$idCategoria = $_REQUEST['idCategoria']; ?>
+<?php
+include("header.php");
+$idCategoria = $_REQUEST['idCategoria'];
+$nombreCategoria = $_REQUEST['nombreCategoria'];
+?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
     <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR SUBCATEGORIAS DE PRODUCTOS</strong></h4>
@@ -7,7 +10,7 @@ $idCategoria = $_REQUEST['idCategoria']; ?>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
     <div class="col-md-6">
-        <h5><strong>SUBCATEGORIAS</strong></h5>
+        <h5><strong>SUBCATEGORIAS:&nbsp;&nbsp;<?= $nombreCategoria ?></strong></h5>
     </div>
     <div class="col-md-6">
         <a onclick="agregarSubcategoria()" class="btn btn-warning btn-sm" style="float: right;">Agregar Subcategoria</a>
@@ -40,30 +43,34 @@ $idCategoria = $_REQUEST['idCategoria']; ?>
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <section id="panel-modal">
-                <div class="modal-header">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <img id="logo-modal" src="../../Files/img/log.png" width="100px" style="float: left;">
-                    <label class="titulo-modal" style="width: 200px; padding-top: 50px;"><h4 class="modal-title" id="modalLabel"></h4></label>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 300px; padding-top: 20px;"><h4 class="modal-title" id="modalLabel"></h4></label>
                 </div>
-                <form id="fm" method="POST" >
-                    <div class="modal-body">
-                        <section class="row">                            
-                            <section class="col-md-12">
-
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="nombreSubCategoria">Nombre Subcategoria</label>
-                                    <input type="text" class="form-control col-md-12" id="nombreSubCategoria" name="nombreSubCategoria" aria-describedby="nombresStatus" placeholder="Nombre" >                                    
-                                </div>
-
-                                <input type="hidden" value="" name="accion" id="accion">
-                                <input type="hidden" value="" name="idSubCategoria" id="idSubCategoria">
-                                <input type="hidden" value="<?= $idCategoria ?>" name="idCategoria" id="idCategoria">
-                            </section>                           
-                        </section><!-- Fin Row-->
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                        <a class="btn btn-success" onclick="crearSubcategora()">Guardar</a>
+                <form id="fm" method="POST" class="form-horizontal">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row">                            
+                                <section class="col-md-12">
+                                    <div id="nombresGroup" class="form-group has-feedback">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="nombreSubCategoria">Nombre Subcategoria</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control col-md-12" id="nombreSubCategoria" name="nombreSubCategoria" placeholder="Nombre" >
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="" name="accion" id="accion">
+                                        <input type="hidden" value="" name="idSubCategoria" id="idSubCategoria">
+                                        <input type="hidden" value="<?= $idCategoria ?>" name="idCategoria" id="idCategoria">
+                                    </div>
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <a class="btn btn-warning" onclick="crearSubcategora()">Guardar</a>
+                        </div>
                     </div>
                 </form>
             </section>
@@ -106,7 +113,7 @@ $idCategoria = $_REQUEST['idCategoria']; ?>
     });
     var tabla = null;
     function cargarSubcategorias() {
-        var idCategoria = document.getElementById('idCategoria').value;        
+        var idCategoria = document.getElementById('idCategoria').value;
         $("#tablaSubCategorias").empty();
         var url_json = '../Servlet/administrarSubcategoria.php?accion=LISTADO_BY_IDCATEGORIA&idCategoria=' + idCategoria;
         $.getJSON(

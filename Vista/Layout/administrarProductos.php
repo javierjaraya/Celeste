@@ -9,7 +9,12 @@
         <h5><strong>PRODUCTOS</strong></h5>
     </div>
     <div class="col-md-6">
-        <a onclick="agregarProducto()" class="btn btn-warning btn-sm" style="float: right;">Agregar Producto</a>
+        <form class="form-inline">
+            <div class="form-group">                
+                <select class="form-control" id="subCategorias" onchange="cargarPorSubCategoria()"></select>
+            </div>
+            <a onclick="agregarProducto()" class="btn btn-warning btn-sm" style="float: right;">Agregar Producto</a>
+        </form>        
     </div>
     <div class="col-md-12">
         <hr style="border: orangered 1px solid;">
@@ -23,10 +28,10 @@
                         <th style="">Grafico</th> 
                         <th style="width: 50px;">ID</th> 
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Stock</th>
                         <th>Precio</th>
-                        <th style="width: 150px;">Accion</th>
+                        <th style="width: 150px;">Acción</th>
                     </tr> 
                 </thead>
                 <tbody id="contenidoTabla">
@@ -43,53 +48,104 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <section id="panel-modal">
-                <div class="modal-header">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <img id="logo-modal" src="../../Files/img/log.png" width="50px" style="float: left;">
-                    <label class="titulo-modal" style="width: 200px; padding-top: 10px;"><h4 class="modal-title" id="modalLabel"></h4></label>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 200px; padding-top: 20px;"><h4 class="modal-title" id="modalLabel"></h4></label>
                 </div>
-                <form id="fm" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <section class="row"> 
-                            <div id="alert-modal"></div>
-                            <section class="col-md-12">
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="nombreProducto">Nombre Producto</label>
-                                    <input type="text" class="form-control col-md-12" id="nombreProducto" name="nombreProducto" aria-describedby="" placeholder="Nombre" >                                    
-                                </div>
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="descripcionProducto">Descripcion Producto</label>
-                                    <input type="text" class="form-control col-md-12" id="descripcionProducto" name="descripcionProducto" aria-describedby="" placeholder="Descripcion" >                                    
-                                </div>
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="stock">Stock</label>
-                                    <input type="number" class="form-control col-md-12" id="stock" name="stock" aria-describedby="" placeholder="" >                                    
-                                </div>
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="precio">Precio</label>
-                                    <input type="number" class="form-control col-md-12" id="precio" name="precio" aria-describedby="" placeholder="$" >                                    
-                                </div>
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="idSubCategoria">Subcategoria</label>
-                                    <select class="form-control col-md-12" id="idSubCategoria" name="idSubCategoria" aria-describedby="" ></select>
-                                </div>
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="imagen">Imagen</label>
-                                    <input type="file" class="form-control col-md-12" id="imagen" name="imagen" aria-describedby="" placeholder="" >
-                                </div>
-                                <input type="hidden" value="" name="accion" id="accion">
-                            </section>                           
-                        </section><!-- Fin Row-->
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                        <a class="btn btn-warning" onclick="guardar()">Guardar</a>
-                    </div>                    
+                <form id="fm" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row"> 
+                                <div id="alert-modal"></div>
+                                <section class="col-md-12">
+                                    <div id="nombresGroup" class="form-group has-feedback">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="nombreProducto">Nombre Producto</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" placeholder="Nombre" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="descripcionProducto">Descripcion Producto</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" placeholder="Descripcion" >                                    
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="stock">Stock</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" id="stock" name="stock" placeholder="" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="precio">Precio</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" id="precio" name="precio" placeholder="$" >
+                                            </div>                                        
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="idSubCategoria">Subcategoria</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="idSubCategoria" name="idSubCategoria"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="imagen">Imagen</label>
+                                            <div class="col-sm-6">
+                                                <div id="imagenPrevisualizada">
+
+                                                </div>
+                                                <input type="file" class="form-control" id="imagen" name="imagen" placeholder="" >
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="" name="accion" id="accion">
+                                        <input type="hidden" value="" name="idProducto" id="idProducto">
+                                        <input type="hidden" value="" name="idImagen" id="idImagen">
+                                        <input type="hidden" value="" name="imagenRemplazada" id="imagenRemplazada">
+                                    </div>
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <a class="btn btn-warning" onclick="guardar()">Guardar</a>
+                        </div>   
+                    </div>             
                 </form>
             </section>
         </div>
     </div>
 </div><!-- END DIALOGO MODAL-->
+
+<!-- MODAL CONFIRMACION-->
+<div class="modal fade bs-example-modal-sm" id="dg-confirmacion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-confirmacion" src="../../Files/img/log.png" width="60px">
+                    <label class="titulo-modal"><h4 class="modal-title" id="titulo-mensaje"></h4></label>
+                </div>
+                <div class="modal-body">
+                    <section class="row">
+                        <section class="col-md-12">
+                            <div id="contenedor-confirmacion">
+
+                            </div>
+                        </section>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarBorrar()">Borrar</button>
+                    <input type="hidden" value="" id="idProductoEliminar" name="idProductoEliminar">
+                </div>
+            </section>
+        </div>
+    </div>
+</div><!-- END MODAL CONFIRMACION-->
 
 <script>
     $(function () {
@@ -103,7 +159,7 @@
         $.getJSON(
                 url_json,
                 function (datos) {
-                    $.each(datos, function (k, v) {                        
+                    $.each(datos, function (k, v) {
                         var contenido = "<tr>";
                         contenido += "<td><img src='../../" + v.imagen.rutaImagen + "' width='50px' height='50px'></td>";
                         contenido += "<td>" + v.idProducto + "</td>";
@@ -112,13 +168,12 @@
                         contenido += "<td>" + v.stock + "</td>";
                         contenido += "<td>" + v.precio + "</td>";
                         contenido += "<td>";
-                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idCategoria + ")'></a>&nbsp;";
-                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idCategoria + ")  '></a>&nbsp;";
-                        contenido += "<a class='btn btn-info btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCategoria + ")'></a>";
+                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idProducto + ")'></a>&nbsp;";
+                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idProducto + ")  '></a>";
                         contenido += "</td>";
                         contenido += "</tr>";
                         $("#contenidoTabla").append(contenido);
-                    });                    
+                    });
                     if (tabla == null) {
                         tabla = $('#tabla').DataTable(
                                 {
@@ -141,15 +196,66 @@
         );
     }
 
+    function cargarPorSubCategoria() {
+        idSubCategoria = document.getElementById("subCategorias").value;
+        if (idSubCategoria == 0) {
+            cargar();
+        } else {
+            $("#contenidoTabla").empty();
+            var url_json = '../Servlet/administrarProducto.php?accion=LISTADO_BY_ID_SUBCATEGORIA&idSubCategoria='+idSubCategoria;
+            $.getJSON(
+                    url_json,
+                    function (datos) {
+                        $.each(datos, function (k, v) {
+                            var contenido = "<tr>";
+                            contenido += "<td><img src='../../" + v.imagen.rutaImagen + "' width='50px' height='50px'></td>";
+                            contenido += "<td>" + v.idProducto + "</td>";
+                            contenido += "<td>" + v.nombreProducto + "</td>";
+                            contenido += "<td>" + v.descripcionProducto + "</td>";
+                            contenido += "<td>" + v.stock + "</td>";
+                            contenido += "<td>" + v.precio + "</td>";
+                            contenido += "<td>";
+                            contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idProducto + ")'></a>&nbsp;";
+                            contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idProducto + ")  '></a>";
+                            contenido += "</td>";
+                            contenido += "</tr>";
+                            $("#contenidoTabla").append(contenido);
+                        });
+                        if (tabla == null) {
+                            tabla = $('#tabla').DataTable(
+                                    {
+                                        "oLanguage": {
+                                            "oPaginate": {
+                                                "sNext": "Siguiente",
+                                                "sPrevious": "Anterior"
+                                            },
+                                            "sLengthMenu": "Mostrar _MENU_ Resultados",
+                                            "sSearch": "Buscar",
+                                            "sZeroRecords": "No se encontraron Resultados",
+                                            "sInfo": "Mostrar desde el _START_ hasta el _END_ de un total de _TOTAL_ Resultados",
+                                            "sInfoEmpty": "Mostrar desde el 0 Hasta el 0 de un total de 0 Resultados",
+                                            "sInfoFiltered": "(Filtrado desde un total de _MAX_ Resultados)"
+                                        },
+                                    }
+                            );
+                        }
+                    }
+            );
+        }
+    }
+
     function cargarSubCategorias() {
         $("#idSubCategoria").empty();
         $("#idSubCategoria").append("<option value='0'> Seleccionar </option>");
+        $("#subCategorias").empty();
+        $("#subCategorias").append("<option value='0'> Todas las SubCategorias</option>");
         var url_json = '../Servlet/administrarSubcategoria.php?accion=LISTADO';
         $.getJSON(
                 url_json,
                 function (datos) {
                     $.each(datos, function (k, v) {
                         $("#idSubCategoria").append("<option value='" + v.idSubCategoria + "'> " + v.nombreSubCategoria + "</option>");
+                        $("#subCategorias").append("<option value='" + v.idSubCategoria + "'> " + v.nombreSubCategoria + "</option>");
                     });
                 }
         );
@@ -158,13 +264,15 @@
     function editar(id) {
         document.getElementById("fm").reset();
         document.getElementById('accion').value = "ACTUALIZAR";
-        document.getElementById('idCategoria').value = id;
-        $('#modalLabel').html("Editar Categoria");
+        document.getElementById('idProducto').value = id;
+        $('#modalLabel').html("Editar Producto");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE                                    
         rellenarFormulario(id);
     }
 
     function rellenarFormulario(id) {
+        document.getElementById('imagen').style.display = 'none';
+        document.getElementById('imagenPrevisualizada').style.display = 'block';
         var url_json = '../Servlet/administrarProducto.php';
         $.ajax({
             type: "POST",
@@ -172,16 +280,31 @@
             data: 'accion=BUSCAR_BY_ID&idProducto=' + id,
             success: function (data) {
                 var data = eval('(' + data + ')');
-                console.log(data);
                 document.getElementById('idProducto').value = data.idProducto;
                 document.getElementById('nombreProducto').value = data.nombreProducto;
+                document.getElementById('descripcionProducto').value = data.descripcionProducto;
+                document.getElementById('stock').value = data.stock;
+                document.getElementById('precio').value = data.precio;
+                document.getElementById('idSubCategoria').value = data.idSubCategoria;
+                document.getElementById('imagenPrevisualizada').innerHTML = "<img src='../../" + data.imagen.rutaImagen + "' width='75px' height='75px'>&nbsp;&nbsp;<a class='btn btn-danger btn-xs glyphicon glyphicon-remove'  onclick='borrarPrevisualizacion()'></a>";
+                document.getElementById('idImagen').value = data.imagen.idImagen;
+                document.getElementById('imagenRemplazada').value = "FALSE";
             }
         });
+    }
+
+    function borrarPrevisualizacion() {
+        document.getElementById('imagenRemplazada').value = "TRUE";
+        document.getElementById('imagen').style.display = 'block';
+        document.getElementById('imagenPrevisualizada').style.display = 'none';
     }
 
     function agregarProducto() {
         document.getElementById("fm").reset();
         document.getElementById('accion').value = "AGREGAR";
+        document.getElementById('imagenRemplazada').value = "TRUE";
+        document.getElementById('imagen').style.display = 'block';
+        document.getElementById('imagenPrevisualizada').style.display = 'none';
         $('#modalLabel').html("Crear Producto");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE
     }
@@ -225,12 +348,15 @@
         } else if (document.getElementById("idSubCategoria").value == 0) {
             notificacion("Debe seleccionar una subcategoria", 'warning', 'alert-modal');
             return false;
-        } else if (document.getElementById("imagen").value == "") {
-            notificacion("Debe seleccionar una imagen", 'warning', 'alert-modal');
-            return false;
-        } else if (validarArchivo(document.getElementById("imagen").value) == false) {
-            notificacion("El archivo seleccionado no es un formato valido", 'warning', 'alert-modal');
-            return false;
+        }
+        if (document.getElementById("imagenRemplazada").value == "TRUE") {
+            if (document.getElementById("imagen").value == "") {
+                notificacion("Debe seleccionar una imagen", 'warning', 'alert-modal');
+                return false;
+            } else if (validarArchivo(document.getElementById("imagen").value) == false) {
+                notificacion("El archivo seleccionado no es un formato valido", 'warning', 'alert-modal');
+                return false;
+            }
         }
         return true;
     }
@@ -257,15 +383,15 @@
 
     function borrar(id) {
         confirmacion('Confirmacion', '¿Esta seguro?, una vez eliminado no se podran recuperar los datos.');
-        document.getElementById('idCategoriaEliminar').value = id;
+        document.getElementById('idProductoEliminar').value = id;
     }
 
     function confirmarBorrar() {
-        var id = document.getElementById('idCategoriaEliminar').value;
-        $.post('../Servlet/administrarCategoria.php?accion=BORRAR', {idCategoria: id}, function (result) {
+        var id = document.getElementById('idProductoEliminar').value;
+        $.post('../Servlet/administrarProducto.php?accion=BORRAR', {idProducto: id}, function (result) {
             if (result.success) {
                 $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
-                cargarCategorias();//Refrescamos la tabla
+                cargar();//Refrescamos la tabla
                 notificacion(result.mensaje, 'success', 'alert');
             } else {
                 notificacion(result.errorMsg, 'danger', 'alert');

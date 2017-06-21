@@ -133,6 +133,10 @@ class Celeste {
     public function getImagenByID($idImagen) {
         return $this->imagenDAO->findByID($idImagen);
     }
+    
+    public function getImagenByIdProducto($idProducto) {
+        return $this->imagenDAO->findByIdProducto($idProducto);
+    }
 
     public function getImagenLikeAtrr($cadena) {
         return $this->imagenDAO->findLikeAtrr($cadena);
@@ -168,6 +172,10 @@ class Celeste {
 
     public function getAllProductos() {
         return $this->productoDAO->findAll();
+    }
+    
+    public function getAllProductosBy_idSubCategoria($idSubCategoria) {
+        return $this->productoDAO->findAllByIdSubCategoria($idSubCategoria);
     }
 
     public function addProducto($producto) {

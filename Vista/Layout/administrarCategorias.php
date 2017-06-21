@@ -22,7 +22,7 @@
                     <tr> 
                         <th style="width: 50px;">ID</th> 
                         <th>Nombre</th>
-                        <th style="width: 150px;">Accion</th>
+                        <th style="width: 200px;">Accion</th>
                     </tr> 
                 </thead>
                 <tbody id="tablaCategorias">
@@ -39,29 +39,34 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <section id="panel-modal">
-                <div class="modal-header">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <img id="logo-modal" src="../../Files/img/log.png" width="100px" style="float: left;">
-                    <label class="titulo-modal" style="width: 200px; padding-top: 50px;"><h4 class="modal-title" id="modalLabel"></h4></label>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 300px; padding-top: 20px;"><h4 class="modal-title" id="modalLabel"></h4></label>
                 </div>
-                <form id="fm" method="POST" >
-                    <div class="modal-body">
-                        <section class="row">                            
-                            <section class="col-md-12">
+                <form id="fm" method="POST" class="form-horizontal">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row">                            
+                                <section class="col-md-12">
+                                    <div id="nombresGroup" class="form-group has-feedback">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="nombreCategoria">Nombre Categoria</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control col-md-12" id="nombreCategoria" name="nombreCategoria" placeholder="Nombre" >
+                                            </div>
+                                        </div>
 
-                                <div id="nombresGroup" class="form-group has-feedback">
-                                    <label class="control-label col-md-12" for="nombreCategoria">Nombre Categoria</label>
-                                    <input type="text" class="form-control col-md-12" id="nombreCategoria" name="nombreCategoria" aria-describedby="nombresStatus" placeholder="Nombre" >                                    
-                                </div>
-
-                                <input type="hidden" value="" name="accion" id="accion">
-                                <input type="hidden" value="" name="idCategoria" id="idCategoria">
-                            </section>                           
-                        </section><!-- Fin Row-->
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                        <a class="btn btn-success" onclick="crearCategora()">Guardar</a>
+                                        <input type="hidden" value="" name="accion" id="accion">
+                                        <input type="hidden" value="" name="idCategoria" id="idCategoria">
+                                    </div>
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <a class="btn btn-warning" onclick="crearCategora()">Guardar</a>
+                        </div>
                     </div>
                 </form>
             </section>
@@ -116,7 +121,7 @@
                         contenido += "<td>";
                         contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-pencil'  onclick='editar(" + v.idCategoria + ")'></a>&nbsp;";
                         contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idCategoria + ")  '></a>&nbsp;";
-                        contenido += "<a class='btn btn-info btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCategoria + ")'></a>";
+                        contenido += "<a class='btn btn-info btn-xs'  onclick='ver(" + v.idCategoria + ",\"" + v.nombreCategoria + "\")'>Ver Subcategorias</a>";
                         contenido += "</td>";
                         contenido += "</tr>";
                         $("#tablaCategorias").append(contenido);
@@ -221,9 +226,9 @@
             }
         }, 'json');
     }
-    
-    function ver(idCategoria) {
-        window.location = "administrarSubCategorias.php?idCategoria="+idCategoria;
+
+    function ver(idCategoria,nombreCategoria) {
+        window.location = "administrarSubCategorias.php?idCategoria=" + idCategoria+"&nombreCategoria="+nombreCategoria;
     }
 </script>
 <!--Middle Part End-->
