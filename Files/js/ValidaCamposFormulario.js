@@ -3,82 +3,129 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+function validarMiPerfil() {
+    if (Rut(document.getElementById('runUsuario').value)) {
+        if (document.getElementById('nombresUsuario').value != "") {
+            if (document.getElementById('apellidosUsuario').value != "") {
+                if (document.getElementById('emailUsuario').value != "") {
+                    if (document.getElementById('direccionUsuario').value != "") {
+                        var telefono = document.getElementById('telefonoUsuario').value;
+                        if (telefono != "" && telefono.length > 5) {
+                            if (!isNaN(telefono)) {
+                                return true;
+                            } else {
+                                notificacion("El telefono contiene caracteres no validos", "warning", "alert");
+                            }
+                        } else {
+                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
+                        }
+                    } else {
+                        notificacion("Debe ingresar una direccion", "warning", "alert");
+                    }
+                } else {
+                    notificacion("Debe ingresar un email", "warning", "alert");
+                }
+            } else {
+                notificacion("Debe ingresar sus apellidos", "warning", "alert");
+            }
+        } else {
+            notificacion("Debe ingresar sus nombres", "warning", "alert");
+        }
+    } else {
+        notificacion("El run ingresado no es valido", "warning", "alert");
+    }
+    return false;
+}
 function validarUsuarioEditar() {
     if (Rut(document.getElementById('runUsuario').value)) {
         if (document.getElementById('nombresUsuario').value != "") {
             if (document.getElementById('apellidosUsuario').value != "") {
-                    if (document.getElementById('emailUsuario').value != "") {
-                        if (document.getElementById('direccionUsuario').value != "") {
-                            var telefono = document.getElementById('telefonoUsuario').value;
-                            if (telefono != "" && telefono.length > 5) {
-                                if (!isNaN(telefono)) {                                    
-                                            return true;                                       
-                                } else {
-                                    notificacion("El telefono contiene caracteres no validos", "warning" , "alert-modal");
-                                }
+                if (document.getElementById('emailUsuario').value != "") {
+                    if (document.getElementById('direccionUsuario').value != "") {
+                        var telefono = document.getElementById('telefonoUsuario').value;
+                        if (telefono != "" && telefono.length > 5) {
+                            if (!isNaN(telefono)) {
+                                return true;
                             } else {
-                                notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning" , "alert-modal");
+                                notificacion("El telefono contiene caracteres no validos", "warning", "alert-modal");
                             }
                         } else {
-                            notificacion("Debe ingresar una direccion", "warning" , "alert-modal");
+                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert-modal");
                         }
                     } else {
-                        notificacion("Debe ingresar un email", "warning" , "alert-modal");
-                    }               
+                        notificacion("Debe ingresar una direccion", "warning", "alert-modal");
+                    }
+                } else {
+                    notificacion("Debe ingresar un email", "warning", "alert-modal");
+                }
             } else {
-                notificacion("Debe ingresar sus apellidos", "warning" , "alert-modal");
+                notificacion("Debe ingresar sus apellidos", "warning", "alert-modal");
             }
         } else {
-            notificacion("Debe ingresar sus nombres", "warning" , "alert-modal");
+            notificacion("Debe ingresar sus nombres", "warning", "alert-modal");
         }
     } else {
-        notificacion("El run ingresado no es valido", "warning" , "alert-modal");
+        notificacion("El run ingresado no es valido", "warning", "alert-modal");
     }
     return false;
 }
-
 function validarUsuario() {
     if (Rut(document.getElementById('runUsuario').value)) {
         if (document.getElementById('nombresUsuario').value != "") {
             if (document.getElementById('apellidosUsuario').value != "") {
-                    if (document.getElementById('emailUsuario').value != "") {
-                        if (document.getElementById('direccionUsuario').value != "") {
-                            var telefono = document.getElementById('telefonoUsuario').value;
-                            if (telefono != "" && telefono.length > 5) {
-                                if (!isNaN(telefono)) {
-                                    var cadenaPass = document.getElementById('contrasenaUsuario').value;
-                                    if (cadenaPass.length >= 4) {
-                                        if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
-                                            return true;
-                                        } else {
-                                            notificacion("Las contraseñas no coinciden", "warning" , "alert");
-                                        }
+                if (document.getElementById('emailUsuario').value != "") {
+                    if (document.getElementById('direccionUsuario').value != "") {
+                        var telefono = document.getElementById('telefonoUsuario').value;
+                        if (telefono != "" && telefono.length > 5) {
+                            if (!isNaN(telefono)) {
+                                var cadenaPass = document.getElementById('contrasenaUsuario').value;
+                                if (cadenaPass.length >= 4 && cadenaPass.length <= 8) {
+                                    if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
+                                        return true;
                                     } else {
-                                        notificacion("La contraseña debe tener minimo 4 caracteres", "warning" , "alert");
+                                        notificacion("Las contraseñas no coinciden", "warning", "alert");
                                     }
                                 } else {
-                                    notificacion("El telefono contiene caracteres no validos", "warning" , "alert");
+                                    notificacion("La contraseña debe tener minimo 4 caracteres y Maximo 8", "warning", "alert");
                                 }
                             } else {
-                                notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning" , "alert");
+                                notificacion("El telefono contiene caracteres no validos", "warning", "alert");
                             }
                         } else {
-                            notificacion("Debe ingresar una direccion", "warning" , "alert");
+                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
                         }
                     } else {
-                        notificacion("Debe ingresar un email", "warning" , "alert");
-                    }               
+                        notificacion("Debe ingresar una direccion", "warning", "alert");
+                    }
+                } else {
+                    notificacion("Debe ingresar un email", "warning", "alert");
+                }
             } else {
-                notificacion("Debe ingresar sus apellidos", "warning" , "alert");
+                notificacion("Debe ingresar sus apellidos", "warning", "alert");
             }
         } else {
-            notificacion("Debe ingresar sus nombres", "warning" , "alert");
+            notificacion("Debe ingresar sus nombres", "warning", "alert");
         }
     } else {
-        notificacion("El run ingresado no es valido", "warning" , "alert");
+        notificacion("El run ingresado no es valido", "warning", "alert");
     }
     return false;
 }
+function validarClaves() {
+    var cadenaPass = document.getElementById('nuevaContrasenaUsuario').value;
+    if (cadenaPass.length >= 4 && cadenaPass.length <= 8) {
+        if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
+            return true;
+        } else {
+            notificacion("Las contraseñas no coinciden", "warning", "alert2");
+        }
+    } else {
+        notificacion("La contraseña debe tener minimo 4 caracteres y Maximo 8", "warning", "alert2");
+    }
+
+    return false;
+}
+
 
 function eliminarCaracteres() {
     var aux = String(document.getElementById("runUsuario").value);

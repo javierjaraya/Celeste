@@ -249,6 +249,9 @@ class Celeste {
     public function updateUsuario($usuario) {
         return $this->usuarioDAO->update($usuario);
     }
+     public function updateClaveUsuario($usuario) {
+        return $this->usuarioDAO->updateClave($usuario);
+    }
 
     public function getUsuarioByID($run) {
         return $this->usuarioDAO->findByID($run);

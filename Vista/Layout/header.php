@@ -6,6 +6,7 @@ if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
+        $run = $_SESSION["run"];
     }
 }
 ?>
