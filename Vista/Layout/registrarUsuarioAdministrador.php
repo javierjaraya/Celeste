@@ -13,7 +13,6 @@ if (isset($_SESSION["autentificado"])) {
     header('Location: index.php');
 }
 ?>
-<?php include("seguridad.php"); ?>
 <!DOCTYPE html>
 <html>
     <head>
