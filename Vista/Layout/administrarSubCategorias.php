@@ -1,6 +1,5 @@
 <?php
 include("header.php");
-include("seguridad.php");
 $idCategoria = $_REQUEST['idCategoria'];
 $nombreCategoria = $_REQUEST['nombreCategoria'];
 ?>

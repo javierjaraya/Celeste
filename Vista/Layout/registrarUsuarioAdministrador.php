@@ -2,11 +2,15 @@
 session_start();
 $idPerfil = 3;
 $nombre = "Visitante";
+$autentificado = "NO";
 if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
+        $autentificado = "SI";
     }
+} else {
+    header('Location: index.php');
 }
 ?>
 <?php include("seguridad.php"); ?>
@@ -191,23 +195,23 @@ if (isset($_SESSION["autentificado"])) {
                                 }
 
                                 function guardarCliente() {
-                                        if (validarUsuario()) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "../Servlet/administrarUsuario.php",
-                                                data: $("#fmusuario").serialize(),
-                                                success: function (result) {
-                                                    console.log(result);
-                                                    var result = eval('(' + result + ')');
-                                                    if (result.errorMsg) {
-                                                        notificacion(result.errorMsg, 'danger', 'alert');
-                                                    } else {
-                                                        notificacion(result.mensaje, 'success', 'alert');
-                                                        window.location = "administrarUsuarios.php";
-                                                    }
+                                    if (validarUsuario()) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "../Servlet/administrarUsuario.php",
+                                            data: $("#fmusuario").serialize(),
+                                            success: function (result) {
+                                                console.log(result);
+                                                var result = eval('(' + result + ')');
+                                                if (result.errorMsg) {
+                                                    notificacion(result.errorMsg, 'danger', 'alert');
+                                                } else {
+                                                    notificacion(result.mensaje, 'success', 'alert');
+                                                    window.location = "administrarUsuarios.php";
                                                 }
-                                            });
-                                        }
+                                            }
+                                        });
+                                    }
                                 }
                             </script>
                             <!--Middle Part End-->

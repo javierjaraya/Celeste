@@ -10,6 +10,8 @@ if (isset($_SESSION["autentificado"])) {
         $run = $_SESSION["run"];
         $autentificado = "SI";
     }
+}else{
+    header('Location: index.php');
 }
 ?>
 <!DOCTYPE html>

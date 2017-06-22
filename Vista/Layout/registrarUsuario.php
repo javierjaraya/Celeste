@@ -2,10 +2,12 @@
 session_start();
 $idPerfil = 3;
 $nombre = "Visitante";
+$autentificado = "NO";
 if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
+        $autentificado = "SI";
     }
 }
 ?>
