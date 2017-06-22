@@ -67,9 +67,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="descripcionProducto">Descripcion Producto</label>
+                                            <label class="col-sm-4 control-label" for="descripcionProducto">Descripción Producto</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" placeholder="Descripcion" >                                    
+                                                <textarea class="form-control" rows="5" id="descripcionProducto" name="descripcionProducto" placeholder="Descripción"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
