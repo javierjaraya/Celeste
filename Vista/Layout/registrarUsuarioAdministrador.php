@@ -9,6 +9,7 @@ if (isset($_SESSION["autentificado"])) {
     }
 }
 ?>
+<?php include("seguridad.php"); ?>
 <!DOCTYPE html>
 <html>
     <head>

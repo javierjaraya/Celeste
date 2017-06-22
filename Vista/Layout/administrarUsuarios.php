@@ -1,4 +1,5 @@
 <?php include("header.php"); ?>
+<?php include("seguridad.php"); ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
     <h4 class="TextoTituloFormulario"><strong>Administrar Usuarios</strong></h4>

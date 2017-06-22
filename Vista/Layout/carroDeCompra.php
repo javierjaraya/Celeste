@@ -1,4 +1,5 @@
 <?php include("header.php"); ?>
+<?php include("seguridad.php"); ?>
 
 <style type="text/css">
     /*************** Cart ****************/
