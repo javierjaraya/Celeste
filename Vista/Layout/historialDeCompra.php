@@ -1,19 +1,18 @@
 <?php include("header.php"); ?>
-<?php include("seguridad.php"); ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
     <h4 class="TextoTituloFormulario"><strong>Historial de Compras</strong></h4>
 </div>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
-    <h5><strong>Compras Recientes</strong></h5>
+    <h5><strong>Compras</strong></h5>
+   
     <hr style="border: orangered 1px solid;">
-    <div id="alert1"></div>
     <div class="table-responsive">
         <table id="tabla" class="table">
             <thead> 
                 <tr> 
-                    <th>Id</th> 
+                    <th>Id Compra</th> 
                     <th>Fecha Compra</th>
                     <th>Estado</th>
                     <th style="width: 30%">Acción</th>
@@ -25,6 +24,53 @@
         </table>
     </div>
 </div>
+
+
+<!-- DIALOGO MODAL cambiar estado-->
+<div class="modal fade bs-example-modal-md" id="dg-modela" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 300px; padding-top: 20px;"><h4 class="modal-title" id="modalLabel"></h4></label>
+                </div>
+                <form id="fm" method="POST" class="form-horizontal">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row">   
+                                <div class="alert"></div>
+                                <section class="col-md-12">
+                                    <div id="nombresGroup" class="form-group has-feedback">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="estado1">Estado de la Compra</label>                                    
+                                            <div class="col-sm-6">
+                                                <select  class="form-control" id="estado1" name="estado1" required > 
+                                                    <option value="Pendiente">Pendiente</option>
+                                                    <option value="En Origen">En Origen</option>
+                                                    <option value="En Reparto">En Reparto</option>
+                                                    <option value="En Destino">En Destino</option>
+                                                </select> 
+                                            </div>
+                                        </div> 
+
+                                        <input type="hidden" value="" name="accion" id="accion">
+                                        <input type="hidden" value="" name="idCompra" id="idCompra">
+                                    </div>
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <a class="btn btn-warning" onclick="guardarCambioEstado()">Guardar</a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div><!-- END DIALOGO MODAL-->
 
 <!-- DIALOGO MODAL FICHA-->
 <div class="modal fade bs-example-modal-md" id="dg-modela2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -161,12 +207,31 @@
     }
     function editar(id) {
         document.getElementById("fm").reset();
-        document.getElementById('accion').value = "ACTUALIZAR";
-        document.getElementById('runEditar').value = id;
-        $('#modalLabel').html("Editar Usuario");
-        $('#dg-modela').modal(this)//CALL MODAL MENSAJE                                    
-        rellenarFormulario(id);
+        document.getElementById('accion').value = "ACTUALIZAR_ESTADO";
+        document.getElementById('idCompra').value = id;
+        $('#modalLabel').html("Editar Estado Compra");
+        $('#dg-modela').modal(this)//CALL MODAL MENSAJE        
     }
+     function guardarCambioEstado() {
+            $.ajax({
+                type: "POST",
+                url: "../Servlet/administrarCompra.php",
+                data: $("#fm").serialize(),
+                success: function (result) {
+                    console.log(result);
+                    var result = eval('(' + result + ')');
+                    if (result.errorMsg) {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.errorMsg, 'danger', 'alert');
+                    } else {
+                        $('#dg-modela').modal('hide')
+                        notificacion(result.mensaje, 'success', 'alert');
+                        cargarCompras();
+                    }
+                }
+            });
+    }
+
     function ver(id) {
         document.getElementById('idCompra').value = id;
         var msj = "<strong>COMPRA N°: " + id + "</strong>";
@@ -200,7 +265,7 @@
                         contenido += "<td>" + v.idProducto + "</td>";
                         contenido += "<td>" + v.nombreProducto + "</td>";
                         contenido += "<td>" + v.cantidad + "</td>";
-                        contenido += "<td>" + v.precio + "</td>";
+                        contenido += "<td>$ " + v.precio + "</td>";
                         contenido += "</tr>";
                         $("#detallecompra").append(contenido);
                     });
@@ -209,86 +274,6 @@
         );
         //
     }
-//    function rellenarFormulario(id) {
-//        var url_json = '../Servlet/administrarUsuario.php';
-//        $.ajax({
-//            type: "POST",
-//            url: url_json,
-//            data: 'accion=BUSCAR_BY_ID&run=' + id,
-//            success: function (data) {
-//                var data = eval('(' + data + ')');
-//                document.getElementById('runUsuario').value = data.run;
-//                document.getElementById('nombresUsuario').value = data.nombres;
-//                document.getElementById('apellidosUsuario').value = data.apellidos;
-//                document.getElementById('emailUsuario').value = data.correoElectronico;
-//                if (data.sexo.localeCompare("F") == 0) {
-//                    document.getElementById("sexoF").checked = true;
-//                } else {
-//                    document.getElementById("sexoM").checked = true;
-//                }
-//                document.getElementById('telefonoUsuario').value = data.telefono;
-//                document.getElementById('direccionUsuario').value = data.direccion;
-//                document.getElementById('idPerfil').value = data.idPerfil;
-//            }
-//        });
-//    }
-//
-//    function cargarPerfiles() {
-//        var url_json = '../Servlet/administrarPerfil.php?accion=LISTADO';
-//        $.getJSON(
-//                url_json,
-//                function (datos) {
-//                    $.each(datos, function (k, v) {
-//                        var contenido = "<option value='" + v.idPerfil + "'>" + v.nombrePerfil + "</option>";
-//                        $("#idPerfil").append(contenido);
-//                    });
-//                }
-//        );
-//    }
-//    function guardarUsuario() {
-//        if (validarUsuarioEditar()) {
-//            $.ajax({
-//                type: "POST",
-//                url: "../Servlet/administrarUsuario.php",
-//                data: $("#fm").serialize(),
-//                success: function (result) {
-//                    var result = eval('(' + result + ')');
-//                    if (result.errorMsg) {
-//                        $('#dg-modela').modal('hide')
-//                        notificacion(result.errorMsg, 'danger', 'alert-modal');
-//                    } else {
-//                        $('#dg-modela').modal('hide')
-//                        notificacion(result.mensaje, 'success', 'alert-modal');
-//                        cargarUsuarios();
-//                        // document.location = "administrarUsuarios.php";
-//                    }
-//                }
-//            });
-//        }
-//    }
-//    function confirmacion(titulo, mensaje) {
-//        document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
-//        $('#titulo-confirmacion').html(titulo);
-//        $('#contenedor-confirmacion').html(mensaje);
-//        $('#dg-confirmacion').modal(this)//CALL MODAL MENSAJE
-//    }
-//    function borrar(id) {
-//        confirmacion('Confirmacion', '¿Esta seguro?, una vez eliminado el usuario no se podrá recuperar.');
-//        document.getElementById('runUsuarioEliminar').value = id;
-//    }
-//    function confirmarBorrar() {
-//        var id = document.getElementById('runUsuarioEliminar').value;
-//        $.post('../Servlet/administrarUsuario.php?accion=BORRAR', {run: id}, function (result) {
-//            if (result.success) {
-//                $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
-//                cargarUsuarios(); //Refrescamos la tabla
-//                notificacion(result.mensaje, 'success', 'alert');
-//            } else {
-//                notificacion(result.errorMsg, 'danger', 'alert');
-//            }
-//        }, 'json');
-//    }
-
 
 </script>
 <!--Middle Part End-->

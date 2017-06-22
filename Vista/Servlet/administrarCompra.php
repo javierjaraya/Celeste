@@ -10,6 +10,11 @@ if ($accion != null) {
         $compras = $control->getAllCompras();
         $json = json_encode($compras);
         echo $json;
+    }if ($accion == "MI_LISTADO") {
+        $run = htmlspecialchars($_REQUEST['run']);
+        $compras = $control->miGetAllCompras($run);
+        $json = json_encode($compras);
+        echo $json;
     } else if ($accion == "AGREGAR") {
         $idCompra = htmlspecialchars($_REQUEST['idCompra']);
         $fechaCompra = htmlspecialchars($_REQUEST['fechaCompra']);
@@ -72,20 +77,36 @@ if ($accion != null) {
         $personaRetira = htmlspecialchars($_REQUEST['personaRetira']);
         $run = htmlspecialchars($_REQUEST['run']);
 
-            $compra = new CompraDTO();
-            $compra->setIdCompra($idCompra);
-            $compra->setFechaCompra($fechaCompra);
-            $compra->setEstado($estado);
-            $compra->setMetodoDespacho($metodoDespacho);
-            $compra->setDireccionDespacho($direccionDespacho);
-            $compra->setPersonaRetira($personaRetira);
-            $compra->setRun($run);
+        $compra = new CompraDTO();
+        $compra->setIdCompra($idCompra);
+        $compra->setFechaCompra($fechaCompra);
+        $compra->setEstado($estado);
+        $compra->setMetodoDespacho($metodoDespacho);
+        $compra->setDireccionDespacho($direccionDespacho);
+        $compra->setPersonaRetira($personaRetira);
+        $compra->setRun($run);
 
         $result = $control->updateCompra($compra);
         if ($result) {
             echo json_encode(array(
                 'success' => true,
                 'mensaje' => "Compra actualizada correctamente"
+            ));
+        } else {
+            echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+        }
+    } else if ($accion == "ACTUALIZAR_ESTADO") {
+        $estado = htmlspecialchars($_REQUEST['estado1']);
+        $idCompra = htmlspecialchars($_REQUEST['idCompra']);
+        $compra = new CompraDTO();
+        $compra->setIdCompra($idCompra);
+        $compra->setEstado($estado);
+
+        $result = $control->updateEstadoCompra($compra);
+        if ($result) {
+            echo json_encode(array(
+                'success' => true,
+                'mensaje' => "Estado compra actualizado correctamente"
             ));
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));

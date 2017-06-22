@@ -38,6 +38,27 @@ class CompraDAO{
         $this->conexion->desconectar();
         return $compras;
     }
+    public function miFindAll($run) {
+        $this->conexion->conectar();
+        $query = "SELECT * FROM compra where run = '".$run."'";
+        $result = $this->conexion->ejecutar($query);
+        $i = 0;
+        $compras = array();
+        while ($fila = $result->fetch_row()) {
+            $compra = new CompraDTO();
+            $compra->setIdCompra($fila[0]);
+            $compra->setFechaCompra($fila[1]);
+            $compra->setEstado($fila[2]);
+            $compra->setMetodoDespacho($fila[3]);
+            $compra->setDireccionDespacho($fila[4]);
+            $compra->setPersonaRetira($fila[5]);
+            $compra->setRun($fila[6]);
+            $compras[$i] = $compra;
+            $i++;
+        }
+        $this->conexion->desconectar();
+        return $compras;
+    }
 
     public function findByID($idCompra) {
         $this->conexion->conectar();
@@ -87,7 +108,15 @@ class CompraDAO{
         $this->conexion->desconectar();
         return $result;
     }
-
+    public function updateEstado($compra) {
+        $this->conexion->conectar();
+        $query = "UPDATE compra SET "
+                . "  estado = '".$compra->getEstado()."'"                
+                . " WHERE  idCompra =  ".$compra->getIdCompra()." ";
+        $result = $this->conexion->ejecutar($query);
+        $this->conexion->desconectar();
+        return $result;
+    }
     public function update($compra) {
         $this->conexion->conectar();
         $query = "UPDATE compra SET "

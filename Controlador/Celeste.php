@@ -69,7 +69,9 @@ class Celeste {
     public function getAllCompras() {
         return $this->compraDAO->findAll();
     }
-
+ public function miGetAllCompras($run) {
+        return $this->compraDAO->miFindAll($run);
+    }
     public function addCompra($compra) {
         return $this->compraDAO->save($compra);
     }
@@ -80,6 +82,9 @@ class Celeste {
 
     public function updateCompra($compra) {
         return $this->compraDAO->update($compra);
+    }
+      public function updateEstadoCompra($compra) {
+        return $this->compraDAO->updateEstado($compra);
     }
 
     public function getCompraByID($idCompra) {

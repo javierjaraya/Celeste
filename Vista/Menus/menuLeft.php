@@ -45,7 +45,6 @@
                     </div>
                     <div class="producto.php?producto=4"><a href="producto.php">new </a></div>
                     <div class="price">$767.677.676 </div>
-                    <div class="rating"><img src="../../Files/img/stars-5.png" alt="Based on 5 reviews."></div>
                 </div>
 
             </div>
@@ -54,11 +53,9 @@
     <!--Latest Product End-->
 
     <div class="box">
-        <div class="box-heading"><span>Ofertas</span></div>
+        <div class="box-heading"><span>Más Vendidos</span></div>
         <div class="box-content">
             <div class="box-product">
-
-
                 <div>
                     <div class="image">
                         <a href="producto.php?producto=4">
@@ -67,7 +64,6 @@
                     </div>
                     <div class="producto.php?producto=4"><a href="producto.php">new </a></div>
                     <div class="price">$767.677.676 </div>
-                    <div class="rating"><img src="../../Files/img/stars-5.png" alt="Based on 5 reviews."></div>
                 </div>
 
 
