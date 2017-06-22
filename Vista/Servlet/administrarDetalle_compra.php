@@ -59,6 +59,12 @@ if ($accion != null) {
         $detalle_compra = $control->getDetalle_compraByID($idDetalle);
         $json = json_encode($detalle_compra);
         echo $json;
+    } else if ($accion == "BUSCAR_All_BY_ID_COMPRA") {
+        $idCompra = htmlspecialchars($_REQUEST['idCompra']);
+
+        $detalle_compra = $control->getAllDetalle_compraByIDCompra($idCompra);
+        $json = json_encode($detalle_compra);
+        echo $json;
     } else if ($accion == "ACTUALIZAR") {
         $idDetalle = htmlspecialchars($_REQUEST['idDetalle']);
         $idCompra = htmlspecialchars($_REQUEST['idCompra']);
@@ -66,12 +72,12 @@ if ($accion != null) {
         $precio = htmlspecialchars($_REQUEST['precio']);
         $cantidad = htmlspecialchars($_REQUEST['cantidad']);
 
-            $detalle_compra = new Detalle_compraDTO();
-            $detalle_compra->setIdDetalle($idDetalle);
-            $detalle_compra->setIdCompra($idCompra);
-            $detalle_compra->setIdProducto($idProducto);
-            $detalle_compra->setPrecio($precio);
-            $detalle_compra->setCantidad($cantidad);
+        $detalle_compra = new Detalle_compraDTO();
+        $detalle_compra->setIdDetalle($idDetalle);
+        $detalle_compra->setIdCompra($idCompra);
+        $detalle_compra->setIdProducto($idProducto);
+        $detalle_compra->setPrecio($precio);
+        $detalle_compra->setCantidad($cantidad);
 
         $result = $control->updateDetalle_compra($detalle_compra);
         if ($result) {

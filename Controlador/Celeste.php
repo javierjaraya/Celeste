@@ -109,7 +109,9 @@ class Celeste {
     public function getDetalle_compraByID($idDetalle) {
         return $this->detalle_compraDAO->findByID($idDetalle);
     }
-
+  public function getAllDetalle_compraByIDCompra($idCompra) {
+        return $this->detalle_compraDAO->findAllByIDCompra($idCompra);
+    }
     public function getDetalle_compraLikeAtrr($cadena) {
         return $this->detalle_compraDAO->findLikeAtrr($cadena);
     }

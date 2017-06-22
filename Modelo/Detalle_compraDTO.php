@@ -5,6 +5,7 @@ class Detalle_compraDTO {
     public $idProducto;
     public $precio;
     public $cantidad;
+    public $nombreProducto;
 
     public function Detalle_compraDTO(){
     }
@@ -20,8 +21,15 @@ class Detalle_compraDTO {
     function getIdCompra() {
         return $this->idCompra;
     }
+    function getNombreProducto() {
+        return $this->nombreProducto;
+    }
 
-    function setIdCompra($idCompra) {
+    function setNombreProducto($nombreProducto) {
+        $this->nombreProducto = $nombreProducto;
+    }
+
+        function setIdCompra($idCompra) {
         return $this->idCompra = $idCompra;
     }
 
