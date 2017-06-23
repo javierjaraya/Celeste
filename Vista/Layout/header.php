@@ -3,14 +3,19 @@ session_start();
 $idPerfil = 3;
 $nombre = "Visitante";
 $autentificado = "NO";
+$precio_total = 0;
 if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
         $run = $_SESSION["run"];
         $autentificado = "SI";
+        include_once '../../Controlador/Celeste.php';
+        $control = Celeste::getInstancia();
+        $carritoCompra = $control->getCarritoCompra();
+        $precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
     }
-}else{
+} else {
     header('Location: index.php');
 }
 ?>
@@ -73,22 +78,22 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
 
-                <?php if($autentificado == "SI"){ ?>
-                <!-- CARRO -->
-                <div id="cart" class=""style="float: right; padding-top: 20px;">
-                    <div class="" style="width: 160px;">
-                        <div class="btn-group" role="group">                            
-                            <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
-                            <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $0</span><span class="caret"></span></a>                           
-                            <ul class="dropdown-menu">
-                                <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
-                                <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
-                            </ul>
-                        </div>
-                    </div>                    
-                </div>
+                <?php if ($autentificado == "SI") { ?>
+                    <!-- CARRO -->
+                    <div id="cart" class=""style="float: right; padding-top: 20px;">
+                        <div class="" style="width: 200px;">
+                            <div class="btn-group" role="group">                            
+                                <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
+                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
+                                <ul class="dropdown-menu">
+                                    <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
+                                    <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
+                                </ul>
+                            </div>
+                        </div>                    
+                    </div>
                 <?php } ?>
-                
+
             </div>
             <!-- MENU -->
             <div class="row" style="padding-left: 10px; padding-right: 10px;">

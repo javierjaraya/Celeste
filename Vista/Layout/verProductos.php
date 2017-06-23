@@ -3,12 +3,17 @@ session_start();
 $idPerfil = 3;
 $nombre = "Visitante";
 $autentificado = "NO";
+$precio_total = 0;
 if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
         $run = $_SESSION["run"];
         $autentificado = "SI";
+        include_once '../../Controlador/Celeste.php';
+        $control = Celeste::getInstancia();
+        $carritoCompra = $control->getCarritoCompra();
+        $precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
     }
 }
 ?>
@@ -74,10 +79,10 @@ if (isset($_SESSION["autentificado"])) {
                 <?php if ($autentificado == "SI") { ?>
                     <!-- CARRO -->
                     <div id="cart" class=""style="float: right; padding-top: 20px;">
-                        <div class="" style="width: 160px;">
+                        <div class="" style="width: 200px;">
                             <div class="btn-group" role="group">                            
                                 <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
-                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $0</span><span class="caret"></span></a>                           
+                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
                                 <ul class="dropdown-menu">
                                     <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
                                     <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
@@ -150,6 +155,7 @@ if (isset($_SESSION["autentificado"])) {
                                         </div>
 
                                         <div id="loader" class="text-center"><img src="../../Files/img/loader.gif"></div>
+                                        <div id="alert"></div>
                                         <div class="outer_div">
                                             <!-- Datos Productos aqui -->
                                         </div>
@@ -176,12 +182,58 @@ if (isset($_SESSION["autentificado"])) {
                                             $("#loader").html("<img src='../../Files/img/loader.gif'>");
                                         },
                                         success: function (data) {
-                                            console.log(data);
-
                                             $(".outer_div").html(data).fadeIn('slow');
                                             $("#loader").html("");
                                         }
-                                    })
+                                    });
+                                }
+
+                                function agregarAlCarro(id) {
+                                    var parametros = {"accion": "AGREGAR_ARTICULO", "idProducto": id, "cantidad": 1};
+                                    $("#loader").fadeIn('slow');
+                                    $.ajax({
+                                        url: '../Servlet/administrarCarroCompra.php',
+                                        data: parametros,
+                                        beforeSend: function (objeto) {
+                                            $("#loader").html("<img src='../../Files/img/loader.gif'>");
+                                        },
+                                        success: function (data) {
+                                            var data = eval('(' + data + ')');
+                                            if (data.success == true) {
+                                                $("#loader").html("");
+                                                if (data.stock == true) {
+                                                    $("#cart-total").html("Total Carro :  $" + number_format(data.precio_total, 0));
+                                                    notificacion("Producto agregado correctamente. Total Carro: $" + number_format(data.precio_total, 0), 'success', 'alert');
+                                                } else {
+                                                    notificacion("No hay mas stock disponible para este producto.", 'warning', 'alert');
+                                                }
+                                            } else {
+                                                location.href = data.url;
+                                            }
+                                        }
+                                    });
+                                }
+
+                                function number_format(amount, decimals) {
+                                    amount += ''; // por si pasan un numero en vez de un string
+                                    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+                                    decimals = decimals || 0; // por si la variable no fue fue pasada
+
+                                    // si no es un numero o es igual a cero retorno el mismo cero
+                                    if (isNaN(amount) || amount === 0)
+                                        return parseFloat(0).toFixed(decimals);
+
+                                    // si es mayor o menor que cero retorno el valor formateado como numero
+                                    amount = '' + amount.toFixed(decimals);
+
+                                    var amount_parts = amount.split('.'),
+                                            regexp = /(\d+)(\d{3})/;
+
+                                    while (regexp.test(amount_parts[0]))
+                                        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+
+                                    return amount_parts.join('.');
                                 }
                             </script>
 

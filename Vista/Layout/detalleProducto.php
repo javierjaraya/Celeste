@@ -3,12 +3,17 @@ session_start();
 $idPerfil = 3;
 $nombre = "Visitante";
 $autentificado = "NO";
+$precio_total = 0;
 if (isset($_SESSION["autentificado"])) {
     if ($_SESSION["autentificado"] == "SI") {
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
         $run = $_SESSION["run"];
         $autentificado = "SI";
+        include_once '../../Controlador/Celeste.php';
+        $control = Celeste::getInstancia();
+        $carritoCompra = $control->getCarritoCompra();
+        $precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
     }
 }
 ?>
@@ -71,22 +76,22 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
 
-                <?php if($autentificado == "SI"){ ?>
-                <!-- CARRO -->
-                <div id="cart" class=""style="float: right; padding-top: 20px;">
-                    <div class="" style="width: 160px;">
-                        <div class="btn-group" role="group">                            
-                            <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
-                            <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $0</span><span class="caret"></span></a>                           
-                            <ul class="dropdown-menu">
-                                <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
-                                <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
-                            </ul>
-                        </div>
-                    </div>                    
-                </div>
+                <?php if ($autentificado == "SI") { ?>
+                    <!-- CARRO -->
+                    <div id="cart" class=""style="float: right; padding-top: 20px;">
+                        <div class="" style="width: 200px;">
+                            <div class="btn-group" role="group">                            
+                                <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
+                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
+                                <ul class="dropdown-menu">
+                                    <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
+                                    <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
+                                </ul>
+                            </div>
+                        </div>                    
+                    </div>
                 <?php } ?>
-                
+
             </div>
             <!-- MENU -->
             <div class="row" style="padding-left: 10px; padding-right: 10px;">
@@ -115,104 +120,162 @@ if (isset($_SESSION["autentificado"])) {
                     <div class="col-md-9">
 
                         <div class="row">
-<?php
-$idSubCategoria = htmlspecialchars($_REQUEST['sub']);
-$idProducto = htmlspecialchars($_REQUEST['idProducto']);
-$subcategoria = $control->getSubcategoriaByID($idSubCategoria);
-$producto = $control->getProductoByID($idProducto);
-?>
+                            <?php
+                            $idSubCategoria = htmlspecialchars($_REQUEST['sub']);
+                            $idProducto = htmlspecialchars($_REQUEST['idProducto']);
+                            $subcategoria = $control->getSubcategoriaByID($idSubCategoria);
+                            $producto = $control->getProductoByID($idProducto);
+                            ?>
 
-<style type="text/css">
-    input[type='number'], input[type='text'], input[type='password'], textarea {
-        background: #F8F8F8;
-        border: 1px solid #E4E4E4;
-        padding: 7px;
-        margin-left: 0px;
-        margin-right: 0px;
-        font-size: 14px;
-    }
-    
-    /************* button ***********/
-    #button-cart { height:35px; line-height:35px; padding:0 15px; background:#F15A23; color:#fff; font-size:14px; font-weight:normal; text-transform:uppercase; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
-    #button-cart:hover { background:#444; color:#fff; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
-    .box-product > div .cart a.button, .box-product > div .cart input.button, .product-grid > div .cart a.button, .product-grid > div .cart input.button, .product-list > div .cart a.button, .product-list > div .cart input.button { background:#eee; color:#555; }
-    .box-product > div .cart a.button:hover, .box-product > div .cart input.button:hover, .product-grid > div .cart a.button:hover, .product-grid > div .cart input.button:hover, .product-list > div .cart a.button:hover, .product-list > div .cart input.button:hover { background:#F15A23; color:#fff; opacity:1; }
-    a.button, input.button { cursor: pointer; color:#fff; font-size: 12px; font-weight: bold; background:#F15A23; border:none; -webkit-box-shadow:inset 0px 0px 5px rgba(0, 0, 0, .10); -moz-box-shadow:inset 0 0 5px rgba(0, 0, 0, .10); box-shadow:inset 0 0 5px rgba(0, 0, 0, .10); border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
-    a.button { display: inline-block; text-decoration: none; padding: 6px 12px 6px 12px; }
-    input.button { margin:0; height:26px; line-height:26px; padding: 0px 10px; }
-    a.button:hover, input.button:hover { background:#444; color:#fff; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
-    .buttons { border-top:1px solid #EEEEEE; overflow: auto; padding: 6px; margin-bottom: 20px; }
-    .buttons .left { float: left; text-align: left; }
-    .buttons .right { float: right; text-align: right; }
-    .buttons .center { text-align: center; margin-left: auto; margin-right: auto; }
+                            <style type="text/css">
+                                input[type='number'], input[type='text'], input[type='password'], textarea {
+                                    background: #F8F8F8;
+                                    border: 1px solid #E4E4E4;
+                                    padding: 7px;
+                                    margin-left: 0px;
+                                    margin-right: 0px;
+                                    font-size: 14px;
+                                }
 
-  
-
-</style>
-
-
-<div style="padding-bottom: 10px;">
-    <div class="breadcrumb-new"> <a href="index.php">Home</a> » <a href="#"><?= $subcategoria->getNombreSubCategoria() ?></a></div>
-</div>
-
-<div class="product-info">
-    <div class="left">
-        <div class="image"> 
-            <img src="../../<?= $producto->getImagen()->getRutaImagen() ?>" title="#" alt="#" id="image" width="350" height="350">            
-        </div>        
-    </div>
-    
-    <div class="right" style="min-height: 350px;">
-        <h1 style="text-align: left;"><?= $producto->getNombreProducto() ?></h1>
-        <div class="description"> 
-            <!--<span>Brand:</span> <a href="#">Apple</a><br>-->
-            <span>Codigo Producto:</span> <?= $producto->getIdProducto() ?><br>
-            <span>Stock:</span> <?= $producto->getStock() ?> unidades</div>
-        <div class="price">Precio: <span class="price-old">$<?= $producto->getPrecio() ?></span>
-            <div class="price-tag">$<?= $producto->getPrecio() ?></div>
-            <br>
-            <!--<span class="price-tax">Ex Tax: $101.00</span><br>-->
-        </div>
-        <div class="cart">
-            <div>
-                <div class="qty"> <strong>Cantidad:</strong>
-                    <input type="number" value="1" min="1" max="<?= $producto->getStock() ?>"  name="quantity" class="w30" id="qty">                    
-                    <div class="clear"></div>
-                </div>
-                <input type="button" class="button" id="button-cart" style="" value="Agregar al carro">
-            </div>
-        </div>
-        <div class="review">
-            <div></div>
-        </div>          
-    </div>
-</div>
-
-<div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
-    Descripción
-</div>
-<div id="tab-description" class="review-list" style="display: block;">
-    <?= $producto->getDescripcionProducto() ?>
-</div>
-
-<div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
-    Consulta
-</div>
-<div class="review-list" id="tab-review" style="display: block;">
-    
-    <b>Nombre:</b><br>
-    <input type="text" value="" name="name">
-    <br>
-    <br>
-    <b>Consulta:</b>
-    <textarea style="width: 98%;" rows="8" cols="40" name="text"></textarea>
-    <span style="font-size: 11px;"><span style="color: #FF0000;">Nota:</span> HTML no es permitido</span><br>    
-    <div class="buttons">
-        <div class="right"><a class="button" id="button-review">Enviar</a></div>
-    </div>
-</div>
+                                /************* button ***********/
+                                #button-cart { height:35px; line-height:35px; padding:0 15px; background:#F15A23; color:#fff; font-size:14px; font-weight:normal; text-transform:uppercase; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+                                #button-cart:hover { background:#444; color:#fff; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+                                .box-product > div .cart a.button, .box-product > div .cart input.button, .product-grid > div .cart a.button, .product-grid > div .cart input.button, .product-list > div .cart a.button, .product-list > div .cart input.button { background:#eee; color:#555; }
+                                .box-product > div .cart a.button:hover, .box-product > div .cart input.button:hover, .product-grid > div .cart a.button:hover, .product-grid > div .cart input.button:hover, .product-list > div .cart a.button:hover, .product-list > div .cart input.button:hover { background:#F15A23; color:#fff; opacity:1; }
+                                a.button, input.button { cursor: pointer; color:#fff; font-size: 12px; font-weight: bold; background:#F15A23; border:none; -webkit-box-shadow:inset 0px 0px 5px rgba(0, 0, 0, .10); -moz-box-shadow:inset 0 0 5px rgba(0, 0, 0, .10); box-shadow:inset 0 0 5px rgba(0, 0, 0, .10); border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+                                a.button { display: inline-block; text-decoration: none; padding: 6px 12px 6px 12px; }
+                                input.button { margin:0; height:26px; line-height:26px; padding: 0px 10px; }
+                                a.button:hover, input.button:hover { background:#444; color:#fff; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+                                .buttons { border-top:1px solid #EEEEEE; overflow: auto; padding: 6px; margin-bottom: 20px; }
+                                .buttons .left { float: left; text-align: left; }
+                                .buttons .right { float: right; text-align: right; }
+                                .buttons .center { text-align: center; margin-left: auto; margin-right: auto; }
 
 
 
+                            </style>
 
-<?php include("footer.php"); ?>
+
+                            <div style="padding-bottom: 10px;">
+                                <div class="breadcrumb-new"> <a href="index.php">Home</a> » <a href="#"><?= $subcategoria->getNombreSubCategoria() ?></a></div>
+                            </div>
+                            <div id="alert"></div>
+
+                            <div class="product-info">
+                                <div class="left">
+                                    <div class="image"> 
+                                        <img src="../../<?= $producto->getImagen()->getRutaImagen() ?>" title="#" alt="#" id="image" width="350" height="350">            
+                                    </div>        
+                                </div>
+
+                                <div class="right" style="min-height: 350px;">
+                                    <h1 style="text-align: left;"><?= $producto->getNombreProducto() ?></h1>
+                                    <div class="description"> 
+                                        <!--<span>Brand:</span> <a href="#">Apple</a><br>-->
+                                        <span>Codigo Producto:</span> <?= $producto->getIdProducto() ?><br>
+                                        <span>Stock:</span> <?= $producto->getStock() ?> unidades</div>
+                                    <div class="price">Precio: <span class="price-old">$<?= $producto->getPrecio() ?></span>
+                                        <div class="price-tag">$<?= $producto->getPrecio() ?></div>
+                                        <br>
+                                        <!--<span class="price-tax">Ex Tax: $101.00</span><br>-->
+                                    </div>
+                                    <div class="cart">
+                                        <div>
+                                            <div class="qty"> <strong>Cantidad:</strong>
+                                                <input type="number" value="1" min="1" max="<?= $producto->getStock() ?>"  name="cantidad" id="cantidad">                    
+                                                <div class="clear"></div>
+                                            </div>
+                                            <input type="button" class="button" id="button-cart" style="" value="Agregar al carro" onclick="agregarAlCarro(<?= $producto->getIdProducto() ?>)">
+                                        </div>
+                                    </div>
+                                    <div class="review">
+                                        <div></div>
+                                    </div>          
+                                </div>
+                            </div>
+
+                            <div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
+                                Descripción
+                            </div>
+                            <div id="tab-description" class="review-list" style="display: block;">
+                                <?= $producto->getDescripcionProducto() ?>
+                            </div>
+
+                            <div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
+                                Consulta
+                            </div>
+                            <div class="review-list" id="tab-review" style="display: block;">
+
+                                <b>Nombre:</b><br>
+                                <input type="text" value="" name="name">
+                                <br>
+                                <br>
+                                <b>Consulta:</b>
+                                <textarea style="width: 98%;" rows="8" cols="40" name="text"></textarea>
+                                <span style="font-size: 11px;"><span style="color: #FF0000;">Nota:</span> HTML no es permitido</span><br>    
+                                <div class="buttons">
+                                    <div class="right"><a class="button" id="button-review">Enviar</a></div>
+                                </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function () {
+
+                                });
+
+                                function agregarAlCarro(id) {
+                                    var cantidad = document.getElementById("cantidad").value;
+                                    if (cantidad != "" && cantidad > 0) {
+                                        var parametros = {"accion": "AGREGAR_ARTICULO", "idProducto": id, "cantidad": cantidad};
+                                        $("#loader").fadeIn('slow');
+                                        $.ajax({
+                                            url: '../Servlet/administrarCarroCompra.php',
+                                            data: parametros,
+                                            beforeSend: function (objeto) {
+                                                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+                                            },
+                                            success: function (data) {
+                                                var data = eval('(' + data + ')');
+                                                if (data.success == true) {
+                                                    $("#loader").html("");
+                                                    if (data.stock == true) {
+                                                        $("#cart-total").html("Total Carro :  $" + number_format(data.precio_total, 0));
+                                                        notificacion("Producto agregado correctamente. Total Carro: $" + number_format(data.precio_total, 0), 'success', 'alert');
+                                                    } else {
+                                                        notificacion("No hay mas stock disponible para este producto.", 'warning', 'alert');
+                                                    }
+                                                } else {
+                                                    location.href = data.url;
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        notificacion("Debe ingresar una cantidad mayor que 0.", 'warning', 'alert');
+                                    }
+                                }
+
+                                function number_format(amount, decimals) {
+                                    amount += ''; // por si pasan un numero en vez de un string
+                                    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+                                    decimals = decimals || 0; // por si la variable no fue fue pasada
+
+                                    // si no es un numero o es igual a cero retorno el mismo cero
+                                    if (isNaN(amount) || amount === 0)
+                                        return parseFloat(0).toFixed(decimals);
+
+                                    // si es mayor o menor que cero retorno el valor formateado como numero
+                                    amount = '' + amount.toFixed(decimals);
+
+                                    var amount_parts = amount.split('.'),
+                                            regexp = /(\d+)(\d{3})/;
+
+                                    while (regexp.test(amount_parts[0]))
+                                        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+
+                                    return amount_parts.join('.');
+                                }
+                            </script>
+
+
+                            <?php include("footer.php"); ?>

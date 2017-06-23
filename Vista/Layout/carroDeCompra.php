@@ -28,11 +28,23 @@
         color: #fff;
     }
 
+
+    input[type='number'], input[type='text'], input[type='password'], textarea {
+        background: #F8F8F8;
+        border: 1px solid #E4E4E4;
+        padding: 7px;
+        margin-left: 0px;
+        margin-right: 0px;
+        font-size: 14px;
+    }
+
 </style>
 
 <div style="padding-bottom: 10px;">
     <div class="breadcrumb-new"> <a href="index.php">Home</a> » <a href="#">Carro Compra</a></div>
 </div>
+
+<div id="alert"></div>
 
 <form enctype="multipart/form-data" method="post" action="">
     <div class="cart-info">
@@ -41,47 +53,14 @@
                 <tr>
                     <td class="image">Imagen</td>
                     <td class="name">Nombre Producto</td>
-                    <td class="model">Descripción</td>
+                    <!--<td class="model">Descripción</td>-->
                     <td class="quantity">Cantidad</td>
                     <td class="price">Precio Unitario</td>
                     <td class="total">Total</td>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="image"><a href="#"><img title="Bag Lady" alt="Bag Lady" src="../../Files/img/Productos/miniatura_images.jpg" width="60px" height="60px"></a></td>
-                    <td class="name"><a href="#">Bag Lady</a></td>
-                    <td class="model">Product 8</td>
-                    <td class="quantity"><input type="text" size="1" value="1" name="" class="w30">
-                        &nbsp;
-                        <input type="image" title="Update" alt="Update" src="../../Files/img/update.png">
-                        &nbsp;<a href="#"><img title="Remove" alt="Remove" src="../../Files/img/remove.png"></a></td>
-                    <td class="price">$131.25</td>
-                    <td class="total">$131.25</td>
-                </tr>
-                <tr>
-                    <td class="image"><a href="#"><img title="Bag Lady" alt="Bag Lady" src="../../Files/img/Productos/miniatura_images.jpg" width="60px" height="60px"></a></td>
-                    <td class="name"><a href="#">MacBook Pro</a><br>
-                        <small>Reward Points: 100</small></td>
-                    <td class="model">Product 10</td>
-                    <td class="quantity"><input type="text" size="1" value="1" name="" class="w30">
-                        &nbsp;
-                        <input type="image" title="Update" alt="Update" src="../../Files/img/update.png">
-                        &nbsp;<a href="#"><img title="Remove" alt="Remove" src="../../Files/img/remove.png"></a></td>
-                    <td class="price">$181.00</td>
-                    <td class="total">$181.00</td>
-                </tr>
-                <tr>
-                    <td class="image"><a href="#"><img title="Bag Lady" alt="Chair Swing" src="../../Files/img/Productos/miniatura_images.jpg" width="60px" height="60px"></a></td>
-                    <td class="name"><a href="#">Chair Swing</a></td>
-                    <td class="model">Product 3</td>
-                    <td class="quantity"><input type="text" size="1" value="1" name="" class="w30">
-                        &nbsp;
-                        <input type="image" title="Update" alt="Update" src="../../Files/img/update.png">
-                        &nbsp;<a href="#"><img title="Remove" alt="Remove" src="../../Files/img/remove.png"></a></td>
-                    <td class="price">$140.50</td>
-                    <td class="total">$140.50</td>
-                </tr>
+            <tbody id="contenido-carro">
+
             </tbody>
         </table>
     </div>
@@ -91,12 +70,8 @@
     <table id="total">
         <tbody>
             <tr>
-                <td class="right"><b>Sub-Total:</b></td>
-                <td class="right">$510.99</td>
-            </tr>
-            <tr>
                 <td class="right"><b>Total:</b></td>
-                <td class="right">$608.41</td>
+                <td class="right" id="totalCarro">$ 0</td>
             </tr>
         </tbody>
     </table>
@@ -108,5 +83,125 @@
         <a class="btn btn-warning btn-sm" style="float: left; color: #fff;" href="index.php">Continuar Comprando</a>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        cargarCarro();
+    });
+
+    function cargarCarro() {
+        var parametros = {"accion": "OBTENER_CARRO"};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                $("#contenido-carro").html(data.carro_html);
+                $("#totalCarro").html("$" + data.total_carro);
+                $("#cart-total").html("$" + data.total_carro);
+            }
+        });
+    }
+
+    function agregarAlCarro(id) {
+        var parametros = {"accion": "AGREGAR_ARTICULO", "idProducto": id, "cantidad": 1};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                if (data.success == true) {
+                    $("#loader").html("");
+                    if (data.stock == true) {
+                        $("#cart-total").html("Total Carro :  $" + number_format(data.precio_total, 0));
+                        notificacion("Producto agregado correctamente. Total Carro: $" + number_format(data.precio_total, 0), 'success', 'alert');
+                    } else {
+                        notificacion("No hay mas stock disponible para este producto.", 'warning', 'alert');
+                    }
+                } else {
+                    location.href = data.url;
+                }
+            }
+        });
+    }
+
+    function borrarProducto(id) {
+        var parametros = {"accion": "BORRAR_ARRICULO", "idProducto": id};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                $("#loader").html("");
+                if (data.success == true) {
+                    notificacion(data.mensaje, 'success', 'alert');
+                    cargarCarro()
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
+            }
+        });
+    }
+
+    function actualizarProducto(id) {
+        var cantidad = document.getElementById("cant"+id).value;
+        var parametros = {"accion": "ACTUALIZAR_ARRICULO", "idProducto": id, "cantidad": cantidad};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                console.log(data);
+                var data = eval('(' + data + ')');
+                $("#loader").html("");
+                if (data.success == true) {
+                    notificacion(data.mensaje, 'success', 'alert');
+                    cargarCarro()
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
+            }
+        });
+    }
+
+    function number_format(amount, decimals) {
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+        decimals = decimals || 0; // por si la variable no fue fue pasada
+
+        // si no es un numero o es igual a cero retorno el mismo cero
+        if (isNaN(amount) || amount === 0)
+            return parseFloat(0).toFixed(decimals);
+
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(decimals);
+
+        var amount_parts = amount.split('.'),
+                regexp = /(\d+)(\d{3})/;
+
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+
+        return amount_parts.join('.');
+    }
+
+</script>
 
 <?php include("footer.php"); ?>

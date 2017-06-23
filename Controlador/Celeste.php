@@ -8,6 +8,7 @@ include_once 'Mantenedores/PerfilDAO.php';
 include_once 'Mantenedores/ProductoDAO.php';
 include_once 'Mantenedores/SubcategoriaDAO.php';
 include_once 'Mantenedores/UsuarioDAO.php';
+include_once 'Mantenedores/CarroCompraDAO.php';
 
 class Celeste {
     private static $instancia = NULL;
@@ -270,6 +271,11 @@ class Celeste {
 
     public function getUsuarioLikeAtrr($cadena) {
         return $this->usuarioDAO->findLikeAtrr($cadena);
+    }
+    
+    public function getCarritoCompra() {
+        $carrito = new CarroCompra();
+        return $carrito;
     }
 
 }
