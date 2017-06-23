@@ -171,8 +171,23 @@ if ($accion != null) {
             'carro_html' => $carro_html,
             'total_carro' => number_format($total_carro, 0, ',', '.')
         ));
-    } else if ($accion == "") {
-        
+    } else if ($accion == "VACIAR_CARRO") {
+        session_start();
+
+        $carritoCompra = $control->getCarritoCompra();
+        $resutl = $carritoCompra->destroy();
+
+        if ($resutl) {
+            echo json_encode(array(
+                'success' => true,
+                'mensaje' => "Carro vaciaro correctamente."
+            ));
+        } else {
+            echo json_encode(array(
+                'success' => false,
+                'mensaje' => "Ocurrio un error al vaciar el carro."
+            ));
+        }
     }
 }
 

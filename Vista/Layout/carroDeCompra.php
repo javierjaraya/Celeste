@@ -79,11 +79,39 @@
 
 <div class="buttons">
     <div>
-        <a class="btn btn-warning btn-sm" style="float: right; color: #fff;" href="#">Pagar</a>    
-        <a class="btn btn-warning btn-sm" style="float: left; color: #fff;" href="index.php">Continuar Comprando</a>
+        <a class="btn btn-warning btn-sm" style="float: right; color: #fff;" href="#"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Pagar</a>    
+        <a class="btn btn-danger btn-sm" style="float: right; color: #fff; margin-right: 10px;" href="#" onclick="vaciarCarro()"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Vaciar Carro</a>
+        <a class="btn btn-warning btn-sm" style="float: left; color: #fff;" href="index.php"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Continuar Comprando</a>
     </div>
 </div>
 
+<!-- MODAL CONFIRMACION-->
+<div class="modal fade bs-example-modal-sm" id="dg-confirmacion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-confirmacion" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal"><h4 class="modal-title" id="titulo-mensaje" style="padding-top: 20px;">Confirmación</h4></label>
+                </div>
+                <div class="modal-body">
+                    <section class="row">
+                        <section class="col-md-12">
+                            <div id="contenedor-confirmacion">
+
+                            </div>
+                        </section>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarVaciarCarro()"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Vaciar Carro</button>                    
+                </div>
+            </section>
+        </div>
+    </div>
+</div><!-- END MODAL CONFIRMACION-->
 
 <script>
     $(document).ready(function () {
@@ -179,7 +207,41 @@
             }
         });
     }
+    
+    function confirmacion(titulo, mensaje) {
+        document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
+        $('#titulo-confirmacion').html(titulo);
+        $('#contenedor-confirmacion').html(mensaje);
+        $('#dg-confirmacion').modal(this);//CALL MODAL MENSAJE
+    }
 
+    function vaciarCarro() {
+        confirmacion('Confirmacion', '¿Esta seguro?, Una vez vaciado no se podran recuperar los datos.');        
+    }
+
+    function confirmarVaciarCarro() {
+        var parametros = {"accion": "VACIAR_CARRO"};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                $("#loader").html("");
+                $('#dg-confirmacion').modal('hide')
+                if (data.success == true) {
+                    notificacion(data.mensaje, 'success', 'alert');
+                    cargarCarro();
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
+            }
+        });
+    }
+    
     function number_format(amount, decimals) {
         amount += ''; // por si pasan un numero en vez de un string
         amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
