@@ -171,6 +171,33 @@ if ($accion != null) {
             'carro_html' => $carro_html,
             'total_carro' => number_format($total_carro, 0, ',', '.')
         ));
+    } else if ($accion == "OBTENER_CARRO_CONFIRMACION") {
+        session_start();
+        $carritoCompra = $control->getCarritoCompra();
+
+        //asignamos a $carro el método get_content() que contiene el contenido del carrito
+        $carro = $carritoCompra->get_content();
+        $carro_html = "";
+        $total_carro = 0;
+        if ($carro) {
+            foreach ($carro as $producto) {
+                $cantidad = $producto['cantidad'];
+                $precio = number_format($producto['precio'], 0, ',', '.');
+                $total = number_format($producto['precio'] * $producto['cantidad'], 0, ',', '.');
+                $total_carro += ($producto['precio'] * $producto['cantidad']);
+                $carro_html = $carro_html . "<tr>"
+                        . "    <td class='image'><img title='Bag Lady' alt='Bag Lady' src='../../" . $producto['imagen'] . "' width='60px' height='60px'></td>"
+                        . "    <td class='name'>" . $producto['nombre'] . "</td>"
+                        . "    <td class='quantity'>" . $producto['cantidad'] . "</td>"
+                        . "    <td class='total'>$" . $total . "</td>"
+                        . "</tr>";
+            }
+        }
+
+        echo json_encode(array(
+            'carro_html' => $carro_html,
+            'total_carro' => number_format($total_carro, 0, ',', '.')
+        ));
     } else if ($accion == "VACIAR_CARRO") {
         session_start();
 

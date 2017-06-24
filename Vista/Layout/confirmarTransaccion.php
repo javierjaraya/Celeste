@@ -1,5 +1,6 @@
 <?php include("header.php"); ?>
 
+
 <style type="text/css">
     /*************** Cart ****************/
     .cart-info table { width: 100%; margin-bottom: 15px; border-collapse: collapse; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; border-right: 1px solid #DDDDDD; }
@@ -29,7 +30,7 @@
     }
 
 
-    input[type='number'], input[type='text'], input[type='password'], textarea {
+    input[type='number'], input[type='text'], input[type='password'], textarea, select {
         background: #F8F8F8;
         border: 1px solid #E4E4E4;
         padding: 7px;
@@ -46,6 +47,37 @@
 
 <div id="alert"></div>
 
+<div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
+    Datos Despacho
+</div>
+
+<div id="tab-description" class="review-list" style="display: block;">
+    
+        <div class="col-md-4">
+            <b>Metodo Despacho:</b><br>
+            <select>
+                <option value="0">Seleccionar</option>
+                <option value="1">Retiro en tienda</option>
+                <option value="2">Despacho a domicilio</option>
+            </select>
+            <br><br>
+            <b>Direccion despacho:</b><br>
+            <input type="text" value="" name="asunto" id="asunto">
+        </div>
+        <div class="col-md-4">
+            <b>Run persona que retira:</b><br>
+            <input type="text" value="" name="asunto" id="asunto">
+            <br><br>
+            <b>Telefono:</b><br>
+            <input type="text" value="" name="asunto" id="asunto">
+        </div>
+        <div class="col-md-4">
+            <b>Nombre persona que retira:</b><br>
+            <input type="text" value="" name="asunto" id="asunto">
+        </div>
+</div>
+
+
 <form enctype="multipart/form-data" method="post" action="">
     <div class="cart-info">
         <table>
@@ -53,9 +85,7 @@
                 <tr>
                     <td class="image">Imagen</td>
                     <td class="name">Nombre Producto</td>
-                    <!--<td class="model">Descripción</td>-->
                     <td class="quantity">Cantidad</td>
-                    <td class="price">Precio Unitario</td>
                     <td class="total">Total</td>
                 </tr>
             </thead>
@@ -80,12 +110,10 @@
 <div class="buttons">
     <div>
         <?php if ($precio_total == 0) { ?>
-            <a class="btn btn-default btn-sm" style="float: right;" href="#"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Completar transacción</a>    
+            <a class="btn btn-default btn-sm" style="float: right;" href="#"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Confirmar y pagar</a>
         <?php } else { ?>
-            <a class="btn btn-primary btn-sm" style="float: right; color: #fff;" href="confirmarTransaccion.php"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Completar transacción</a>
-        <?php } ?>
-        <a class="btn btn-danger btn-sm" style="float: right; color: #fff; margin-right: 10px;" href="#" onclick="vaciarCarro()"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Vaciar Carro</a>
-        <a class="btn btn-warning btn-sm" style="float: left; color: #fff;" href="index.php"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Continuar Comprando</a>
+            <a class="btn btn-primary btn-sm" style="float: right; color: #fff;" href="#"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Confirmar y pagar</a>
+        <?php } ?>        
     </div>
 </div>
 
@@ -117,147 +145,155 @@
     </div>
 </div><!-- END MODAL CONFIRMACION-->
 
+
+
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
         cargarCarro();
     });
 
-        function cargarCarro() {
-            var parametros = {"accion": "OBTENER_CARRO"};
-            $("#loader").fadeIn('slow');         $.ajax({
-                url: '../Servlet/administrarCarroCompra.php',
+    function cargarCarro() {
+        var parametros = {"accion": "OBTENER_CARRO_CONFIRMACION"};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
             data: parametros,
             beforeSend: function (objeto) {
                 $("#loader").html("<img src='../../Files/img/loader.gif'>");
-                },
+            },
             success: function (data) {
                 var data = eval('(' + data + ')');
                 $("#contenido-carro").html(data.carro_html);
-    $("#totalCarro").html("$" + data.total_carro);
-        $("#cart-total").html("$" + data.total_carro);
+                $("#totalCarro").html("$" + data.total_carro);
+                $("#cart-total").html("$" + data.total_carro);
             }
         });
     }
 
-        function agregarAlCarro(id) {
-            var parametros = {"accion": "AGREGAR_ARTICULO", "idProducto": id, "cantidad": 1};
-            $("#loader").fadeIn('slow');         $.ajax({
-                url: '../Servlet/administrarCarroCompra.php',
+    function agregarAlCarro(id) {
+        var parametros = {"accion": "AGREGAR_ARTICULO", "idProducto": id, "cantidad": 1};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
             data: parametros,
             beforeSend: function (objeto) {
                 $("#loader").html("<img src='../../Files/img/loader.gif'>");
-                },
-                    success: function (data) {                 var data = eval('(' + data + ')');
-                        if (data.success == true) {
+            },
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                if (data.success == true) {
                     $("#loader").html("");
                     if (data.stock == true) {
                         $("#cart-total").html("Total Carro :  $" + number_format(data.precio_total, 0));
                         notificacion("Producto agregado correctamente. Total Carro: $" + number_format(data.precio_total, 0), 'success', 'alert');
                     } else {
-                    notificacion("No hay mas stock disponible para este producto.", 'warning', 'alert');
-            }
-    } else {
-        location.href = data.url;
+                        notificacion("No hay mas stock disponible para este producto.", 'warning', 'alert');
+                    }
+                } else {
+                    location.href = data.url;
                 }
             }
         });
     }
 
-        function borrarProducto(id) {
-            var parametros = {"accion": "BORRAR_ARRICULO", "idProducto": id};
-            $("#loader").fadeIn('slow');         $.ajax({
-                url: '../Servlet/administrarCarroCompra.php',
-            data: parametros,
-            beforeSend: function (objeto) {
-                $("#loader").html("<img src='../../Files/img/loader.gif'>");
-                },
-                success: function (data) {
-                    var data = eval('(' + data + ')');
-                $("#loader").html("");
-                    if (data.success == true) {
-                    notificacion(data.mensaje, 'success', 'alert');
-                    cargarCarro()
-            } else {
-        notificacion(data.mensaje, 'warning', 'alert');
-                }
-            }
-        });
-    } 
- 
-        function actualizarProducto(id) {
-        var cantidad = document.getElementById("cant"+id).value;
-            var parametros = {"accion": "ACTUALIZAR_ARRICULO", "idProducto": id, "cantidad": cantidad};
-            $("#loader").fadeIn('slow');         $.ajax({
-                url: '../Servlet/administrarCarroCompra.php',
+    function borrarProducto(id) {
+        var parametros = {"accion": "BORRAR_ARRICULO", "idProducto": id};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
             data: parametros,
             beforeSend: function (objeto) {
                 $("#loader").html("<img src='../../Files/img/loader.gif'>");
             },
-                success: function (data) {
-                console.log(data);
-                    var data = eval('(' + data + ')');
+            success: function (data) {
+                var data = eval('(' + data + ')');
                 $("#loader").html("");
-                    if (data.success == true) {
+                if (data.success == true) {
                     notificacion(data.mensaje, 'success', 'alert');
                     cargarCarro()
-            } else {
-    notificacion(data.mensaje, 'warning', 'alert');
-        }
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
             }
         });
     }
-    
-        function confirmacion(titulo, mensaje) {
+
+    function actualizarProducto(id) {
+        var cantidad = document.getElementById("cant" + id).value;
+        var parametros = {"accion": "ACTUALIZAR_ARRICULO", "idProducto": id, "cantidad": cantidad};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
+            data: parametros,
+            beforeSend: function (objeto) {
+                $("#loader").html("<img src='../../Files/img/loader.gif'>");
+            },
+            success: function (data) {
+                console.log(data);
+                var data = eval('(' + data + ')');
+                $("#loader").html("");
+                if (data.success == true) {
+                    notificacion(data.mensaje, 'success', 'alert');
+                    cargarCarro()
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
+            }
+        });
+    }
+
+    function confirmacion(titulo, mensaje) {
         document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
         $('#titulo-confirmacion').html(titulo);
-    $('#contenedor-confirmacion').html(mensaje);
+        $('#contenedor-confirmacion').html(mensaje);
         $('#dg-confirmacion').modal(this);//CALL MODAL MENSAJE
     }
 
     function vaciarCarro() {
-        confirmacion('Confirmacion', '¿Esta seguro?, Una vez vaciado no se podran recuperar los datos.');        
-        }
+        confirmacion('Confirmacion', '¿Esta seguro?, Una vez vaciado no se podran recuperar los datos.');
+    }
 
-        function confirmarVaciarCarro() {
-            var parametros = {"accion": "VACIAR_CARRO"};
-            $("#loader").fadeIn('slow');         $.ajax({
-                url: '../Servlet/administrarCarroCompra.php',
+    function confirmarVaciarCarro() {
+        var parametros = {"accion": "VACIAR_CARRO"};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url: '../Servlet/administrarCarroCompra.php',
             data: parametros,
             beforeSend: function (objeto) {
                 $("#loader").html("<img src='../../Files/img/loader.gif'>");
-                },
-                success: function (data) {
+            },
+            success: function (data) {
                 var data = eval('(' + data + ')');
                 $("#loader").html("");
-                    $('#dg-confirmacion').modal('hide')
-                    if (data.success == true) {
+                $('#dg-confirmacion').modal('hide')
+                if (data.success == true) {
                     notificacion(data.mensaje, 'success', 'alert');
                     cargarCarro();
-            } else {
-    notificacion(data.mensaje, 'warning', 'alert');
-        }
+                } else {
+                    notificacion(data.mensaje, 'warning', 'alert');
+                }
             }
         });
     }
-    
-        function number_format(amount, decimals) {
+
+    function number_format(amount, decimals) {
         amount += ''; // por si pasan un numero en vez de un string
         amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
 
         decimals = decimals || 0; // por si la variable no fue fue pasada
 
-            // si no es un numero o es igual a cero retorno el mismo cero
+        // si no es un numero o es igual a cero retorno el mismo cero
         if (isNaN(amount) || amount === 0)
-        return parseFloat(0).toFixed(decimals);
+            return parseFloat(0).toFixed(decimals);
 
         // si es mayor o menor que cero retorno el valor formateado como numero
         amount = '' + amount.toFixed(decimals);
 
-            var amount_parts = amount.split('.'),
+        var amount_parts = amount.split('.'),
                 regexp = /(\d+)(\d{3})/;
 
         while (regexp.test(amount_parts[0]))
-    amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
 
         return amount_parts.join('.');
     }
