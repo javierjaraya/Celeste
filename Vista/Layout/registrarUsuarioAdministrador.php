@@ -186,7 +186,9 @@ if (isset($_SESSION["autentificado"])) {
                                             url_json,
                                             function (datos) {
                                                 $.each(datos, function (k, v) {
-                                                    var contenido = "<option value='" + v.idPerfil + "'>" + v.nombrePerfil + "</option>";
+                                                    if (v.idPerfil != 3) {
+                                                        var contenido = "<option value='" + v.idPerfil + "'>" + v.nombrePerfil + "</option>";
+                                                    }
                                                     $("#idPerfil").append(contenido);
                                                 });
                                             }

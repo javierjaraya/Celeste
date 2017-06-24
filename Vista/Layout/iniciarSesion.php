@@ -113,14 +113,10 @@ if (isset($_SESSION["autentificado"])) {
                         <?php include("../Menus/menuLeft.php"); ?>
                     </div>
                     <div class="col-md-9">
-
                         <div class="row">
-
-
                             <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center;  margin-bottom: 20px;">
                                 <h4 class="TextoTituloFormulario"><strong>INGRESE SUS DATOS PARA INICIAR SESIÓN</strong></h4>
                             </div>
-
                             <div class="col-md-12" style="padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px;">      
                                 <div  class="row">
                                     <div id="alert"></div>    
@@ -141,7 +137,7 @@ if (isset($_SESSION["autentificado"])) {
                                             <div class="col-sm-offset-4 col-sm-8">
                                                 <div class="checkbox">
                                                     <label style="width: 200px;">
-                                                        <a>Olvido su contraseña</a>                                
+                                                        <a href="restablecerClave.php">Olvido su contraseña</a>                                
                                                     </label>
                                                 </div>
                                             </div>

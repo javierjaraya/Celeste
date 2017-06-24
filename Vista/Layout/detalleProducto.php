@@ -204,19 +204,24 @@ if (isset($_SESSION["autentificado"])) {
                             <div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
                                 Consulta
                             </div>
-                            <div class="review-list" id="tab-review" style="display: block;">
-
-                                <b>Nombre:</b><br>
-                                <input type="text" value="" name="name">
-                                <br>
-                                <br>
-                                <b>Consulta:</b>
-                                <textarea style="width: 98%;" rows="8" cols="40" name="text"></textarea>
-                                <span style="font-size: 11px;"><span style="color: #FF0000;">Nota:</span> HTML no es permitido</span><br>    
-                                <div class="buttons">
-                                    <div class="right"><a class="button" id="button-review">Enviar</a></div>
+                            
+                             <div id="alert2"></div>
+                            <form action="enviarCorreo.php" method="Post">
+                                <div class="review-list" id="tab-review" style="display: block;">
+                                    <b>Asunto:</b><br>
+                                    <input type="text" value="" name="asunto" id="asunto">
+                                    <br>
+                                    <br>
+                                    <b>Consulta:</b>
+                                    <textarea style="width: 98%;" rows="8" cols="40" name="mensaje" id="mensaje"></textarea>
+                                    <span style="font-size: 11px;"><span style="color: #FF0000;">Nota:</span> HTML no es permitido</span><br>    
+                                    <div class="buttons">
+                                        <div class="right"><input class="button" type="submit"></div>
+                                    </div>
                                 </div>
-                            </div>
+                                <input type="hidden" id="destino" name="destino" value="joseline.cisternas@gmail.com">
+                                <input type="hidden" id="desde" name="desde" value="Sistema web Celeste">
+                            </form>
 
                             <script>
                                 $(document).ready(function () {

@@ -180,7 +180,7 @@ if ($accion != null) {
         if ($resutl) {
             echo json_encode(array(
                 'success' => true,
-                'mensaje' => "Carro vaciaro correctamente."
+                'mensaje' => "El carro fue vaciado correctamente."
             ));
         } else {
             echo json_encode(array(
