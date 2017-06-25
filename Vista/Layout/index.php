@@ -30,13 +30,21 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/datatables/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/menuDespegable/estilo-menu.css" />
 
+        <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />
+
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/menuDespegable/js-menu.js"></script>
+        
+        <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>
+        <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script>
+        
         <!-- JS Part End-->
 
         <!-- Bootstrap 3.3.6 -->
@@ -76,22 +84,22 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
 
-                <?php if($autentificado == "SI"){ ?>
-                <!-- CARRO -->
-                <div id="cart" class=""style="float: right; padding-top: 20px;">
-                    <div class="" style="width: 200px;">
-                        <div class="btn-group" role="group">                            
-                            <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
-                            <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
-                            <ul class="dropdown-menu">
-                                <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
-                                <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
-                            </ul>
-                        </div>
-                    </div>                    
-                </div>
+                <?php if ($autentificado == "SI") { ?>
+                    <!-- CARRO -->
+                    <div id="cart" class=""style="float: right; padding-top: 20px;">
+                        <div class="" style="width: 200px;">
+                            <div class="btn-group" role="group">                            
+                                <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
+                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
+                                <ul class="dropdown-menu">
+                                    <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>
+                                    <li><a href="#">Pagar<samp class="glyphicon glyphicon-usd" style="float: right;"></samp></a></li>
+                                </ul>
+                            </div>
+                        </div>                    
+                    </div>
                 <?php } ?>
-                
+
             </div>
             <!-- MENU -->
             <div class="row" style="padding-left: 10px; padding-right: 10px;">
@@ -118,19 +126,22 @@ if (isset($_SESSION["autentificado"])) {
                         <?php include("../Menus/menuLeft.php"); ?>
                     </div>
                     <div class="col-md-9">
-
                         <div class="row">
+                            <!--Middle Part Start-->
+                            <div id="content" style="padding-top: 0">
+                                <!--Slideshow Part Start-->
+                                <div class="slider-wrapper">
+                                    <div id="slideshow" class="nivoSlider"> <a href="#"><img src="../../Files/img/slider/slider-1.jpg" alt="slideshow-1" /></a> <a href="#"><img src="../../Files/img/slider/slider-2.jpg" alt="slideshow-2" /></a> <a href="#"><img src="../../Files/img/slider/slider-3.jpg" alt="slideshow-3" /></a> <a href="#"><img src="../../Files/img/slider/slider-4.jpg" alt="slideshow-4" /></a> </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#slideshow').nivoSlider();
+                                    });
+                                </script>
+                                <!--Slideshow Part End-->
+                            </div>
+                            <!--Middle Part End-->
+                            <?php include("footer.php"); ?>
+    
 
-    
-    <!--Middle Part Start-->
-    <div id="content">
-        <p>" Nuestra principal intencion es compartir nuestro amor por las flores , plantas y arboles con nuestros clientes."</p>
-    </div>
-    <!--Middle Part End-->
-    
-    
-<?php include("footer.php"); ?>
-    
-    
-    
-    
+
