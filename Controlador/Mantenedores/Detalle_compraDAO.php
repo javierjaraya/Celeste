@@ -95,8 +95,8 @@ class Detalle_compraDAO{
 
     public function save($detalle_compra) {
         $this->conexion->conectar();
-        $query = "INSERT INTO detalle_compra (idDetalle,idCompra,idProducto,precio,cantidad)"
-                . " VALUES ( ".$detalle_compra->getIdDetalle()." ,  ".$detalle_compra->getIdCompra()." ,  ".$detalle_compra->getIdProducto()." ,  ".$detalle_compra->getPrecio()." ,  ".$detalle_compra->getCantidad()." )";
+        $query = "INSERT INTO detalle_compra (idCompra,idProducto,precio,cantidad)"
+                . " VALUES ( ".$detalle_compra->getIdCompra()." ,  ".$detalle_compra->getIdProducto()." ,  ".$detalle_compra->getPrecio()." ,  ".$detalle_compra->getCantidad()." )";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;

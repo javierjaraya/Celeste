@@ -8,6 +8,18 @@ class CompraDAO{
     public function CompraDAO() {
         $this->conexion = new ConexionMySQL();
     }
+    
+    public function idDisponible() {
+        $this->conexion->conectar();
+        $query = "SELECT (IFNULL(max(idCompra),0)+1) as id FROM compra ";
+        $result = $this->conexion->ejecutar($query);
+        $id = 1;
+        while ($fila = $result->fetch_row()) {
+            $id = $fila[0];
+        }
+        $this->conexion->desconectar();
+        return $id;
+    }
 
     public function delete($idCompra) {
         $this->conexion->conectar();
@@ -38,6 +50,7 @@ class CompraDAO{
         $this->conexion->desconectar();
         return $compras;
     }
+    
     public function miFindAll($run) {
         $this->conexion->conectar();
         $query = "SELECT * FROM compra where run = '".$run."'";
@@ -103,11 +116,12 @@ class CompraDAO{
     public function save($compra) {
         $this->conexion->conectar();
         $query = "INSERT INTO compra (idCompra,fechaCompra,estado,metodoDespacho,direccionDespacho,personaRetira,run)"
-                . " VALUES ( ".$compra->getIdCompra()." , ".$compra->getFechaCompra()." , '".$compra->getEstado()."' , '".$compra->getMetodoDespacho()."' , '".$compra->getDireccionDespacho()."' , '".$compra->getPersonaRetira()."' , '".$compra->getRun()."' )";
+                . " VALUES ( ".$compra->getIdCompra()." , now() , '".$compra->getEstado()."' , '".$compra->getMetodoDespacho()."' , '".$compra->getDireccionDespacho()."' , '".$compra->getPersonaRetira()."' , '".$compra->getRun()."' )";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;
     }
+    
     public function updateEstado($compra) {
         $this->conexion->conectar();
         $query = "UPDATE compra SET "

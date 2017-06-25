@@ -121,5 +121,11 @@ if ($accion != null) {
         } else {
              echo json_encode(array('errorMsg' => 'La Clave actual es Incorrecta'));
         }
+    } else if ($accion == "OBTENER_USUARIO_SESION"){
+        session_start();
+        $run = $_SESSION['run'];
+        $usuario = $control->getUsuarioByID($run);
+        $json = json_encode($usuario);
+        echo $json;
     }
 }

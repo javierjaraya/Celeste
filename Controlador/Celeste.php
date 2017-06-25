@@ -11,6 +11,7 @@ include_once 'Mantenedores/UsuarioDAO.php';
 include_once 'Mantenedores/CarroCompraDAO.php';
 
 class Celeste {
+
     private static $instancia = NULL;
     private $categoriaDAO;
     private $compraDAO;
@@ -58,7 +59,7 @@ class Celeste {
     public function getCategoriaByID($idCategoria) {
         return $this->categoriaDAO->findByID($idCategoria);
     }
-    
+
     public function getCategoriaByNombre($nombreCategoria) {
         return $this->categoriaDAO->findByNombre($nombreCategoria);
     }
@@ -66,13 +67,19 @@ class Celeste {
     public function getCategoriaLikeAtrr($cadena) {
         return $this->categoriaDAO->findLikeAtrr($cadena);
     }
+    
+    public function getIdCompras() {
+        return $this->compraDAO->idDisponible();
+    }
 
     public function getAllCompras() {
         return $this->compraDAO->findAll();
     }
- public function miGetAllCompras($run) {
+
+    public function miGetAllCompras($run) {
         return $this->compraDAO->miFindAll($run);
     }
+
     public function addCompra($compra) {
         return $this->compraDAO->save($compra);
     }
@@ -84,7 +91,8 @@ class Celeste {
     public function updateCompra($compra) {
         return $this->compraDAO->update($compra);
     }
-      public function updateEstadoCompra($compra) {
+
+    public function updateEstadoCompra($compra) {
         return $this->compraDAO->updateEstado($compra);
     }
 
@@ -115,9 +123,11 @@ class Celeste {
     public function getDetalle_compraByID($idDetalle) {
         return $this->detalle_compraDAO->findByID($idDetalle);
     }
-  public function getAllDetalle_compraByIDCompra($idCompra) {
+
+    public function getAllDetalle_compraByIDCompra($idCompra) {
         return $this->detalle_compraDAO->findAllByIDCompra($idCompra);
     }
+
     public function getDetalle_compraLikeAtrr($cadena) {
         return $this->detalle_compraDAO->findLikeAtrr($cadena);
     }
@@ -141,7 +151,7 @@ class Celeste {
     public function getImagenByID($idImagen) {
         return $this->imagenDAO->findByID($idImagen);
     }
-    
+
     public function getImagenByIdProducto($idProducto) {
         return $this->imagenDAO->findByIdProducto($idProducto);
     }
@@ -181,11 +191,11 @@ class Celeste {
     public function getAllProductos() {
         return $this->productoDAO->findAll();
     }
-    
+
     public function getAllProductosBy_idSubCategoria($idSubCategoria) {
         return $this->productoDAO->findAllByIdSubCategoria($idSubCategoria);
     }
-    
+
     public function getAllProductos_Limit_By_idSubCategoria($offset, $per_page, $order, $idSubCategoria) {
         return $this->productoDAO->findLimitByIdSubCategoria($offset, $per_page, $order, $idSubCategoria);
     }
@@ -217,7 +227,7 @@ class Celeste {
     public function getAllSubcategorias() {
         return $this->subcategoriaDAO->findAll();
     }
-    
+
     public function getAllSubcategoriasByIdCategoria($idCategoria) {
         return $this->subcategoriaDAO->findAllByIdCategoria($idCategoria);
     }
@@ -237,7 +247,7 @@ class Celeste {
     public function getSubcategoriaByID($idSubCategoria) {
         return $this->subcategoriaDAO->findByID($idSubCategoria);
     }
-    
+
     public function getSubcategoriaByNombre($nombreSubCategoria) {
         return $this->subcategoriaDAO->findByNombre($nombreSubCategoria);
     }
@@ -261,7 +271,8 @@ class Celeste {
     public function updateUsuario($usuario) {
         return $this->usuarioDAO->update($usuario);
     }
-     public function updateClaveUsuario($usuario) {
+
+    public function updateClaveUsuario($usuario) {
         return $this->usuarioDAO->updateClave($usuario);
     }
 
@@ -272,11 +283,12 @@ class Celeste {
     public function getUsuarioLikeAtrr($cadena) {
         return $this->usuarioDAO->findLikeAtrr($cadena);
     }
-    
+
     public function getCarritoCompra() {
         $carrito = new CarroCompra();
         return $carrito;
     }
 
 }
+
 ?>
