@@ -203,30 +203,52 @@ if (isset($_SESSION["autentificado"])) {
 
                             <div style=" padding: 5px; color: #333; font-size: 15px; font-weight: bold; text-align: center; border-top: 1px solid #EEEEEE;border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE; width: 150px;">
                                 Consulta
-                            </div>
-                            
-                             <div id="alert2"></div>
-                            <form action="enviarCorreo.php" method="Post">
+                            </div>                            
+                            <div id="alert2"></div>
+                            <form id="fm-consulta" class="form-horizontal" method="Post">                           
                                 <div class="review-list" id="tab-review" style="display: block;">
-                                    <b>Asunto:</b><br>
-                                    <input type="text" value="" name="asunto" id="asunto">
+                                    <input type="hidden" value="" name="asunto" id="asunto">                              
+                                    <input type="hidden" id="destino" name="destino" value="joseline.cisternas@gmail.com">                                   
+                                    <input type="hidden" id="idProductoConsulta" name="idProductoConsulta" value="<?= $producto->getIdProducto() ?>">
+                                    <input type="hidden" id="nombreProductoConsulta" name="nombreProductoConsulta" value="<?= $producto->getNombreProducto() ?>">
+                                    <input type="hidden" id="accion" name="accion" value=""> 
+
+                                    <b>Ingrese su correo electronico:</b><br>
+                                    <input type="text" value="" style="width: 300px" name="desde" id="desde">
                                     <br>
                                     <br>
                                     <b>Consulta:</b>
                                     <textarea style="width: 98%;" rows="8" cols="40" name="mensaje" id="mensaje"></textarea>
                                     <span style="font-size: 11px;"><span style="color: #FF0000;">Nota:</span> HTML no es permitido</span><br>    
                                     <div class="buttons">
-                                        <div class="right"><input class="button" type="submit"></div>
+                                        <div class="right"><input class="btn btn-warning" value="Enviar Consulta" onclick="enviarConsulta()" type="button"></div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="destino" name="destino" value="joseline.cisternas@gmail.com">
-                                <input type="hidden" id="desde" name="desde" value="Sistema web Celeste">
                             </form>
 
                             <script>
                                 $(document).ready(function () {
 
                                 });
+                                function enviarConsulta() {
+                                    var asunto = "Consulta Por: " + document.getElementById("nombreProductoConsulta").value + " (id:" + document.getElementById("idProductoConsulta").value + ")";
+                                    document.getElementById("asunto").value = asunto;
+                                    document.getElementById("accion").value = "ENVIAR_CORREO";
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../Servlet/enviarCorreo.php",
+                                        data: $("#fm-consulta").serialize(),
+                                        success: function (result) {
+                                            var result = eval('(' + result + ')');
+                                            if (result.errorMsg) {
+                                                notificacion('Error, Su consulta no pudo ser enviada, intente nuevamente', 'danger', 'alert2');
+                                            } else {
+                                                notificacion('Su consulta a sido enviada de forma exitosa', 'success', 'alert2');
+                                                document.getElementById("mensaje").value = "";                                                
+                                            }
+                                        }
+                                    });
+                                }
 
                                 function agregarAlCarro(id) {
                                     var cantidad = document.getElementById("cantidad").value;
@@ -258,7 +280,6 @@ if (isset($_SESSION["autentificado"])) {
                                         notificacion("Debe ingresar una cantidad mayor que 0.", 'warning', 'alert');
                                     }
                                 }
-
                                 function number_format(amount, decimals) {
                                     amount += ''; // por si pasan un numero en vez de un string
                                     amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto

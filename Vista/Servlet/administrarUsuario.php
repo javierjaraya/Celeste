@@ -119,9 +119,42 @@ if ($accion != null) {
                 echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
             }
         } else {
-             echo json_encode(array('errorMsg' => 'La Clave actual es Incorrecta'));
+            echo json_encode(array('errorMsg' => 'La Clave actual es Incorrecta'));
         }
-    } else if ($accion == "OBTENER_USUARIO_SESION"){
+    } else if ($accion == "RECUPERAR_CLAVE") {
+        $runIngresado = htmlspecialchars($_REQUEST['run']);
+        $correoIngresado = htmlspecialchars($_REQUEST['correo']);
+        $asunto = "Recuperar Clave";
+        $desde = "FROM: Sistema Web Celeste";
+        $destino = "joseline.cisternas@gmail.com";
+        if (($runIngresado != null || $runIngresado != "") && ($correoIngresado != null || $correoIngresado != "")) {
+            $usuario = $control->getUsuarioByID($runIngresado);
+            $CorreoRegistrado = $usuario->getCorreoElectronico();
+            $runRegistrado = $usuario->getRun();
+            if (($runIngresado == $runRegistrado) && ($correoIngresado == $CorreoRegistrado)) {
+                $nombreCompleto = $usuario->getNombres()." ".$usuario->getApellidos();
+                $ClaveAleatoria = rand(1000, 99999999);
+                $mensaje = "Estimado/a ".$nombreCompleto.", Su nueva clave secreta es: ".$ClaveAleatoria." . Le recomendamos cambiarla lo antes posible en la seccion 'Mi Perfil'";
+                $usuarioModificado = new UsuarioDTO();
+                $usuarioModificado->setRun($runRegistrado);
+                $usuarioModificado->setClave(md5($ClaveAleatoria));
+                $result = $control->updateClaveUsuario($usuarioModificado);
+                if ($result) {
+                    mail($destino, $asunto, $mensaje, $desde);
+                    echo json_encode(array(
+                        'success' => true,
+                        'mensaje' => "Su nueva clave a sido enviada a su correo electronico"
+                    ));
+                } else {
+                    echo json_encode(array('errorMsg' => 'Ha ocurrido un error al intentar actualizar la clave.'));
+                }
+            } else {
+                echo json_encode(array('errorMsg' => 'Los datos ingresados no corresponden a un usuario válido'));
+            }
+        } else {
+            echo json_encode(array('errorMsg' => 'Debe ingresar datos validos'));
+        }
+    } else if ($accion == "OBTENER_USUARIO_SESION") {
         session_start();
         $run = $_SESSION['run'];
         $usuario = $control->getUsuarioByID($run);
