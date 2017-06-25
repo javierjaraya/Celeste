@@ -20,7 +20,7 @@ if ($accion != null) {
         $direccionDespacho = htmlspecialchars($_REQUEST['direccionDespacho']);
         $personaRetira = htmlspecialchars($_REQUEST['personaRetira']);
 
-        $estado = "Processando";
+        $estado = "Procesando";
         session_start();
         $run = $_SESSION["run"];
         $idCompra = $control->getIdCompras();
@@ -58,15 +58,16 @@ if ($accion != null) {
 
         /* PAGAR EN PAYPAL */
         $paypal_business = "manuel.gaete.v-facilitator@gmail.com";
-        $paypal_currency = "CLP";
+        $paypal_currency = "USD";
         $paypal_cursymbol = "&$";
         $paypal_location = "CL";
-        $paypal_returnurl = "http://localhost/Celeste/Vista/Layout/pagoRealizado.php";
+        $paypal_returnurl = "http://localhost/Celeste/Vista/Layout/pagoRealizado.php?idCompra=".$idCompra;
         $paypal_returntxt = "Pago Realizado Exitosamente!";
-        $paypal_cancelurl = "http://localhost/Celeste/Vista/Layout/pagoRealizado.php";
+        $paypal_cancelurl = "http://localhost/Celeste/Vista/Layout/pagoCancelado.php?idCompra=".$idCompra;
 
         /* Detalle compra */
         $ppurl = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_cart";
+        $ppurl = "https://www.paypal.com/cgi-bin/webscr?cmd=_cart";
         $ppurl .= "&business=" . $paypal_business;
         $ppurl .= "&no_note=1";
         $ppurl .= "&currency_code=" . $paypal_currency;
@@ -85,17 +86,11 @@ if ($accion != null) {
         }
         $ppurl.= "&tax_cart=0.00";
         
-        /* Url paypal*/
-        $url = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick";
-        $url .= "";
-
-
-
         if ($result) {
             echo json_encode(array(
                 'url' => $ppurl,
                 'success' => true,
-                'mensaje' => "Compra ingresada correctamente"
+                'mensaje' => "Redireccionando a PayPal"
             ));
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
