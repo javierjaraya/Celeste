@@ -25,6 +25,7 @@ if (isset($_SESSION["autentificado"])) {
         <meta charset="utf-8" />
         <title>Celeste</title>
         <link href="../../Files/img/favicon2.png" rel="icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <!-- CSS Part Start-->     
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />     
