@@ -108,6 +108,52 @@
     </div>
 </div>
 
+
+<!-- DIALOGO MODAL-->
+<div class="modal fade bs-example-modal-md" id="dg-modela" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
+                    <label class="titulo-modal" style="width: 300px; padding-top: 20px;"><h4 class="modal-title" id="modalLabel">Productos con stock bajo</h4></label>
+                </div>
+                <form id="fm" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <div style="margin: 1%; align-content: center; border: orangered 1px solid; border-radius: 15px;">
+                        <div class="modal-body">
+                            <section class="row"> 
+                                <div id="alert-modal"></div>
+                                <section class="col-md-12">
+                                    <div class="cart-info">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td class="image">Imagen</td>
+                                                    <td class="name">Nombre Producto</td>
+                                                    <td class="quantity">Stock Solicitado</td>
+                                                    <td class="total">Stock Disponible</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="contenido-bajo-stock">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </section>                           
+                            </section><!-- Fin Row-->
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-warning" data-dismiss="modal">Aceptar</a>
+                        </div>   
+                    </div>             
+                </form>
+            </section>
+        </div>
+    </div>
+</div><!-- END DIALOGO MODAL-->
+
+
 <script>
     $(document).ready(function () {
         cargarUsuario();
@@ -161,21 +207,39 @@
                 data: parametros,
                 beforeSend: function (objeto) {
                     $("#loader").html("<img src='../../Files/img/loader.gif'>");
-                },
-                success: function (data) {
-                    console.log(data);
+                }, success: function (data) {
                     var data = eval('(' + data + ')');
                     if (data.success == true) {
                         $("#loader").html("");
-                        location.href=data.url;
+                        location.href = data.url;
                         notificacion(data.mensaje, 'success', 'alert');
                         //location.href = data.url;
                     } else {
-                        notificacion(data.errorMsg, 'warning', 'alert');
+                        if (data.errorMsg) {
+                            notificacion(data.errorMsg, 'warning', 'alert');
+                        } else {
+                            notificacion(data.mensaje, 'warning', 'alert-modal');
+                            productosBajoStock(data);
+                            $('#dg-modela').modal(this)//CALL MODAL MENSAJE                            
+                        }
+
                     }
                 }
             });
         }
+    }
+
+    function productosBajoStock(data) {
+        $("#contenido-bajo-stock").html("");        
+        $.each(data.productos, function (k, v) {
+            var html = "<tr>"
+                    + "    <td class='image'><img title='Bag Lady' alt='Bag Lady' src='../../" + v.producto.imagen.rutaImagen + "' width='60px' height='60px'></td>"
+                    + "    <td class='name'>" + v.producto.nombreProducto + "</td>"
+                    + "    <td class='quantity' style='color: red;'><b>" + v.stockSolicitado + "</b></td>"
+                    + "    <td class='quantity'><b>" + v.producto.stock + "</b></td>"
+                    + "</tr>";
+            $("#contenido-bajo-stock").append(html);
+        });
     }
 
     function validar() {

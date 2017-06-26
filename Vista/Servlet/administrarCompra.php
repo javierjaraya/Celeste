@@ -41,6 +41,9 @@ if ($accion != null) {
         $carro = $carritoCompra->get_content();
         $total_carro = 0;
         $cantidad_articulos = 0;
+        $stock_disponible = true;
+        $producto_sin_stock = array();
+        $i_sin_stock = 0;
         if ($carro) {
             foreach ($carro as $producto) {
                 $detalle_compra = new Detalle_compraDTO();
@@ -50,55 +53,98 @@ if ($accion != null) {
                 $detalle_compra->setCantidad($producto['cantidad']);
                 $cantidad_articulos++;
                 $total_carro = $total_carro + ($producto['precio'] * $producto['cantidad']);
-                $resultDetalle = $control->addDetalle_compra($detalle_compra);
+
+
+                /* descuento stock */
+                $object = $control->getProductoByID($producto['id']);
+                if ($object->getStock() >= $producto['cantidad']) {
+                    $stock = $object->getStock() - $producto['cantidad'];
+                    $object->setStock($stock);
+                    $control->updateProducto($object);
+
+                    $resultDetalle = $control->addDetalle_compra($detalle_compra);
+                } else {
+                    $stock_disponible = false;
+                    $producto_sin_stock[$i_sin_stock] = array('producto' => $object, 'stockSolicitado' => $producto['cantidad']);
+                    $i_sin_stock++;
+                }
             }
         }
 
-        /* VACIAR CARRO DE COMPRA */
+        if ($stock_disponible) {
 
-        /* PAGAR EN PAYPAL */
-        $paypal_business = "manuel.gaete.v-facilitator@gmail.com";
-        $paypal_currency = "USD";
-        $paypal_cursymbol = "&$";
-        $paypal_location = "CL";
-        $paypal_returnurl = "http://localhost/Celeste/Vista/Layout/pagoRealizado.php?idCompra=".$idCompra;
-        $paypal_returntxt = "Pago Realizado Exitosamente!";
-        $paypal_cancelurl = "http://localhost/Celeste/Vista/Layout/pagoCancelado.php?idCompra=".$idCompra;
+            /* PAGAR EN PAYPAL */
+            $paypal_business = "manuel.gaete.v-facilitator@gmail.com";
+            $paypal_currency = "USD";
+            $paypal_cursymbol = "&$";
+            $paypal_location = "CL";
+            $paypal_returnurl = "http://localhost/Celeste/Vista/Layout/pagoRealizado.php?idCompra=" . $idCompra;
+            $paypal_returntxt = "Pago Realizado Exitosamente!";
+            $paypal_cancelurl = "http://localhost/Celeste/Vista/Layout/pagoCancelado.php?idCompra=" . $idCompra;
 
-        /* Detalle compra */
-        $ppurl = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_cart";
-        $ppurl = "https://www.paypal.com/cgi-bin/webscr?cmd=_cart";
-        $ppurl .= "&business=" . $paypal_business;
-        $ppurl .= "&no_note=1";
-        $ppurl .= "&currency_code=" . $paypal_currency;
-        $ppurl .= "&charset=utf-8&rm=1&upload=1";
-        $ppurl .= "&business=" . $paypal_business;
-        $ppurl .= "&return=" . urlencode($paypal_returnurl);
-        $ppurl .= "&cancel_return=" . urlencode($paypal_cancelurl);
-        $ppurl .= "&page_style=&paymentaction=sale&bn=katanapro_cart&invoice=KP-";
+            /* Detalle compra */
+            $ppurl = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_cart";
+            $ppurl = "https://www.paypal.com/cgi-bin/webscr?cmd=_cart";
+            $ppurl .= "&business=" . $paypal_business;
+            $ppurl .= "&no_note=1";
+            $ppurl .= "&currency_code=" . $paypal_currency;
+            $ppurl .= "&charset=utf-8&rm=1&upload=1";
+            $ppurl .= "&business=" . $paypal_business;
+            $ppurl .= "&return=" . urlencode($paypal_returnurl);
+            $ppurl .= "&cancel_return=" . urlencode($paypal_cancelurl);
+            $ppurl .= "&page_style=&paymentaction=sale&bn=katanapro_cart&invoice=KP-";
 
-        $i = 1;
-        if ($carro) {
-            foreach ($carro as $producto) {
-                $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . $producto["precio"] . "&item_number_$i=" . $i;
-                $i++;
+            $i = 1;
+            if ($carro) {
+                foreach ($carro as $producto) {
+                    $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . $producto["precio"] . "&item_number_$i=" . $i;
+                    $i++;
+                }
             }
-        }
-        $ppurl.= "&tax_cart=0.00";
-        
-        if ($result) {
-            echo json_encode(array(
-                'url' => $ppurl,
-                'success' => true,
-                'mensaje' => "Redireccionando a PayPal"
-            ));
+            $ppurl.= "&tax_cart=0.00";
+
+            if ($result) {
+                echo json_encode(array(
+                    'url' => $ppurl,
+                    'success' => true,
+                    'mensaje' => "Redireccionando a PayPal"
+                ));
+            } else {
+                echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+            }
         } else {
-            echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+            echo json_encode(array(
+                'productos' => $producto_sin_stock,
+                'success' => false,
+                'mensaje' => "Existen productos con bajo stock"
+            ));
         }
     } else if ($accion == "BORRAR") {
         $idCompra = htmlspecialchars($_REQUEST['idCompra']);
 
         $result = $control->removeCompra($idCompra);
+        if ($result) {
+            echo json_encode(array('success' => true, 'mensaje' => "Compra borrado correctamente"));
+        } else {
+            echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+        }
+    } else if ($accion == "CANCELAR") {
+        $idCompra = htmlspecialchars($_REQUEST['idCompra']);
+
+        $detalle_compras = $control->getAllDetalle_compraByIDCompra($idCompra);
+
+        foreach ($detalle_compras as $detalle) {
+            /* Obtener producto */
+            $producto = $control->getProductoByID($detalle->getIdProducto());
+            /* Sumar stock */
+            $stock = $producto->getStock() + $detalle->getCantidad();
+            /* Actualizar producto */
+            $producto->setStock($stock);
+            $control->updateProducto($producto);
+        }
+
+        $result = $control->removeCompra($idCompra);
+
         if ($result) {
             echo json_encode(array('success' => true, 'mensaje' => "Compra borrado correctamente"));
         } else {
