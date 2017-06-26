@@ -338,7 +338,6 @@
             }
         });
     }
-
     function cargarPerfiles() {
         var url_json = '../Servlet/administrarPerfil.php?accion=LISTADO';
         $.getJSON(
@@ -386,6 +385,7 @@
         var id = document.getElementById('runUsuarioEliminar').value;
         $.post('../Servlet/administrarUsuario.php?accion=BORRAR', {run: id}, function (result) {
             if (result.success) {
+                console.log(result);
                 $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
                 cargarUsuarios(); //Refrescamos la tabla
                 notificacion(result.mensaje, 'success', 'alert');

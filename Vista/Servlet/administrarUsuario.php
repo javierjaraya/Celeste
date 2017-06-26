@@ -49,7 +49,6 @@ if ($accion != null) {
         }
     } else if ($accion == "BORRAR") {
         $run = htmlspecialchars($_REQUEST['run']);
-
         $result = $control->removeUsuario($run);
         if ($result) {
             echo json_encode(array('success' => true, 'mensaje' => "Usuario borrado correctamente"));

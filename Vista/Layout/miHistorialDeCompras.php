@@ -133,7 +133,7 @@
                         contenido += "<td>" + v.fechaCompra + "</td>";
                         contenido += "<td>" + v.estado + "</td>";
                         contenido += "<td>";
-                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCompra + ")'><strong>Ver detalles</strong></a>";
+                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCompra + ")'><strong>Ver detalles</strong></a>";
                         contenido += "</td>";
                         contenido += "</tr>";
                         $("#comprasRecientes").append(contenido);
