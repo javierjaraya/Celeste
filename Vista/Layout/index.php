@@ -39,6 +39,7 @@ if (isset($_SESSION["autentificado"])) {
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+        <!--<script type="text/javascript" src="../../Files/js/jquery-1.9.1.min.js"></script>-->
         <script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/menuDespegable/js-menu.js"></script>
         

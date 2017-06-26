@@ -140,14 +140,20 @@ if ($accion != null) {
     } else if ($accion == "BORRAR") {
         $idProducto = htmlspecialchars($_REQUEST['idProducto']);
 
-        $imagen = $control->getImagenByIdProducto($idProducto);
-        unlink("../../Files/img/Productos/" . $imagen->getNombreImagen());
+        $detalle_compras = $control->getAllDetalle_compraByIDProducto($idProducto);
 
-        $result = $control->removeProducto($idProducto);
-        if ($result) {
-            echo json_encode(array('success' => true, 'mensaje' => "Producto borrado correctamente"));
+        if (count($detalle_compras) == 0) {
+            $imagen = $control->getImagenByIdProducto($idProducto);
+            $result = $control->removeProducto($idProducto);
+
+            if ($result) {
+                unlink("../../Files/img/Productos/" . $imagen->getNombreImagen());
+                echo json_encode(array('success' => true, 'mensaje' => "Producto borrado correctamente"));
+            } else {
+                echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+            }
         } else {
-            echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+            echo json_encode(array('errorMsg' => 'El producto está asociado a una venta, no se puede eliminar.'));
         }
     } else if ($accion == "BUSCAR") {
         $cadena = htmlspecialchars($_REQUEST['cadena']);

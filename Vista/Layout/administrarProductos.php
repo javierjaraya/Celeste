@@ -394,6 +394,7 @@
                 cargar();//Refrescamos la tabla
                 notificacion(result.mensaje, 'success', 'alert');
             } else {
+                $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
                 notificacion(result.errorMsg, 'danger', 'alert');
             }
         }, 'json');
