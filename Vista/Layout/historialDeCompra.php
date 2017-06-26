@@ -6,7 +6,7 @@
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
     <h5><strong>Compras</strong></h5>
-   
+
     <hr style="border: orangered 1px solid;">
     <div class="table-responsive">
         <table id="tabla" class="table">
@@ -47,10 +47,9 @@
                                             <label class="col-sm-4 control-label" for="estado1">Estado de la Compra</label>                                    
                                             <div class="col-sm-6">
                                                 <select  class="form-control" id="estado1" name="estado1" required > 
-                                                    <option value="Pendiente">Pendiente</option>
                                                     <option value="En Origen">En Origen</option>
                                                     <option value="En Reparto">En Reparto</option>
-                                                    <option value="En Destino">En Destino</option>
+                                                    <option value="Finalizado">Finalizado</option>
                                                 </select> 
                                             </div>
                                         </div> 
@@ -136,6 +135,7 @@
                                                     <th>Nombre Producto</th> 
                                                     <th>Cantidad</th>
                                                     <th>Precio</th>
+                                                    <th>SubTotal</th>                                                        
                                                 </tr> 
                                             </thead>
                                             <tbody id="detallecompra">
@@ -143,6 +143,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="" style="text-align: right ;" >
+                                        <h7 class="" for="total"><strong>Total:</strong></h7>
+                                        <h7 class="" id="total" name= "total"></h7>
+                                    </div> 
                                 </div>
                                 <input type="hidden" value="" name="accion" id="accion">
                                 <input type="hidden" value="" name="idCompra" id="idCompra">
@@ -159,6 +163,35 @@
     </div>
 </div>
 <!-- END DIALOGO MODAL-->
+<!-- MODAL CONFIRMACION-->
+<div class="modal fade bs-example-modal-sm" id="dg-confirmacion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section id="panel-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img id="logo-confirmacion" src="../../Files/img/log.png" width="50px">
+                    <label class="titulo-modal"><h4 class="modal-title" id="titulo-mensaje"></h4></label>
+                </div>
+                <div class="modal-body">
+                    <section class="row">
+                        <section class="col-md-12">
+                            <div id="contenedor-confirmacion">
+
+                            </div>
+                        </section>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarBorrar()">Borrar</button>
+                    <input type="hidden" value="" id="idCompraAnulada" name="idCompraAnulada">
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- END MODAL CONFIRMACION-->
 
 <script>
     $(function () {
@@ -178,8 +211,13 @@
                         contenido += "<td>" + v.fechaCompra + "</td>";
                         contenido += "<td>" + v.estado + "</td>";
                         contenido += "<td>";
-                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-edit'  onclick='editar(" + v.idCompra + ")'><strong>Cambiar Estado</strong></a>&nbsp;";
-                        contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCompra + ")'><strong>Ver detalles</strong></a>";
+                        if (v.estado == "Procesando") {
+                            contenido += "<a class='btn btn-danger btn-xs glyphicon glyphicon-trash'  onclick='borrar(" + v.idCompra + ")'><strong>Anular Compra</strong></a>&nbsp;";
+                        } else {
+                            contenido += "<a class='btn btn-info btn-xs glyphicon glyphicon-edit'  onclick='editar(" + v.idCompra + ")'><strong>Cambiar Estado</strong></a>&nbsp;";
+                        }
+                        contenido += "<a class='btn btn-warning btn-xs glyphicon glyphicon-search'  onclick='ver(" + v.idCompra + ")'><strong>Ver detalles</strong></a>";
+
                         contenido += "</td>";
                         contenido += "</tr>";
                         $("#comprasRecientes").append(contenido);
@@ -212,24 +250,24 @@
         $('#modalLabel').html("Editar Estado Compra");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE        
     }
-     function guardarCambioEstado() {
-            $.ajax({
-                type: "POST",
-                url: "../Servlet/administrarCompra.php",
-                data: $("#fm").serialize(),
-                success: function (result) {
-                    console.log(result);
-                    var result = eval('(' + result + ')');
-                    if (result.errorMsg) {
-                        $('#dg-modela').modal('hide')
-                        notificacion(result.errorMsg, 'danger', 'alert');
-                    } else {
-                        $('#dg-modela').modal('hide')
-                        notificacion(result.mensaje, 'success', 'alert');
-                        cargarCompras();
-                    }
+    function guardarCambioEstado() {
+        $.ajax({
+            type: "POST",
+            url: "../Servlet/administrarCompra.php",
+            data: $("#fm").serialize(),
+            success: function (result) {
+                console.log(result);
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $('#dg-modela').modal('hide')
+                    notificacion(result.errorMsg, 'danger', 'alert');
+                } else {
+                    $('#dg-modela').modal('hide')
+                    notificacion(result.mensaje, 'success', 'alert');
+                    cargarCompras();
                 }
-            });
+            }
+        });
     }
 
     function ver(id) {
@@ -257,23 +295,54 @@
         });
         //
         var url_json = '../Servlet/administrarDetalle_compra.php?accion=BUSCAR_All_BY_ID_COMPRA&idCompra=' + id;
+        var total = 0;
+        $("#detallecompra").html("");
         $.getJSON(
                 url_json,
                 function (datos) {
                     $.each(datos, function (k, v) {
+                        var subtotal = v.cantidad * v.precio;
                         var contenido = "<tr>";
                         contenido += "<td>" + v.idProducto + "</td>";
                         contenido += "<td>" + v.nombreProducto + "</td>";
                         contenido += "<td>" + v.cantidad + "</td>";
                         contenido += "<td>$ " + v.precio + "</td>";
+                        contenido += "<td>$ " + subtotal + "</td>";
                         contenido += "</tr>";
+                        total = total + subtotal;
                         $("#detallecompra").append(contenido);
                     });
-
+                    document.getElementById('total').innerHTML = total;
                 }
+
         );
-        //
+
+
     }
+
+    function confirmacion(titulo, mensaje) {
+        document.getElementById('logo-confirmacion').src = "../../Files/img/log.png";
+        $('#titulo-confirmacion').html(titulo);
+        $('#contenedor-confirmacion').html(mensaje);
+        $('#dg-confirmacion').modal(this)//CALL MODAL MENSAJE
+    }
+    function borrar(id) {
+        confirmacion('Confirmacion', '¿Esta seguro?, una vez anulada la compra, no podrá recuperar la información.');
+        document.getElementById('idCompraAnulada').value = id;
+    }
+    function confirmarBorrar() {
+        var id = document.getElementById('idCompraAnulada').value;
+        $.post('../Servlet/administrarCompra.php?accion=CANCELAR', {idCompra: id}, function (result) {
+            if (result.success) {
+                $('#dg-confirmacion').modal('toggle'); //Cerrar Modal
+                cargarCompras(); //Refrescamos la tabla
+                notificacion(result.mensaje, 'success', 'alert');
+            } else {
+                notificacion(result.errorMsg, 'danger', 'alert');
+            }
+        }, 'json');
+    }
+
 
 </script>
 <!--Middle Part End-->

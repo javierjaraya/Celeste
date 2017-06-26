@@ -22,7 +22,7 @@
 
             </tbody>
         </table>
- <input type="hidden"  name="run1" id="run1" value="<?php echo $run; ?>">
+        <input type="hidden"  name="run1" id="run1" value="<?php echo $run; ?>">
     </div>
 </div>
 
@@ -85,6 +85,7 @@
                                                     <th>Nombre Producto</th> 
                                                     <th>Cantidad</th>
                                                     <th>Precio</th>
+                                                    <th>Subtotal</th>
                                                 </tr> 
                                             </thead>
                                             <tbody id="detallecompra">
@@ -92,6 +93,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="" style="text-align: right ;" >
+                                        <h7 class="" for="total"><strong>Total:</strong></h7>
+                                        <h7 class="" id="total" name= "total"></h7>
+                                    </div> 
                                 </div>
                                 <input type="hidden" value="" name="accion" id="accion">
                                 <input type="hidden" value="" name="idCompra" id="idCompra">
@@ -115,10 +120,10 @@
     });
     var tabla = null;
 
-    function cargarCompras() {        
+    function cargarCompras() {
         var run = document.getElementById('run1').value;
         $("#comprasRecientes").empty();
-        var url_json = '../Servlet/administrarCompra.php?accion=MI_LISTADO&run='+ run;
+        var url_json = '../Servlet/administrarCompra.php?accion=MI_LISTADO&run=' + run;
         $.getJSON(
                 url_json,
                 function (datos) {
@@ -154,7 +159,7 @@
                 }
         );
     }
-    
+
     function ver(id) {
         document.getElementById('idCompra').value = id;
         var msj = "<strong>MI COMPRA N°: " + id + "</strong>";
@@ -179,19 +184,24 @@
         });
         //
         var url_json = '../Servlet/administrarDetalle_compra.php?accion=BUSCAR_All_BY_ID_COMPRA&idCompra=' + id;
+        var total = 0;
+        $("#detallecompra").html("");
         $.getJSON(
                 url_json,
                 function (datos) {
                     $.each(datos, function (k, v) {
+                        var subtotal = v.cantidad * v.precio;
                         var contenido = "<tr>";
                         contenido += "<td>" + v.idProducto + "</td>";
                         contenido += "<td>" + v.nombreProducto + "</td>";
                         contenido += "<td>" + v.cantidad + "</td>";
                         contenido += "<td>$ " + v.precio + "</td>";
+                        contenido += "<td>$ " + subtotal + "</td>";
                         contenido += "</tr>";
+                        total = total + subtotal;
                         $("#detallecompra").append(contenido);
                     });
-
+                    document.getElementById('total').innerHTML = total;
                 }
         );
         //

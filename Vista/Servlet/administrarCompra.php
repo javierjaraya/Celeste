@@ -146,7 +146,7 @@ if ($accion != null) {
         $result = $control->removeCompra($idCompra);
 
         if ($result) {
-            echo json_encode(array('success' => true, 'mensaje' => "Compra borrado correctamente"));
+            echo json_encode(array('success' => true, 'mensaje' => "Compra anulada correctamente"));
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
         }
@@ -199,7 +199,7 @@ if ($accion != null) {
         if ($result) {
             echo json_encode(array(
                 'success' => true,
-                'mensaje' => "Estado compra actualizado correctamente"
+                'mensaje' => "Estado compra actualizada correctamente"
             ));
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
