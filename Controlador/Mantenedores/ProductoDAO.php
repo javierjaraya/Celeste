@@ -146,6 +146,69 @@ class ProductoDAO {
         return $producto;
     }
 
+    public function find_n_recientes($n) {
+        $this->conexion->conectar();
+        $query = " SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto ORDER BY producto.idProducto DESC LIMIT 0," . $n;
+        $result = $this->conexion->ejecutar($query);
+        $i = 0;
+        $productos = array();
+        while ($fila = $result->fetch_row()) {
+            $producto = new ProductoDTO();
+            $producto->setIdProducto($fila[0]);
+            $producto->setNombreProducto($fila[1]);
+            $producto->setDescripcionProducto($fila[2]);
+            $producto->setStock($fila[3]);
+            $producto->setPrecio($fila[4]);
+            $producto->setIdSubCategoria($fila[5]);
+
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+
+            $producto->setImagen($imagen);
+            
+            $productos[$i] = $producto;
+            $i++;
+        }
+        $this->conexion->desconectar();
+        return $productos;
+    }
+
+    public function find_n_mas_vendidos($n) {
+        $this->conexion->conectar();
+        $query = "  SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto JOIN "
+                . " (SELECT dc.idProducto as id, sum(dc.cantidad) as cantidad FROM detalle_compra dc GROUP BY dc.idProducto ORDER BY cantidad DESC LIMIT 0," . $n . ") as ranking "
+                . " ON producto.idProducto = ranking.id ";
+        
+        $result = $this->conexion->ejecutar($query);
+        $i = 0;
+        $productos = array();        
+        while ($fila = $result->fetch_row()) {
+            $producto = new ProductoDTO();
+            $producto->setIdProducto($fila[0]);
+            $producto->setNombreProducto($fila[1]);
+            $producto->setDescripcionProducto($fila[2]);
+            $producto->setStock($fila[3]);
+            $producto->setPrecio($fila[4]);
+            $producto->setIdSubCategoria($fila[5]);
+
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+
+            $producto->setImagen($imagen);
+            
+            $productos[$i] = $producto;
+            $i++;
+        }
+        $this->conexion->desconectar();
+        return $productos;
+    }
+
     public function findByNombre($nombreProducto) {
         $this->conexion->conectar();
         $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE nombreProducto =  '" . $nombreProducto . "' ";

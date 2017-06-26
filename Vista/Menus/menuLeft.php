@@ -36,17 +36,21 @@
         <div class="box-heading"><span>Últimos productos</span></div>
         <div class="box-content">
             <div class="box-product">
-
-                <div>
-                    <div class="image">
-                        <a href="producto.php?producto=4">
-                            <img src="../../Files/img/Productos/miniatura_images.jpg" alt="new">
-                        </a>
-                    </div>
-                    <div class="producto.php?producto=4"><a href="producto.php">new </a></div>
-                    <div class="price">$767.677.676 </div>
-                </div>
-
+                <?php
+                $productos = $control->getProducto_n_recientes(2);
+                foreach ($productos as $p) {
+                    $imagen = $p->getImagen();
+                    echo "<div>"
+                    . "<div class='image'>"
+                    . "    <a href='detalleProducto.php?idProducto=" . $p->getIdProducto() . "'>"
+                    . "        <img src='../../" . $imagen->getRutaImagen() . "' alt='" . $p->getNombreProducto() . "' height='50px' height='50px'>"
+                    . "    </a>"
+                    . "</div>"
+                    . "<div><a href='detalleProducto.php?idProducto=" . $p->getIdProducto() . "'>" . $p->getNombreProducto() . "</a></div>"
+                    . "<div class='price'>$" . $p->getPrecio() . "</div>"
+                    . "</div>";
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -56,16 +60,21 @@
         <div class="box-heading"><span>Más Vendidos</span></div>
         <div class="box-content">
             <div class="box-product">
-                <div>
-                    <div class="image">
-                        <a href="producto.php?producto=4">
-                            <img src="../../Files/img/Productos/miniatura_images.jpg" alt="new">
-                        </a>
-                    </div>
-                    <div class="producto.php?producto=4"><a href="producto.php">new </a></div>
-                    <div class="price">$767.677.676 </div>
-                </div>
-
+                <?php
+                $productos = $control->getProducto_n_mas_vendidos(2);
+                foreach ($productos as $p) {
+                    $imagen = $p->getImagen();
+                    echo "<div>"
+                    . "<div class='image'>"
+                    . "    <a href='detalleProducto.php?idProducto=" . $p->getIdProducto() . "'>"
+                    . "        <img src='../../" . $imagen->getRutaImagen() . "' alt='" . $p->getNombreProducto() . "' height='50px' height='50px'>"
+                    . "    </a>"
+                    . "</div>"
+                    . "<div><a href='detalleProducto.php?idProducto=" . $p->getIdProducto() . "'>" . $p->getNombreProducto() . "</a></div>"
+                    . "<div class='price'>$" . $p->getPrecio() . "</div>"
+                    . "</div>";
+                }
+                ?>
 
             </div>
         </div>
@@ -79,7 +88,6 @@
 <script>
     $(function () {
         cat = getParameterByName("cat");
-        console.log(cat);
         if (cat != "") {
             document.getElementById(cat).className = " default open";
         }

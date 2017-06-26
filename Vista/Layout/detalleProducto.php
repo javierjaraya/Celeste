@@ -121,10 +121,11 @@ if (isset($_SESSION["autentificado"])) {
 
                         <div class="row">
                             <?php
-                            $idSubCategoria = htmlspecialchars($_REQUEST['sub']);
                             $idProducto = htmlspecialchars($_REQUEST['idProducto']);
-                            $subcategoria = $control->getSubcategoriaByID($idSubCategoria);
                             $producto = $control->getProductoByID($idProducto);
+                            $idSubCategoria = $producto->getIdSubCategoria();
+                            $subcategoria = $control->getSubcategoriaByID($idSubCategoria);
+                            $idCategoria = $subcategoria->getIdCategoria();
                             ?>
 
                             <style type="text/css">

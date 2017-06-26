@@ -224,6 +224,14 @@ if ($accion != null) {
         } else {
             echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
         }
+    } else if ($accion == "OBTENER_N_PRODUCTOS_RECIENTES") {
+        $cantidad = htmlspecialchars($_REQUEST['cantidad']);
+        $productos = $control->getProducto_n_recientes($cantidad);
+        $json = json_encode($productos);
+    } else if ($accion == "OBTENER_N_PRODUCTOS_MAS_VENDIDOS") {
+        $cantidad = htmlspecialchars($_REQUEST['cantidad']);
+        $productos = $control->getProducto_n_mas_vendidos($cantidad);
+        $json = json_encode($productos);
     }
 }
 

@@ -67,7 +67,7 @@ class Celeste {
     public function getCategoriaLikeAtrr($cadena) {
         return $this->categoriaDAO->findLikeAtrr($cadena);
     }
-    
+
     public function getIdCompras() {
         return $this->compraDAO->idDisponible();
     }
@@ -127,7 +127,7 @@ class Celeste {
     public function getAllDetalle_compraByIDCompra($idCompra) {
         return $this->detalle_compraDAO->findAllByIDCompra($idCompra);
     }
-    
+
     public function getAllDetalle_compraByIDProducto($idProducto) {
         return $this->detalle_compraDAO->findAllByIDProducto($idProducto);
     }
@@ -218,6 +218,14 @@ class Celeste {
 
     public function getProductoByID($idProducto) {
         return $this->productoDAO->findByID($idProducto);
+    }
+
+    public function getProducto_n_recientes($n) {
+        return $this->productoDAO->find_n_recientes($n);
+    }
+
+    public function getProducto_n_mas_vendidos($n) {
+        return $this->productoDAO->find_n_mas_vendidos($n);
     }
 
     public function getProductoByNombre($nombreProducto) {
