@@ -157,8 +157,15 @@ if ($accion != null) {
         }
     } else if ($accion == "BUSCAR") {
         $cadena = htmlspecialchars($_REQUEST['cadena']);
+
         $productos = $control->getProductoLikeAtrr($cadena);
-        $json = json_encode($productos);
+
+        $lista_productos = array();
+        foreach ($productos as $p) {
+            array_push($lista_productos, array("id" => $p->getIdProducto(), "label" => $p->getNombreProducto()));
+        }
+
+        $json = json_encode($lista_productos);
         echo $json;
     } else if ($accion == "BUSCAR_BY_ID") {
         $idProducto = htmlspecialchars($_REQUEST['idProducto']);

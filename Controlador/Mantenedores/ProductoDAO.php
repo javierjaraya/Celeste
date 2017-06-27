@@ -236,7 +236,7 @@ class ProductoDAO {
 
     public function findLikeAtrr($cadena) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM producto WHERE  upper(idProducto) LIKE upper(" . $cadena . ")  OR  upper(nombreProducto) LIKE upper('" . $cadena . "')  OR  upper(descripcionProducto) LIKE upper('" . $cadena . "')  OR  upper(stock) LIKE upper(" . $cadena . ")  OR  upper(precio) LIKE upper(" . $cadena . ")  OR  upper(idSubCategoria) LIKE upper(" . $cadena . ") ";
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE  upper(producto.nombreProducto) LIKE upper('%" . $cadena . "%')   ";
         $result = $this->conexion->ejecutar($query);
         $i = 0;
         $productos = array();
@@ -248,6 +248,15 @@ class ProductoDAO {
             $producto->setStock($fila[3]);
             $producto->setPrecio($fila[4]);
             $producto->setIdSubCategoria($fila[5]);
+            
+            $imagen = new ImagenDTO();
+            $imagen->setIdImagen($fila[6]);
+            $imagen->setNombreImagen($fila[7]);
+            $imagen->setRutaImagen($fila[8]);
+            $imagen->setIdProducto($fila[9]);
+
+            $producto->setImagen($imagen);
+            
             $productos[$i] = $producto;
             $i++;
         }
