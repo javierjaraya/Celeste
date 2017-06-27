@@ -8,6 +8,7 @@
     <div id="alert"></div>
     <form name="fm-reporte" class="form-horizontal" method="POST">    
         <div class="form-group">
+            <div class="alert"></div>
             <label class="col-sm-4 control-label" for="tipoReporte">Tipo Reporte: </label>
             <div class="col-sm-5">
                 <select class="form-control" style="text-align: center" onclick="HabilitarInput()" name="tipoReporte" id="tipoReporte">
@@ -71,6 +72,11 @@
             document.getElementById('grupoMes').style.display = "none";
             document.getElementById('grupoDiario').style.display = "none";
             document.getElementById('botonAno').style.display = "block";
+        } else {
+            document.getElementById('grupoAno').style.display = "none";
+            document.getElementById('grupoMes').style.display = "none";
+            document.getElementById('grupoDiario').style.display = "none";
+            document.getElementById('botonAno').style.display = "none";
         }
     }
     function generarReporteDiario() {
@@ -89,10 +95,8 @@
         window.open("generarReporteDiario.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
     }
     function generarReporteMensual() {
-        var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-       
         var fechaReporte = $("#mes").val();
-         var mesReporte ;
+        var fechaFormateada = convertDateFormat(fechaReporte);
         var f = new Date();
         var mes = (f.getMonth() + 1);
         if (mes < 10) {
@@ -103,22 +107,32 @@
             dia = "0" + (f.getDate());
         }
         var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
-       console.log('mesReporte' + mesReporte + 'fechaReporte' + fechaReporte);
-        //window.open("generarReporteMensual.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
+
+        window.open("generarReporteMensual.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual + "&fechaFormateada=" + fechaFormateada);
+    }
+    function convertDateFormat(fechaReporte) {
+        var string = fechaReporte.split('-');
+        var meses = new Array("ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE");
+        var fechaConvertida = meses[string[1] - 1] + ' DE ' + string[0];
+        return fechaConvertida;
     }
     function generarReporteAnual() {
         var fechaReporte = $("#ano").val();
-        var f = new Date();
-        var mes = (f.getMonth() + 1);
-        if (mes < 10) {
-            mes = "0" + (f.getMonth() + 1);
+        if (fechaReporte != null && fechaReporte != "") {
+            var f = new Date();
+            var mes = (f.getMonth() + 1);
+            if (mes < 10) {
+                mes = "0" + (f.getMonth() + 1);
+            }
+            var dia = f.getDate();
+            if (dia < 10) {
+                dia = "0" + (f.getDate());
+            }
+            var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
+            window.open("generarReporteAnual.php?" + "&anoReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
+        } else {
+            notificacion('Debe ingresar un año', 'warning', 'alert');
         }
-        var dia = f.getDate();
-        if (dia < 10) {
-            dia = "0" + (f.getDate());
-        }
-        var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
-        window.open("generarReporteAnual.php?" + "&anoReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
     }
 </script>
 <?php include("footer.php"); ?>
