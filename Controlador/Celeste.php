@@ -76,6 +76,22 @@ class Celeste {
         return $this->compraDAO->findAll();
     }
 
+    public function getVentasPorDia($fechaReporte) {
+        return $this->compraDAO->findAllComprasDiarias($fechaReporte);
+    }
+
+    public function getVentasPorMes($fechaReporte) {
+        return $this->compraDAO->findAllComprasMensuales($fechaReporte);
+    }
+
+    public function getVentasPorAno($fechaReporte) {
+        return $this->compraDAO->findAllComprasAnuales($fechaReporte);
+    }
+
+    public function getMontoTotalCompra($idCompra) {
+        return $this->compraDAO->MontoTotalCompra($idCompra);
+    }
+
     public function miGetAllCompras($run) {
         return $this->compraDAO->miFindAll($run);
     }

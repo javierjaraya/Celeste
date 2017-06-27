@@ -13,7 +13,7 @@ class UsuarioDAO {
 
     public function delete($run) {
         $this->conexion->conectar();
-        $query = "delete FROM usuario WHERE run NOT IN (SELECT run FROM compra) and run ='" . $run . "' ";
+        $query = "delete FROM usuario WHERE run ='" . $run . "' ";
         $result = $this->conexion->ejecutar($query);
         $this->conexion->desconectar();
         return $result;

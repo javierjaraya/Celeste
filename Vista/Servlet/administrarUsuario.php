@@ -49,11 +49,16 @@ if ($accion != null) {
         }
     } else if ($accion == "BORRAR") {
         $run = htmlspecialchars($_REQUEST['run']);
-        $result = $control->removeUsuario($run);
-        if ($result) {
-            echo json_encode(array('success' => true, 'mensaje' => "Usuario borrado correctamente"));
-        } else {
-            echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+        $misCompras = $control->miGetAllCompras($run);
+        if (count($misCompras) == 0) {
+            $result = $control->removeUsuario($run);
+            if ($result) {
+                echo json_encode(array('success' => true, 'mensaje' => "Usuario borrado correctamente"));
+            } else {
+                echo json_encode(array('errorMsg' => 'Ha ocurrido un error.'));
+            }
+        }else{
+            echo json_encode(array('errorMsg' => 'El usuario no puede ser eliminado, ya que tiene ventas asociadas'));
         }
     } else if ($accion == "BUSCAR") {
         $cadena = htmlspecialchars($_REQUEST['cadena']);
@@ -131,9 +136,9 @@ if ($accion != null) {
             $CorreoRegistrado = $usuario->getCorreoElectronico();
             $runRegistrado = $usuario->getRun();
             if (($runIngresado == $runRegistrado) && ($correoIngresado == $CorreoRegistrado)) {
-                $nombreCompleto = $usuario->getNombres()." ".$usuario->getApellidos();
+                $nombreCompleto = $usuario->getNombres() . " " . $usuario->getApellidos();
                 $ClaveAleatoria = rand(1000, 99999999);
-                $mensaje = "Estimado/a ".$nombreCompleto.", Su nueva clave secreta es: ".$ClaveAleatoria." . Le recomendamos cambiarla lo antes posible en la seccion 'Mi Perfil'";
+                $mensaje = "Estimado/a " . $nombreCompleto . ", Su nueva clave secreta es: " . $ClaveAleatoria . " . Le recomendamos cambiarla lo antes posible en la seccion 'Mi Perfil'";
                 $usuarioModificado = new UsuarioDTO();
                 $usuarioModificado->setRun($runRegistrado);
                 $usuarioModificado->setClave(md5($ClaveAleatoria));
