@@ -135,7 +135,7 @@
                 var data = eval('(' + data + ')');
                 $("#contenido-carro").html(data.carro_html);
                 $("#totalCarro").html("$" + data.total_carro);
-                $("#cart-total").html("$" + data.total_carro);
+                $("#cart-total").html("Total Carro : $" + data.total_carro);
             }
         });
     }

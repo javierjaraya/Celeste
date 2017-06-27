@@ -74,7 +74,8 @@ if ($accion != null) {
         if ($stock_disponible) {
 
             /* PAGAR EN PAYPAL */
-            $paypal_business = "manuel.gaete.v-facilitator@gmail.com";
+            //$paypal_business = "manuel.gaete.v-facilitator@gmail.com";
+            $paypal_business = "manuel.gaete.v@gmail.com";
             $paypal_currency = "USD";
             $paypal_cursymbol = "&$";
             $paypal_location = "CL";
@@ -83,7 +84,7 @@ if ($accion != null) {
             $paypal_cancelurl = "http://localhost/Celeste/Vista/Layout/pagoCancelado.php?idCompra=" . $idCompra;
 
             /* Detalle compra */
-            $ppurl = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_cart";
+            //$ppurl = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_cart";
             $ppurl = "https://www.paypal.com/cgi-bin/webscr?cmd=_cart";
             $ppurl .= "&business=" . $paypal_business;
             $ppurl .= "&no_note=1";
@@ -97,7 +98,7 @@ if ($accion != null) {
             $i = 1;
             if ($carro) {
                 foreach ($carro as $producto) {
-                    $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . $producto["precio"] . "&item_number_$i=" . $i;
+                    $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . ($producto["precio"] / 661) . "&item_number_$i=" . $i;
                     $i++;
                 }
             }
