@@ -31,7 +31,6 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/menuDespegable/estilo-menu.css" />
 
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootcomplete/dist/bootcomplete.css" media="screen" />
-
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->

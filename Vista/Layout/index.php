@@ -33,19 +33,19 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/css/slideshow.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../Files/css/carousel.css" media="screen" />
 
+        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootcomplete/dist/bootcomplete.css" media="screen" />
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
-        <!--<script type="text/javascript" src="../../Files/js/jquery-1.9.1.min.js"></script>-->
-        <!--<script type="text/javascript" src="../../Files/js/jquery-1.7.1.min.js"></script>-->
+        <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>        
         <script type="text/javascript" src="../../Files/Complementos/menuDespegable/js-menu.js"></script>
 
         <script type="text/javascript" src="../../Files/js/jquery.nivo.slider.pack.js"></script>
         <script type="text/javascript" src="../../Files/js/jquery.jcarousel.min.js"></script>
 
+        <script type="text/javascript" src="../../Files/Complementos/bootcomplete/dist/jquery.bootcomplete.js"></script>
         <!-- JS Part End-->
 
         <!-- Bootstrap 3.3.6 -->
@@ -66,9 +66,38 @@ if (isset($_SESSION["autentificado"])) {
                 <div class="col-md-1">
                     <a href="index.php"><img src="../../Files/img/log.png" title="Vivero Celeste" /></a>
                 </div>
-                <div class="col-md-7" style="padding-top: 20px;">
-                    <input type="text" class="form-control" value="" placeholder="Buscar...." id="buscar-filter" name="search">                    
+
+                <!-- BUSCAR -->
+                <div class="col-md-7" style="padding-top: 20px; z-index: 2000;">                                     
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="buscar"  name="buscar" value="" onkeyup="buscar(this.value)" placeholder="Buscar productos..." >
+                            <div class="input-group-addon" style="padding: 0px;"><a onclick="resultadoBusqueda()" class="btn btn-warning btn-xs" style="margin: 0px; padding-top: 5px; height: 32px;">Buscar</a></div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- SCRIPT BUSCAR -->
+                <script type="text/javascript">
+                    function buscar(cadena) {
+                        if (cadena.length > 2) {
+                            $('#buscar').bootcomplete({
+                                url: '../Servlet/administrarProducto.php?accion=BUSCAR',
+                                minLength: 3,
+                                dataParams: {
+                                    cadena: $("#buscar").val()
+                                }
+                            });
+                            document.getElementById("buscar").focus();
+                        }
+                    }
+
+                    function resultadoBusqueda() {
+                        var busqueda = $("#buscar").val();
+                        window.location = "resultadoBusqueda.php?busqueda=" + busqueda;
+                    }
+                </script>
+
                 <div class="col-md-4">
                     <div style="text-align: right">
                         <h8>Bienvenido/a:</h8>
