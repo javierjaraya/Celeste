@@ -98,7 +98,8 @@ if ($accion != null) {
             $i = 1;
             if ($carro) {
                 foreach ($carro as $producto) {
-                    $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . ($producto["precio"] / 661) . "&item_number_$i=" . $i;
+                    $precioEnDolar = ($producto["precio"] / 661);
+                    $ppurl.="&item_name_$i=" . urlencode($producto["nombre"]) . "&quantity_$i=" . $producto["cantidad"] . "&amount_$i=" . $precioEnDolar . "&item_number_$i=" . $i;
                     $i++;
                 }
             }
