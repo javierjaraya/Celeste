@@ -57,7 +57,7 @@ if (isset($_SESSION["autentificado"])) {
                 </div>
                 
                 <!-- BUSCAR -->
-                <div class="col-md-7" style="padding-top: 20px; z-index: 2000;">                                     
+                <div class="col-md-7" style="padding-top: 20px; z-index: 1040;">                                     
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control" id="buscar"  name="buscar" value="" onkeyup="buscar(this.value)" placeholder="Buscar productos..." >
