@@ -48,7 +48,10 @@ if (isset($_SESSION["autentificado"])) {
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootstrap/css/bootstrap.css" />
         <script src="../../Files/Complementos/bootstrap/js/bootstrap.min.js"></script>
-
+        
+        <!-- Chart Graficos-->
+        <script src="../../Files/js/Chart.min.js"></script>
+        
         <!-- Usabilidad -->
         <script src="../../Files/js/notificaciones.js"></script>
         <script src="../../Files/js/ValidaCamposFormulario.js"></script>
