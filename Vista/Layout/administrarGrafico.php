@@ -5,7 +5,23 @@
 </div>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <canvas id="myChart" width="400" height="150"></canvas>
+    <form id="fm-fechas" class="form-inline">
+        <div class="form-group">
+            <label class="" style="width: 150px; padding-top: 6px;">Fecha desde</label>
+            <input type="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="" style="width: 150px; padding-top: 6px;">Fecha hasta</label>
+            <input type="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <a class="btn btn-warning">Generar Grafico</a>
+        </div>
+    </form>
+</div>
+
+<div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
+    <canvas id="grafico" width="400" height="150"></canvas>
 </div>
 
 
@@ -14,8 +30,8 @@
         //cargarCompras();
     });
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById("grafico").getContext('2d');
+    var grafico = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],

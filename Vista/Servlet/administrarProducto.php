@@ -239,6 +239,13 @@ if ($accion != null) {
         $cantidad = htmlspecialchars($_REQUEST['cantidad']);
         $productos = $control->getProducto_n_mas_vendidos($cantidad);
         $json = json_encode($productos);
+    } else if ($accion == "OBTENER_N_PRODUCTOS_MAS_VENDIDOS_ENTRE_FECHAS") {
+        $cantidad = htmlspecialchars($_REQUEST['cantidad']);
+        $fecha_desde = htmlspecialchars($_REQUEST['fecha_desde']);
+        $fecha_hasta = htmlspecialchars($_REQUEST['fecha_hasta']);
+
+        $productos = $control->getProducto_n_mas_vendidos_by_fechas($cantidad, $fecha_desde, $fecha_hasta);
+        $json = json_encode($productos);
     }
 }
 

@@ -244,6 +244,10 @@ class Celeste {
         return $this->productoDAO->find_n_mas_vendidos($n);
     }
 
+    public function getProducto_n_mas_vendidos_by_fechas($n, $fecha_desde, $fecha_hasta) {
+        return $this->productoDAO->find_n_mas_vendidos_by_fechas($n, $fecha_desde, $fecha_hasta);
+    }
+
     public function getProductoByNombre($nombreProducto) {
         return $this->productoDAO->findByNombre($nombreProducto);
     }
