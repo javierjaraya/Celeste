@@ -211,7 +211,7 @@ class ProductoDAO {
 
     public function findByNombre($nombreProducto) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE nombreProducto =  '" . $nombreProducto . "' ";
+        $query = "SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto WHERE upper(producto.nombreProducto) LIKE upper('" . $nombreProducto . "') ";
         $result = $this->conexion->ejecutar($query);
         $producto = new ProductoDTO();
         while ($fila = $result->fetch_row()) {
