@@ -30,6 +30,7 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/datatables/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/menuDespegable/estilo-menu.css" />
 
+        <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootcomplete/dist/bootcomplete.css" media="screen" />
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->
@@ -37,6 +38,8 @@ if (isset($_SESSION["autentificado"])) {
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/menuDespegable/js-menu.js"></script>
+        
+        <script type="text/javascript" src="../../Files/Complementos/bootcomplete/dist/jquery.bootcomplete.js"></script>
         <!-- JS Part End-->
 
         <!-- Bootstrap 3.3.6 -->
