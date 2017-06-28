@@ -4,7 +4,10 @@
     <h4 class="TextoTituloFormulario"><strong>Productos mas vendidos</strong></h4>
 </div>
 
-<canvas id="myChart" width="400" height="400"></canvas>
+<div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
+    <canvas id="myChart" width="400" height="150"></canvas>
+</div>
+
 
 <script>
     $(function () {
