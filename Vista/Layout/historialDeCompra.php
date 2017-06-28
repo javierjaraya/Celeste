@@ -155,6 +155,7 @@
                     </div>
 
                     <div class="modal-footer">
+                        <a class="btn btn-warning  glyphicon glyphicon-print" onclick="generarPdf()"></a>
                         <a class="btn btn-default" data-dismiss="modal">Salir</a>
                     </div>
                 </div>
@@ -342,7 +343,10 @@
             }
         }, 'json');
     }
-
+    function generarPdf() {
+    var idCompra = document.getElementById('idCompra').value;
+        window.open("generarPdfDetalleCompra.php?" + "&idCompra=" + idCompra );
+    }
 
 </script>
 <!--Middle Part End-->

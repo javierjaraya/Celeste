@@ -67,7 +67,7 @@ class CompraDAO {
 
     public function findAllComprasDiarias($fechaReporte) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM compra WHERE cast(fechaCompra as date) = '" . $fechaReporte . "'";
+        $query = "SELECT * FROM compra WHERE estado = 'Finalizado' AND cast(fechaCompra as date) = '" . $fechaReporte . "'";
         $result = $this->conexion->ejecutar($query);
         $i = 0;
         $compras = array();
@@ -89,7 +89,7 @@ class CompraDAO {
 
     public function findAllComprasAnuales($fechaReporte) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM compra WHERE year(fechaCompra)  = '" . $fechaReporte . "'";
+        $query = "SELECT * FROM compra WHERE estado = 'Finalizado' AND year(fechaCompra)  = '" . $fechaReporte . "'";
         $result = $this->conexion->ejecutar($query);
         $i = 0;
         $compras = array();
@@ -111,7 +111,7 @@ class CompraDAO {
 
     public function findAllComprasMensuales($fechaReporte) {
         $this->conexion->conectar();
-        $query = "SELECT * FROM compra WHERE date_format(fechaCompra, '%Y-%m') ='" . $fechaReporte . "'";
+        $query = "SELECT * FROM compra WHERE estado = 'Finalizado' AND date_format(fechaCompra, '%Y-%m') = '" . $fechaReporte . "'";
         $result = $this->conexion->ejecutar($query);
         $i = 0;
         $compras = array();

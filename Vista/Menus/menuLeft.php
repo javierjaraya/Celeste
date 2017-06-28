@@ -33,7 +33,7 @@
     <!--Categories Part End-->
     <!--Latest Product Start-->
     <div class="box">
-        <div class="box-heading"><span>Últimos productos</span></div>
+        <div class="box-heading"><span>Nuevos</span></div>
         <div class="box-content">
             <div class="box-product">
                 <?php
@@ -57,11 +57,11 @@
     <!--Latest Product End-->
 
     <div class="box">
-        <div class="box-heading"><span>Más Vendidos</span></div>
+        <div class="box-heading"><span>Sugerencias</span></div>
         <div class="box-content">
             <div class="box-product">
                 <?php
-                $productos = $control->getProducto_n_mas_vendidos(2);
+                $productos = $control->getProducto_n_mas_vendidos(3);
                 foreach ($productos as $p) {
                     $imagen = $p->getImagen();
                     echo "<div>"

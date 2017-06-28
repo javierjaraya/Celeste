@@ -33,7 +33,7 @@
         <div class="modal-content">
             <section id="panel-modal">
                 <div class="modal-header" style=" border: orangered 1px solid; border-radius: 15px; text-align: center ; margin:  1%;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                   
                     <img id="logo-modal" src="../../Files/img/log.png" width="60px" style="float: left;">
                     <label class="titulo-modal" style="width: 300px; padding-top: 25px; text-align: center"><h4 class="modal-title" id="modalLabel2"></h4></label>
                 </div>
@@ -43,7 +43,7 @@
                             <section class="col-md-12">
                                 <div id="nombresGroup" class="form-horizontal has-feedback">
                                     <h5><strong>DATOS DEL DESPACHO</strong></h5>
-                                    <hr style="border: orangered 1px solid;">                                     
+                                    <hr style="border: orangered 1px solid;">                                
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label" for="fechaCompra">Fecha Compra:</label>
                                         <div class="col-sm-6">
@@ -105,6 +105,7 @@
                     </div>
 
                     <div class="modal-footer">
+                        <a class="btn btn-warning  glyphicon glyphicon-print" onclick="generarPdf()"></a>
                         <a class="btn btn-default" data-dismiss="modal">Salir</a>
                     </div>
                 </div>
@@ -158,6 +159,10 @@
                     }
                 }
         );
+    }
+    function generarPdf() {
+    var idCompra = document.getElementById('idCompra').value;
+        window.open("generarPdfDetalleCompra.php?" + "&idCompra=" + idCompra );
     }
 
     function ver(id) {

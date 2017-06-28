@@ -1,6 +1,6 @@
 <?php include("header.php"); ?>
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>REPORTES DE VENTAS</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>REPORTES DE VENTAS CONCRETADAS</strong></h4>
 </div>
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
     <h5><strong>Seleccione el tipo de reporte:</strong></h5>
