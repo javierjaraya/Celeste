@@ -28,7 +28,7 @@
         <div class="form-group" id="grupoAno"  style="display: none">
             <label class="col-sm-4 control-label" for="ano">Ingrese el Año: </label>
             <div class="col-sm-5">
-                <input class="form-control" type="number" size="4" maxlength="4" min="2010" id="ano" name="ano" value="" onchange="generarReporteAnual()"/>
+                <input class="form-control" type="number" size="4" maxlength="4" min="2010" id="ano" placeholder="AAAA" name="ano" value="" onchange="generarReporteAnual()"/>
             </div>
         </div>
         <div class="form-group" id="grupoMes"  style="display: none">
@@ -41,16 +41,6 @@
         <div class="form-group" style="text-align: center; display: none" id="botonAno">
             <button type="button" class="btn btn-warning" onclick="generarReporteAnual()">Generar Reporte</button>
         </div>
-        <!--        <div class="form-group">
-                    <label class="col-sm-2 control-label" for="runUsuario">Desde: </label>
-                    <div class="col-sm-4">
-                        <input class="form-control" type="date" name="fecha" value="" />
-                    </div>
-                    <label class="col-sm-2 control-label" for="runUsuario">Hasta: </label>
-                    <div class="col-sm-4">
-                        <input class="form-control" type="date" name="fecha" value="" />
-                    </div>
-                </div>-->
     </form>
 </div>
 <script>
@@ -90,9 +80,11 @@
         if (dia < 10) {
             dia = "0" + (f.getDate());
         }
-        var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
-        //console.log('fechaActual'+fechaActual+'fechaReporte'+fechaReporte);
-        window.open("generarReporteDiario.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
+        var fechaActual = dia + "/" + mes + "/" + f.getFullYear();
+        
+        var info = fechaReporte.split('-');
+        var fechaOrdenada = info[2] + '/' + info[1] + '/' + info[0];
+        window.open("generarReporteDiario.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual+"&fechaOrdenada="+fechaOrdenada);
     }
     function generarReporteMensual() {
         var fechaReporte = $("#mes").val();
@@ -106,8 +98,7 @@
         if (dia < 10) {
             dia = "0" + (f.getDate());
         }
-        var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
-
+        var fechaActual = dia + "/" + mes + "/" + f.getFullYear();
         window.open("generarReporteMensual.php?" + "&fechaReporte=" + fechaReporte + "&fechaActual=" + fechaActual + "&fechaFormateada=" + fechaFormateada);
     }
     function convertDateFormat(fechaReporte) {
@@ -128,7 +119,7 @@
             if (dia < 10) {
                 dia = "0" + (f.getDate());
             }
-            var fechaActual = f.getFullYear() + "-" + mes + "-" + dia;
+            var fechaActual = dia + "/" + mes + "/" + f.getFullYear();
             window.open("generarReporteAnual.php?" + "&anoReporte=" + fechaReporte + "&fechaActual=" + fechaActual);
         } else {
             notificacion('Debe ingresar un año', 'warning', 'alert');

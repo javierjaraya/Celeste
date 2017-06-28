@@ -17,7 +17,7 @@ if (isset($_SESSION["autentificado"])) {
 
 $fechaReporte = htmlspecialchars($_REQUEST['fechaReporte']);
 $fechaActual = utf8_decode(htmlspecialchars($_REQUEST['fechaActual']));
-
+$fechaOrdenada = utf8_decode(htmlspecialchars($_REQUEST['fechaOrdenada']));
 $ventasDiarias = $control->getVentasPorDia($fechaReporte);
 ?>
 
@@ -185,7 +185,7 @@ $ventasDiarias = $control->getVentasPorDia($fechaReporte);
         <img src="../../Files/img/log.png" width="100" height="100" alt="log"/>
         <div>            
             <table class="table">                    
-                <tr><th align="center"><h3>REPORTE<br>VENTAS <?= $fechaReporte ?></h3></th></tr>
+                <tr><th align="center"><h3>REPORTE<br>VENTAS <?= $fechaOrdenada ?></h3></th></tr>
             </table>
         </div>
         <div>
@@ -196,7 +196,7 @@ $ventasDiarias = $control->getVentasPorDia($fechaReporte);
         <br>
         <div>
             <table class="table">
-                <tr><td class="td-borde alto-xm ancho-71mm" colspan="8">DETALLE DE VENTAS DEL D&Iacute;A <?= $fechaReporte ?></td></tr>                
+                <tr><td class="td-borde alto-xm ancho-71mm" colspan="8">DETALLE DE VENTAS DEL D&Iacute;A <?= $fechaOrdenada ?></td></tr>                
                 <tr><td class="td-borde fondo ancho-10mm" align="center" valign="top">Id Venta</td><td class="td-borde fondo ancho-30mm" align="center" valign="top">Fecha Venta</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Estado</td><td class="td-borde fondo ancho-20mm" align="center" valign="top">Metodo Despacho</td><td class="td-borde fondo ancho-100mm" align="center" valign="top">Direcci&oacute;n Despacho</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Monto Total</td></tr>
                 <?php
                 $count = 0;

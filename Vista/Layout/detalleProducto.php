@@ -238,7 +238,7 @@ if (isset($_SESSION["autentificado"])) {
                             <form id="fm-consulta" class="form-horizontal" method="Post">                           
                                 <div class="review-list" id="tab-review" style="display: block;">
                                     <input type="hidden" value="" name="asunto" id="asunto">                              
-                                    <input type="hidden" id="destino" name="destino" value="joseline.cisternas@gmail.com">                                   
+                                    <input type="hidden" id="destino" name="destino" value="jpicunch@alumnos.ubiobio.cl">                                   
                                     <input type="hidden" id="idProductoConsulta" name="idProductoConsulta" value="<?= $producto->getIdProducto() ?>">
                                     <input type="hidden" id="nombreProductoConsulta" name="nombreProductoConsulta" value="<?= $producto->getNombreProducto() ?>">
                                     <input type="hidden" id="accion" name="accion" value=""> 
@@ -261,7 +261,7 @@ if (isset($_SESSION["autentificado"])) {
 
                                 });
                                 function enviarConsulta() {
-                                    var asunto = "Consulta Por: " + document.getElementById("nombreProductoConsulta").value + " (id:" + document.getElementById("idProductoConsulta").value + ")";
+                                    var asunto = "Consulta Por: " + document.getElementById("nombreProductoConsulta").value + " (Código: " + document.getElementById("idProductoConsulta").value + ")";
                                     document.getElementById("asunto").value = asunto;
                                     document.getElementById("accion").value = "ENVIAR_CORREO";
                                     $.ajax({
