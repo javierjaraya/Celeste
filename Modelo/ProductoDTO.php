@@ -8,6 +8,9 @@ class ProductoDTO {
     public $idSubCategoria;
     
     public $imagen;
+    
+    /* Cantidad de productos vendidos, utilizado para los graficos*/
+    public $cantidad;
 
     public function ProductoDTO(){
     }
@@ -66,6 +69,14 @@ class ProductoDTO {
     
     function getImagen(){
         return $this->imagen;
+    }
+    
+    function getCantidad() {
+        return $this->cantidad;
+    }
+
+    function setCantidad($cantidad) {
+        $this->cantidad = $cantidad;
     }
 
 }

@@ -212,8 +212,8 @@ class ProductoDAO {
     public function find_n_mas_vendidos_by_fechas($n, $fecha_desde, $fecha_hasta) {
         $this->conexion->conectar();
         $query = "  SELECT * FROM producto JOIN imagen ON producto.idProducto = imagen.idProducto JOIN "
-                . " (SELECT dc.idProducto as id, sum(dc.cantidad) as cantidad FROM detalle_compra dc GROUP BY dc.idProducto ORDER BY cantidad DESC LIMIT 0," . $n . ") as ranking "
-                . " ON producto.idProducto = ranking.id ";
+                . " (SELECT dc.idProducto as id, sum(dc.cantidad) as cantidad FROM detalle_compra dc  JOIN compra c ON dc.idCompra = c.idCompra WHERE DATE_FORMAT(c.fechaCompra, '%Y-%m-%d') BETWEEN '" . $fecha_desde . "'  AND '" . $fecha_hasta . "' GROUP BY dc.idProducto ORDER BY cantidad DESC LIMIT 0," . $n . ") as ranking "
+                . " ON producto.idProducto = ranking.id ORDER BY ranking.cantidad DESC ";
 
         $result = $this->conexion->ejecutar($query);
         $i = 0;
@@ -234,6 +234,8 @@ class ProductoDAO {
             $imagen->setIdProducto($fila[9]);
 
             $producto->setImagen($imagen);
+            
+            $producto->setCantidad($fila[11]);
 
             $productos[$i] = $producto;
             $i++;

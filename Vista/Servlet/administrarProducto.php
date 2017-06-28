@@ -245,7 +245,20 @@ if ($accion != null) {
         $fecha_hasta = htmlspecialchars($_REQUEST['fecha_hasta']);
 
         $productos = $control->getProducto_n_mas_vendidos_by_fechas($cantidad, $fecha_desde, $fecha_hasta);
-        $json = json_encode($productos);
+
+        $label = array();
+        $cantida = array();
+
+        foreach ($productos as $value) {
+            array_push($label, $value->getNombreProducto());
+            array_push($cantida, $value->getCantidad());
+        }
+
+        echo json_encode(array(
+            'count' => count($label),
+            'labels' => $label,
+            'data' => $cantida
+        ));
     }
 }
 
