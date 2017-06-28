@@ -48,7 +48,7 @@
                             data: {
                                 labels: datos.labels,
                                 datasets: [{
-                                        label: 'Productos',
+                                        label: '# Cantidad de ventas',
                                         data: datos.data,
                                         backgroundColor: [
                                             'rgba(255, 99, 132, 0.2)',
