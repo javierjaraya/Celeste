@@ -105,8 +105,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <a class="btn btn-warning  glyphicon glyphicon-print" onclick="generarPdf()"></a>
-                        <a class="btn btn-default" data-dismiss="modal">Salir</a>
+                        <a class="btn btn-warning  glyphicon glyphicon-print" onclick="generarPdf()">&nbsp;Comprobante</a>
+                        <a class="btn btn-default glyphicon glyphicon-off" data-dismiss="modal">&nbsp;Salir</a>
                     </div>
                 </div>
             </section>

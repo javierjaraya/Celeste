@@ -188,12 +188,13 @@ $detalleCompra = $control->getAllDetalle_compraByIDCompra($idCompra);
         <img src="../../Files/img/log.png" width="100" height="100" alt="log"/>
         <div>            
             <table class="table" >                    
-                <tr><th class="td-borde fondo alto-xs" align="center"><h3> DETALLE COMPRA N&deg; <?= " " . $idCompra ?></h3></th></tr>
+                <tr><th class="td-borde fondo alto-xs" align="center"><h3>COMPROBANTE DE COMPRA</h3></th></tr>
             </table>
         </div>  
 
         <br>
         <table class="table">
+            <tr><td class="td-borde alto-xm ancho-71mm" colspan="5">Datos Generales: </td></tr> 
             <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Fecha Compra:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getFechaCompra() ?></td></tr>
             <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Metodo de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getMetodoDespacho() ?></td></tr>
             <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Direcci&oacute;n de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getDireccionDespacho() ?></td></tr>
@@ -221,6 +222,9 @@ $detalleCompra = $control->getAllDetalle_compraByIDCompra($idCompra);
             <table class="table">
                 <tr><td class="td-borde fondo alto-xs" colspan="4" style = "text-align: right"><strong>Total Compra:</strong></td><td class="td-borde ancho-69mm center"><?= "$ " . $montoTotalCompra ?></td></tr>
             </table>
+            <br>
+            <h7 class="" colspan="4" style = "text-align: left;">* Comprobante no v&aacute;lido como boleta</h7>
+            
         </div>
     </body>
 </html>
