@@ -22,6 +22,9 @@ if ($accion != null) {
         $per_page = htmlspecialchars($_REQUEST['por_pagina']); //Cantidad de registros por pagina
         $order = htmlspecialchars($_REQUEST['orden']);
 
+        session_start();
+        $idPerfil = $_SESSION['idPerfil'];
+
         if ($order == "Defecto") {
             $order = "";
         } else if ($order == "A-Z") {
@@ -51,15 +54,24 @@ if ($accion != null) {
                 <?php
                 foreach ($productos as $value) {
                     //echo json_encode($value);
-
-                    echo "<div class='product-cuadro'>"
-                    . "<div class='imagen'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
-                    . "<div class='nombre'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'>" . $value->getNombreProducto() . "</a></div>"
-                    . "<div class='precio'>$" . number_format($value->getPrecio(), 0, ',', '.') . "</div>"
-                    . "<div class='cart'>"
-                    . "  <input type='button' value='Agregar al Carro' onclick='agregarAlCarro(" . $value->getIdProducto() . ");' class='button'>"
-                    . "</div>"
-                    . "</div>";
+                    if ($idPerfil != 1) {
+                        echo "<div class='product-cuadro'>"
+                        . "<div class='imagen'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
+                        . "<div class='nombre'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'>" . $value->getNombreProducto() . "</a></div>"
+                        . "<div class='precio'>$" . number_format($value->getPrecio(), 0, ',', '.') . "</div>"
+                        . "<div class='cart'>"
+                        . "  <input type='button' value='Agregar al Carro' onclick='agregarAlCarro(" . $value->getIdProducto() . ");' class='button'>"
+                        . "</div>"
+                        . "</div>";
+                    } else {
+                        echo "<div class='product-cuadro'>"
+                        . "<div class='imagen'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'><img src='../../" . $value->getImagen()->getRutaImagen() . "' width='135px' height='135px' alt='iPhone'></a></div>"
+                        . "<div class='nombre'><a href='detalleProducto.php?cat=" . $idCategoria . "&sub=" . $idSubCategoria . "&idProducto=" . $value->getIdProducto() . "'>" . $value->getNombreProducto() . "</a></div>"
+                        . "<div class='precio'>$" . number_format($value->getPrecio(), 0, ',', '.') . "</div>"
+                        . "<div class='cart'>"
+                        . "</div>"
+                        . "</div>";
+                    }
                 }
                 ?>
             </div>

@@ -114,7 +114,7 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
 
-                <?php if ($autentificado == "SI") { ?>
+                <?php if ($autentificado == "SI" && $idPerfil != 1) { ?>
                     <!-- CARRO -->
                     <div id="cart" class=""style="float: right; padding-top: 20px;">
                         <div class="" style="width: 200px;">

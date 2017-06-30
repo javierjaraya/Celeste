@@ -5,16 +5,16 @@ $nombre = "Visitante";
 $autentificado = "NO";
 $precio_total = 0;
 if (isset($_SESSION["autentificado"])) {
-    if ($_SESSION["autentificado"] == "SI") {
-        $idPerfil = $_SESSION["idPerfil"];
-        $nombre = $_SESSION["nombre"];
-        $run = $_SESSION["run"];
-        $autentificado = "SI";
-        include_once '../../Controlador/Celeste.php';
-        $control = Celeste::getInstancia();
-        $carritoCompra = $control->getCarritoCompra();
-        $precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
-    }
+if ($_SESSION["autentificado"] == "SI") {
+$idPerfil = $_SESSION["idPerfil"];
+$nombre = $_SESSION["nombre"];
+$run = $_SESSION["run"];
+$autentificado = "SI";
+include_once '../../Controlador/Celeste.php';
+$control = Celeste::getInstancia();
+$carritoCompra = $control->getCarritoCompra();
+$precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
+}
 }
 ?>
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ if (isset($_SESSION["autentificado"])) {
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
         <script type="text/javascript" src="../../Files/Complementos/menuDespegable/js-menu.js"></script>
-        
+
         <script type="text/javascript" src="../../Files/Complementos/bootcomplete/dist/jquery.bootcomplete.js"></script>
         <!-- JS Part End-->
 
@@ -60,7 +60,7 @@ if (isset($_SESSION["autentificado"])) {
                 <div class="col-md-1">
                     <a href="index.php"><img src="../../Files/img/log.png" title="Vivero Celeste" /></a>
                 </div>
-                
+
                 <!-- BUSCAR -->
                 <div class="col-md-7" style="padding-top: 20px; z-index: 1040;">                                     
                     <div class="form-group">
@@ -91,36 +91,36 @@ if (isset($_SESSION["autentificado"])) {
                         window.location = "resultadoBusqueda.php?busqueda=" + busqueda;
                     }
                 </script>
-                
+
                 <div class="col-md-4">
                     <div style="text-align: right">
                         <h8>Bienvenido/a:</h8>
                         <?php
                         if ($nombre != "Visitante") {
-                            echo $_SESSION['nombre'];
-                            ?>
-                            <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
-                            <?php
+                        echo $_SESSION['nombre'];
+                        ?>
+                        <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
+                        <?php
                         } else {
-                            echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
+                        echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
                         }
                         ?>
                     </div>
                 </div>
 
-                <?php if ($autentificado == "SI") { ?>
-                    <!-- CARRO -->
-                    <div id="cart" class=""style="float: right; padding-top: 20px;">
-                        <div class="" style="width: 200px;">
-                            <div class="btn-group" role="group">                            
-                                <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
-                                <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
-                                <ul class="dropdown-menu">
-                                    <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>                                    
-                                </ul>
-                            </div>
-                        </div>                    
-                    </div>
+                <?php if ($autentificado == "SI" && $idPerfil != 1) { ?>
+                <!-- CARRO -->
+                <div id="cart" class=""style="float: right; padding-top: 20px;">
+                    <div class="" style="width: 200px;">
+                        <div class="btn-group" role="group">                            
+                            <img width="32" height="32" alt="small-cart-icon" src="../../Files/img/cart-bg.png" style="background: #F15A23;">
+                            <a style="text-decoration: none; color: #333;" data-toggle="dropdown"><span id="cart-total">Total Carro :  $<?= $precio_total ?></span><span class="caret"></span></a>                           
+                            <ul class="dropdown-menu">
+                                <li><a href="carroDeCompra.php">Ver Carro<samp class="glyphicon glyphicon-shopping-cart" style="float: right;"></samp></a></li>                                    
+                            </ul>
+                        </div>
+                    </div>                    
+                </div>
                 <?php } ?>
 
             </div>
@@ -131,11 +131,11 @@ if (isset($_SESSION["autentificado"])) {
                     <!--Top Navigation Start-->
                     <?php
                     if ($idPerfil == 1) {
-                        include("../Menus/menuAdministrador.php");
+                    include("../Menus/menuAdministrador.php");
                     } else if ($idPerfil == 2) {
-                        include("../Menus/menuCliente.php");
+                    include("../Menus/menuCliente.php");
                     } else if ($idPerfil == 3) {
-                        include("../Menus/menuVisitante.php");
+                    include("../Menus/menuVisitante.php");
                     }
                     ?>
                     <!--Top Navigation Start-->
@@ -217,7 +217,9 @@ if (isset($_SESSION["autentificado"])) {
                                                 <input type="number" value="1" min="1" max="<?= $producto->getStock() ?>"  name="cantidad" id="cantidad">                    
                                                 <div class="clear"></div>
                                             </div>
+                                            <?php if($idPerfil != 1) { ?>
                                             <input type="button" class="button" id="button-cart" style="" value="Agregar al carro" onclick="agregarAlCarro(<?= $producto->getIdProducto() ?>)">
+                                            <?php }?>
                                         </div>
                                     </div>
                                     <div class="review">
@@ -276,7 +278,7 @@ if (isset($_SESSION["autentificado"])) {
                                                 notificacion('Error, Su consulta no pudo ser enviada, intente nuevamente', 'danger', 'alert2');
                                             } else {
                                                 notificacion('Su consulta a sido enviada de forma exitosa', 'success', 'alert2');
-                                                document.getElementById("mensaje").value = "";                                                
+                                                document.getElementById("mensaje").value = "";
                                             }
                                         }
                                     });

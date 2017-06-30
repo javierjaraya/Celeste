@@ -109,7 +109,7 @@ if (isset($_SESSION["autentificado"])) {
                     </div>
                 </div>
 
-                <?php if ($autentificado == "SI") { ?>
+                <?php if ($autentificado == "SI" && $idPerfil != 1) { ?>
                     <!-- CARRO -->
                     <div id="cart" class=""style="float: right; padding-top: 20px;">
                         <div class="" style="width: 200px;">
@@ -225,7 +225,9 @@ if (isset($_SESSION["autentificado"])) {
                                                     <input type="number" value="1" min="1" max="<?= $producto->getStock() ?>"  name="cantidad" id="cantidad">                    
                                                     <div class="clear"></div>
                                                 </div>
-                                                <input type="button" class="button" id="button-cart" style="" value="Agregar al carro" onclick="agregarAlCarro(<?= $producto->getIdProducto() ?>)">
+                                                <?php if ($idPerfil != 1) { ?>
+                                                    <input type="button" class="button" id="button-cart" style="" value="Agregar al carro" onclick="agregarAlCarro(<?= $producto->getIdProducto() ?>)">
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="review">
