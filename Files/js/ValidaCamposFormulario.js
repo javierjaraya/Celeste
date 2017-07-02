@@ -70,32 +70,37 @@ function validarUsuarioEditar() {
     return false;
 }
 function validarUsuario() {
+    var email = document.getElementById('emailUsuario').value;
+    var telefono = document.getElementById('telefonoUsuario').value;
+    var cadenaPass = document.getElementById('contrasenaUsuario').value;
     if (Rut(document.getElementById('runUsuario').value)) {
         if (document.getElementById('nombresUsuario').value != "") {
             if (document.getElementById('apellidosUsuario').value != "") {
-                if (document.getElementById('emailUsuario').value != "") {
-                    if (document.getElementById('direccionUsuario').value != "") {
-                        var telefono = document.getElementById('telefonoUsuario').value;
-                        if (telefono != "" && telefono.length > 5) {
-                            if (!isNaN(telefono)) {
-                                var cadenaPass = document.getElementById('contrasenaUsuario').value;
-                                if (cadenaPass.length >= 4 && cadenaPass.length <= 8) {
-                                    if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
-                                        return true;
+                if (email != "") {
+                    if (email == document.getElementById('emailUsuarioRepetido').value) {
+                        if (document.getElementById('direccionUsuario').value != "") {
+                            if (telefono != "" && telefono.length > 5) {
+                                if (!isNaN(telefono)) {
+                                    if (cadenaPass.length >= 4 && cadenaPass.length <= 8) {
+                                        if (cadenaPass == document.getElementById('contrasenaRepetidaUsuario').value) {
+                                            return true;
+                                        } else {
+                                            notificacion("Las contraseñas no coinciden", "warning", "alert");
+                                        }
                                     } else {
-                                        notificacion("Las contraseñas no coinciden", "warning", "alert");
+                                        notificacion("La contraseña debe tener minimo 4 caracteres y Maximo 8", "warning", "alert");
                                     }
                                 } else {
-                                    notificacion("La contraseña debe tener minimo 4 caracteres y Maximo 8", "warning", "alert");
+                                    notificacion("El telefono contiene caracteres no validos", "warning", "alert");
                                 }
                             } else {
-                                notificacion("El telefono contiene caracteres no validos", "warning", "alert");
+                                notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
                             }
                         } else {
-                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
+                            notificacion("Debe ingresar una direccion", "warning", "alert");
                         }
                     } else {
-                        notificacion("Debe ingresar una direccion", "warning", "alert");
+                        notificacion("Los email no coinciden", "warning", "alert");
                     }
                 } else {
                     notificacion("Debe ingresar un email", "warning", "alert");
@@ -125,8 +130,6 @@ function validarClaves() {
 
     return false;
 }
-
-
 function eliminarCaracteres() {
     var aux = String(document.getElementById("runUsuario").value);
     aux = aux.replace('.', '');

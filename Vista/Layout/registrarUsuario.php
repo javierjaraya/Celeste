@@ -22,14 +22,14 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />     
         <link rel="stylesheet" type="text/css" href="../../Files/css/notificaciones.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/datatables/css/jquery.dataTables.css">
-        
+
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootcomplete/dist/bootcomplete.css" media="screen" />
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
-        
+
         <script type="text/javascript" src="../../Files/Complementos/bootcomplete/dist/jquery.bootcomplete.js"></script>
         <!-- JS Part End-->
 
@@ -51,7 +51,7 @@ if (isset($_SESSION["autentificado"])) {
                 <div class="col-md-1">
                     <a href="index.php"><img src="../../Files/img/log.png" title="Vivero Celeste" /></a>
                 </div>
-                
+
                 <!-- BUSCAR -->
                 <div class="col-md-7" style="padding-top: 20px; z-index: 1040;">                                     
                     <div class="form-group">
@@ -82,18 +82,18 @@ if (isset($_SESSION["autentificado"])) {
                         window.location = "resultadoBusqueda.php?busqueda=" + busqueda;
                     }
                 </script>
-                
+
                 <div class="col-md-4">
                     <div style="text-align: right">
-                        <h8>Bienvenido/a:</h8>
+                        <h8>Bienvenido/a</h8>
                         <?php
                         if ($nombre != "Visitante") {
-                            echo $_SESSION['nombre'];
+                            echo ": " . $_SESSION['nombre'];
                             ?>
                             <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
                             <?php
                         } else {
-                            echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
+                            echo "";
                         }
                         ?>
                     </div>
@@ -151,6 +151,12 @@ if (isset($_SESSION["autentificado"])) {
                                             <label class="col-sm-3 control-label" for="emailUsuario"><strong>E-Mail (*)</strong></label>
                                             <div class="col-sm-6">
                                                 <input class="form-control" id="emailUsuario" name="emailUsuario" type="text" placeholder="ejemplo@celeste.cl">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="emailUsuarioRepetido"><strong>Repetir E-Mail (*)</strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="emailUsuarioRepetido" name="emailUsuarioRepetido" type="text" placeholder="ejemplo@celeste.cl">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -245,22 +251,25 @@ if (isset($_SESSION["autentificado"])) {
 
                                 function guardarCliente() {
                                     if (document.getElementById('TerminosyCondiciones').checked) {
+                                        window.scrollTo(0, 0);
                                         if (validarUsuario()) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "../Servlet/administrarUsuario.php",
-                                                data: $("#fmusuario").serialize(),
-                                                success: function (result) {
-                                                    console.log(result);
-                                                    var result = eval('(' + result + ')');
-                                                    if (result.errorMsg) {
-                                                        notificacion(result.errorMsg, 'danger', 'alert');
-                                                    } else {
-                                                        notificacion(result.mensaje, 'success', 'alert');
-                                                        window.location = "iniciarSesion.php";
-                                                    }
-                                                }
-                                            });
+                                            console.log('entro');
+
+//                                            $.ajax({
+//                                                type: "POST",
+//                                                url: "../Servlet/administrarUsuario.php",
+//                                                data: $("#fmusuario").serialize(),
+//                                                success: function (result) {
+//                                                    console.log(result);
+//                                                    var result = eval('(' + result + ')');
+//                                                    if (result.errorMsg) {
+//                                                        notificacion(result.errorMsg, 'danger', 'alert');
+//                                                    } else {
+//                                                        notificacion(result.mensaje, 'success', 'alert');
+//                                                        setTimeout(function(){window.location = "iniciarSesion.php";},3000);
+//                                                    }
+//                                                }
+//                                            });
                                         }
                                     } else {
                                         notificacion('Primero debe aceptar los términos y condiciones', 'warning', 'alert');

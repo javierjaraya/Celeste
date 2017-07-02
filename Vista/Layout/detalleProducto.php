@@ -94,15 +94,15 @@ $precio_total = number_format($carritoCompra->precio_total(), 0, ',', '.');
 
                 <div class="col-md-4">
                     <div style="text-align: right">
-                        <h8>Bienvenido/a:</h8>
+                        <h8>Bienvenido/a</h8>
                         <?php
                         if ($nombre != "Visitante") {
-                        echo $_SESSION['nombre'];
+                        echo ": ".$_SESSION['nombre'];
                         ?>
                         <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
                         <?php
                         } else {
-                        echo "<a href='iniciarSesion.php' style='margin: 20px; color: orangered'>Inicia Sesión</a> o <a href='registrarUsuario.php' style='margin: 20px; color: orangered'>Registrate</a>";
+                        echo "";
                         }
                         ?>
                     </div>
