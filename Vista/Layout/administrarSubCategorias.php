@@ -1,5 +1,5 @@
 <?php
-include("header.php");
+include("headerAdmin.php");
 $idCategoria = $_REQUEST['idCategoria'];
 $nombreCategoria = $_REQUEST['nombreCategoria'];
 ?>

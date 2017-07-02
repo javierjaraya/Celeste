@@ -1,4 +1,4 @@
-<?php include("header.php"); ?>
+<?php include("headerAdmin.php"); ?>
 
 <div id="alert"></div> 
 

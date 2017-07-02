@@ -27,7 +27,7 @@ if (($run != null || $run != "") && ($clave != null || $clave != "")) {
                 $_SESSION["sexo"] = $usuario->getSexo();
 
                 if ($perfil->getIdPerfil() == 1) {//Administrador
-                    $pagina = "index.php";
+                    $pagina = "historialDeCompra.php";
                 }
                 if ($perfil->getIdPerfil() == 2) {//Cliente
                     $pagina = "index.php";

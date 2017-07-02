@@ -23,7 +23,10 @@ if ($accion != null) {
         $order = htmlspecialchars($_REQUEST['orden']);
 
         session_start();
-        $idPerfil = $_SESSION['idPerfil'];
+        $idPerfil = 3;
+        if(isset($_SESSION["idPerfil"])){
+            $idPerfil = $_SESSION["idPerfil"];
+        }
 
         if ($order == "Defecto") {
             $order = "";

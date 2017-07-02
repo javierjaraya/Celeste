@@ -5,11 +5,17 @@ $nombre = "Visitante";
 $autentificado = "NO";
 $precio_total = 0;
 if (isset($_SESSION["autentificado"])) {
-    if ($_SESSION["autentificado"] == "SI") {
+    if ($_SESSION["autentificado"] == "SI") {                
         $idPerfil = $_SESSION["idPerfil"];
         $nombre = $_SESSION["nombre"];
         $run = $_SESSION["run"];
         $autentificado = "SI";
+        
+        if($idPerfil == 1){
+            header('Location: historialDeCompra.php');
+        }
+        
+        
         include_once '../../Controlador/Celeste.php';
         $control = Celeste::getInstancia();
         $carritoCompra = $control->getCarritoCompra();
