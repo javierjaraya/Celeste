@@ -30,7 +30,11 @@ if ($accion != null) {
         $compra->setIdCompra($idCompra);
         $compra->setEstado($estado);
         $compra->setMetodoDespacho($metodoDespacho);
-        $compra->setDireccionDespacho($direccionDespacho);
+        if($metodoDespacho == "Retiro en tienda"){
+            $compra->setDireccionDespacho("  -  ");
+        }else{
+            $compra->setDireccionDespacho($direccionDespacho);
+        }
         $compra->setPersonaRetira($personaRetira);
         $compra->setRun($run);
 

@@ -47,9 +47,9 @@
         <div class="form-group">
             <label class="col-sm-4 control-label" for="medotoDespacho">Metodo Despacho:</label>
             <div class="col-sm-6">
-                <select class="form-control" id="metodoDespacho" name="metodoDespacho">
-                    <option value="Retiro en tienda">Retiro en tienda</option>
+                <select class="form-control" id="metodoDespacho" name="metodoDespacho" onchange="mostrarOcultar()">                    
                     <option value="Despacho a domicilio">Despacho a domicilio</option>
+                    <option value="Retiro en tienda">Retiro en tienda</option>
                 </select>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 <input class="form-control" id="personaRetira" name="personaRetira" type="text">
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="div-despacho">
             <label class="col-sm-4 control-label" for="direccionDespacho">Direccion despacho:</label>
             <div class="col-sm-6">
                 <input class="form-control" id="direccionDespacho" name="direccionDespacho" type="text">                                     
@@ -158,6 +158,7 @@
     $(document).ready(function () {
         cargarUsuario();
         cargarCarro();
+        document.getElementById("metodoDespacho").selectedIndex = "Despacho a domicilio";
     });
 
     function cargarUsuario() {
@@ -230,7 +231,7 @@
     }
 
     function productosBajoStock(data) {
-        $("#contenido-bajo-stock").html("");        
+        $("#contenido-bajo-stock").html("");
         $.each(data.productos, function (k, v) {
             var html = "<tr>"
                     + "    <td class='image'><img title='Bag Lady' alt='Bag Lady' src='../../" + v.producto.imagen.rutaImagen + "' width='60px' height='60px'></td>"
@@ -243,11 +244,16 @@
     }
 
     function validar() {
+        var metodoDespacho = document.getElementById("metodoDespacho").value;
         if (document.getElementById('personaRetira').value != "") {
-            if (document.getElementById('direccionDespacho').value != "") {
-                return true;
+            if (metodoDespacho == "Despacho a domicilio") {
+                if (document.getElementById('direccionDespacho').value != "") {
+                    return true;
+                } else {
+                    notificacion("Dbe ingresar la direccion de despacho", "warning", "alert");
+                }
             } else {
-                notificacion("Dbe ingresar la direccion de despacho", "warning", "alert");
+                return true;
             }
         } else {
             notificacion("Debe ingresar el nombre de la persona que retira", "warning", "alert");
@@ -255,6 +261,14 @@
         return false;
     }
 
+    function mostrarOcultar() {
+        var metodoDespacho = document.getElementById("metodoDespacho").value;
+        if (metodoDespacho == "Retiro en tienda") {
+            document.getElementById("div-despacho").style.display = 'none';
+        } else {
+            document.getElementById("div-despacho").style.display = 'block';
+        }
+    }
     function number_format(amount, decimals) {
         amount += ''; // por si pasan un numero en vez de un string
         amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
