@@ -1,7 +1,7 @@
 
 
 function notificacion(mensaje, tipo, contenedor) {
-    $("#" + contenedor).css("display", "block");
+    $("#" + contenedor).css("display", "block");    
     var class_alert = "alert-info";
     var icon_alert = 'fa-info';
     var titulo_alert = "Alerta";
@@ -21,8 +21,9 @@ function notificacion(mensaje, tipo, contenedor) {
         class_alert = "alert-warning";
         icon_alert = 'fa-warning';
         titulo_alert = "Advertencia";
-    }
+    }    
     var alert = "<div class='alert " + class_alert + " alert-dismissible'><h4><i class='icon fa " + icon_alert + "'></i> " + titulo_alert + "</h4>" + mensaje + "</div>"
     $("#" + contenedor).html(alert);
     $("#" + contenedor).delay(5000).hide(600);
+    location.href = "#" + contenedor;
 }
