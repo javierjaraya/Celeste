@@ -1,15 +1,15 @@
 <?php include("headerAdmin.php"); ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR CATEGORIAS DE PRODUCTOS</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR CATEGORÍAS DE PRODUCTOS</strong></h4>
 </div>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
     <div class="col-md-6">
-        <h5><strong>CATEGORIAS</strong></h5>
+        <h5><strong>CATEGORÍAS</strong></h5>
     </div>
     <div class="col-md-6">
-        <a onclick="agregarCategoria()" class="btn btn-warning btn-sm" style="float: right;">Agregar Categoria</a>
+        <a onclick="agregarCategoria()" class="btn btn-warning btn-sm" style="float: right;">Agregar Categoría</a>
     </div>
     <div class="col-md-12">
         <hr style="border: orangered 1px solid;">
@@ -20,9 +20,9 @@
             <table id="tabla" class="table">
                 <thead> 
                     <tr> 
-                        <th style="width: 50px;">ID</th> 
+                        <th style="width: 50px;">Id</th> 
                         <th>Nombre</th>
-                        <th style="width: 200px;">Accion</th>
+                        <th style="width: 200px;">Acción</th>
                     </tr> 
                 </thead>
                 <tbody id="tablaCategorias">

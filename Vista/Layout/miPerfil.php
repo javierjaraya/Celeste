@@ -32,6 +32,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label" for="emailUsuarioRepetido"><strong>Repetir E-Mail (*)</strong></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" id="emailUsuarioRepetido" name="emailUsuarioRepetido" type="text" placeholder="ejemplo@celeste.cl">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label" for="sexo">Sexo (*)</label>
                     <div class="col-sm-6">
                         <div class="col-md-3">
@@ -43,7 +49,7 @@
                     </div>  
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="telefonoUsuario">Telefono (*)</label>
+                    <label class="col-sm-3 control-label" for="telefonoUsuario">Teléfono (*)</label>
                     <div class="col-sm-6">
                         <input class="form-control" id="telefonoUsuario" name="telefonoUsuario" type="text" placeholder="Ej: 988776655">
                     </div>
@@ -120,6 +126,7 @@
                 document.getElementById('nombresUsuario').value = data.nombres;
                 document.getElementById('apellidosUsuario').value = data.apellidos;
                 document.getElementById('emailUsuario').value = data.correoElectronico;
+                  document.getElementById('emailUsuarioRepetido').value = data.correoElectronico;
                 if (data.sexo.localeCompare("F") == 0) {
                     document.getElementById("sexoF").checked = true;
                 } else {

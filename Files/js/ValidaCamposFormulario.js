@@ -4,23 +4,28 @@
  * and open the template in the editor.
  */
 function validarMiPerfil() {
+    var email = document.getElementById('emailUsuario').value;
     if (Rut(document.getElementById('runUsuario').value)) {
         if (document.getElementById('nombresUsuario').value != "") {
             if (document.getElementById('apellidosUsuario').value != "") {
-                if (document.getElementById('emailUsuario').value != "") {
-                    if (document.getElementById('direccionUsuario').value != "") {
-                        var telefono = document.getElementById('telefonoUsuario').value;
-                        if (telefono != "" && telefono.length > 5) {
-                            if (!isNaN(telefono)) {
-                                return true;
+                if (email != "") {
+                    if (email == document.getElementById('emailUsuarioRepetido').value) {
+                        if (document.getElementById('direccionUsuario').value != "") {
+                            var telefono = document.getElementById('telefonoUsuario').value;
+                            if (telefono != "" && telefono.length > 5) {
+                                if (!isNaN(telefono)) {
+                                    return true;
+                                } else {
+                                    notificacion("El teléfono contiene caracteres no válidos", "warning", "alert");
+                                }
                             } else {
-                                notificacion("El telefono contiene caracteres no validos", "warning", "alert");
+                                notificacion("Debe ingresar una teléfono de contacto con al menos 6 dígitos", "warning", "alert");
                             }
                         } else {
-                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
+                            notificacion("Debe ingresar una dirección", "warning", "alert");
                         }
                     } else {
-                        notificacion("Debe ingresar una direccion", "warning", "alert");
+                        notificacion("Los email no coinciden", "warning", "alert");
                     }
                 } else {
                     notificacion("Debe ingresar un email", "warning", "alert");
@@ -32,28 +37,33 @@ function validarMiPerfil() {
             notificacion("Debe ingresar sus nombres", "warning", "alert");
         }
     } else {
-        notificacion("El run ingresado no es valido", "warning", "alert");
+        notificacion("El run ingresado no es válido", "warning", "alert");
     }
     return false;
 }
 function validarUsuarioEditar() {
+    var email = document.getElementById('emailUsuario').value;
     if (Rut(document.getElementById('runUsuario').value)) {
         if (document.getElementById('nombresUsuario').value != "") {
             if (document.getElementById('apellidosUsuario').value != "") {
-                if (document.getElementById('emailUsuario').value != "") {
-                    if (document.getElementById('direccionUsuario').value != "") {
-                        var telefono = document.getElementById('telefonoUsuario').value;
-                        if (telefono != "" && telefono.length > 5) {
-                            if (!isNaN(telefono)) {
-                                return true;
+                if (email != "") {
+                    if (email == document.getElementById('emailUsuarioRepetido').value) {
+                        if (document.getElementById('direccionUsuario').value != "") {
+                            var telefono = document.getElementById('telefonoUsuario').value;
+                            if (telefono != "" && telefono.length > 5) {
+                                if (!isNaN(telefono)) {
+                                    return true;
+                                } else {
+                                    notificacion("El teléfono contiene caracteres no validos", "warning", "alert-modal");
+                                }
                             } else {
-                                notificacion("El telefono contiene caracteres no validos", "warning", "alert-modal");
+                                notificacion("Debe ingresar una teléfono de contacto con al menos 6 digitos", "warning", "alert-modal");
                             }
                         } else {
-                            notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert-modal");
+                            notificacion("Debe ingresar una dirección", "warning", "alert-modal");
                         }
                     } else {
-                        notificacion("Debe ingresar una direccion", "warning", "alert-modal");
+                        notificacion("Los email no coinciden", "warning", "alert-modal");
                     }
                 } else {
                     notificacion("Debe ingresar un email", "warning", "alert-modal");
@@ -65,7 +75,7 @@ function validarUsuarioEditar() {
             notificacion("Debe ingresar sus nombres", "warning", "alert-modal");
         }
     } else {
-        notificacion("El run ingresado no es valido", "warning", "alert-modal");
+        notificacion("El run ingresado no es válido", "warning", "alert-modal");
     }
     return false;
 }
@@ -91,13 +101,13 @@ function validarUsuario() {
                                         notificacion("La contraseña debe tener minimo 4 caracteres y Maximo 8", "warning", "alert");
                                     }
                                 } else {
-                                    notificacion("El telefono contiene caracteres no validos", "warning", "alert");
+                                    notificacion("El teléfono contiene caracteres no válidos", "warning", "alert");
                                 }
                             } else {
-                                notificacion("Debe ingresar una telefono de contacto con al menos 6 digitos", "warning", "alert");
+                                notificacion("Debe ingresar una teléfono de contacto con al menos 6 dígitos", "warning", "alert");
                             }
                         } else {
-                            notificacion("Debe ingresar una direccion", "warning", "alert");
+                            notificacion("Debe ingresar una dirección", "warning", "alert");
                         }
                     } else {
                         notificacion("Los email no coinciden", "warning", "alert");
@@ -112,7 +122,7 @@ function validarUsuario() {
             notificacion("Debe ingresar sus nombres", "warning", "alert");
         }
     } else {
-        notificacion("El run ingresado no es valido", "warning", "alert");
+        notificacion("El run ingresado no es válido", "warning", "alert");
     }
     return false;
 }

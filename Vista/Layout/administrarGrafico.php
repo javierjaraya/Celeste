@@ -3,7 +3,7 @@
 <div id="alert"></div> 
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>Productos mas vendidos</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>Productos más vendidos</strong></h4>
 </div>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
@@ -17,7 +17,7 @@
             <input type="date" id="fecha_hasta" name="fecha_hasta" class="form-control">
         </div>
         <div class="form-group">
-            <a class="btn btn-warning" onclick="cargarDatos()">Generar Grafico</a>
+            <a class="btn btn-warning" onclick="cargarDatos()">Generar Gráfico</a>
         </div>
     </form>
 </div>

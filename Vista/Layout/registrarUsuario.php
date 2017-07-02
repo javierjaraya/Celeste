@@ -171,7 +171,7 @@ if (isset($_SESSION["autentificado"])) {
                                             </div>  
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="telefonoUsuario">Telefono (*)</label>
+                                            <label class="col-sm-3 control-label" for="telefonoUsuario">Teléfono (*)</label>
                                             <div class="col-sm-6">
                                                 <input class="form-control" id="telefonoUsuario" name="telefonoUsuario" type="text" placeholder="Ej: 988776655">
                                             </div>
@@ -261,10 +261,8 @@ if (isset($_SESSION["autentificado"])) {
                                                     console.log(result);
                                                     var result = eval('(' + result + ')');
                                                     if (result.errorMsg) {
-                                                        SubirPagina();
                                                         notificacion(result.errorMsg, 'danger', 'alert');
                                                     } else {
-                                                       SubirPagina();
                                                         notificacion(result.mensaje, 'success', 'alert');
                                                         setTimeout(function(){window.location = "iniciarSesion.php";},3000);
                                                     }
@@ -272,12 +270,8 @@ if (isset($_SESSION["autentificado"])) {
                                             });
                                         }
                                     } else {
-                                        SubirPagina();
                                         notificacion('Primero debe aceptar los términos y condiciones', 'warning', 'alert');
                                     }
-                                }
-                                function SubirPagina(){
-                                    window.scrollTo(0, 0);
                                 }
                             </script>
                             <!--Middle Part End-->

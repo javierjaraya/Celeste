@@ -1,11 +1,11 @@
 <?php include("headerAdmin.php"); ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>Historial de Compras</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>Historial de Ventas</strong></h4>
 </div>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
-    <h5><strong>Compras</strong></h5>
+    <h5><strong>Ventas</strong></h5>
 
     <hr style="border: orangered 1px solid;">
     <div class="table-responsive">

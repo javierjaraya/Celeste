@@ -1,7 +1,7 @@
 <?php include("headerAdmin.php"); ?>
 
 <div class="col-md-12" style="padding: 5px; border: orangered 1px solid; border-radius: 15px; text-align: center; margin-bottom: 20px;">
-    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR PRODUCTOS POR SUBCATEGORIA</strong></h4>
+    <h4 class="TextoTituloFormulario"><strong>ADMINISTRAR PRODUCTOS POR SUBCATEGORÍA</strong></h4>
 </div>
 
 <div class="col-md-12" id="subContenedor" style=" padding: 3%; align-content: center; border: orangered 1px solid; border-radius: 15px; margin-bottom: 20px;">
@@ -25,8 +25,8 @@
             <table id="tabla" class="table">
                 <thead> 
                     <tr>
-                        <th style="">Grafico</th> 
-                        <th style="width: 50px;">ID</th> 
+                        <th style="">Gráfico</th> 
+                        <th style="width: 50px;">Id</th> 
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Stock</th>
@@ -85,7 +85,7 @@
                                             </div>                                        
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="idSubCategoria">Subcategoria</label>
+                                            <label class="col-sm-4 control-label" for="idSubCategoria">Subcategoría</label>
                                             <div class="col-sm-6">
                                                 <select class="form-control" id="idSubCategoria" name="idSubCategoria"></select>
                                             </div>
@@ -305,7 +305,7 @@
         document.getElementById('imagenRemplazada').value = "TRUE";
         document.getElementById('imagen').style.display = 'block';
         document.getElementById('imagenPrevisualizada').style.display = 'none';
-        $('#modalLabel').html("Crear Producto");
+        $('#modalLabel').html("Agregar Producto");
         $('#dg-modela').modal(this)//CALL MODAL MENSAJE
     }
 

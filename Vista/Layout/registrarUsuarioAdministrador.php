@@ -31,14 +31,14 @@ if (isset($_SESSION["autentificado"])) {
         <link rel="stylesheet" type="text/css" href="../../Files/css/estilos.css" />     
         <link rel="stylesheet" type="text/css" href="../../Files/css/notificaciones.css" />
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/datatables/css/jquery.dataTables.css">
-        
+
         <link rel="stylesheet" type="text/css" href="../../Files/Complementos/bootcomplete/dist/bootcomplete.css" media="screen" />
         <!-- CSS Part End-->
 
         <!-- JS Part Start-->
         <script type="text/javascript" src="../../Files/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" charset="utf8" src="../../Files/Complementos/datatables/jquery.dataTables.js"></script>
-        
+
         <script type="text/javascript" src="../../Files/Complementos/bootcomplete/dist/jquery.bootcomplete.js"></script>
         <!-- JS Part End-->
 
@@ -60,7 +60,7 @@ if (isset($_SESSION["autentificado"])) {
                 <div class="col-md-1">
                     <a href="index.php"><img src="../../Files/img/log.png" title="Vivero Celeste" /></a>
                 </div>
-                
+
                 <!-- BUSCAR -->
                 <div class="col-md-7" style="padding-top: 20px; z-index: 1040;">                                     
                     <div class="form-group">
@@ -91,13 +91,13 @@ if (isset($_SESSION["autentificado"])) {
                         window.location = "resultadoBusqueda.php?busqueda=" + busqueda;
                     }
                 </script>
-                
+
                 <div class="col-md-4">
                     <div style="text-align: right">
                         <h8>Bienvenido/a</h8>
                         <?php
                         if ($nombre != "Visitante") {
-                            echo ": ".$_SESSION['nombre'];
+                            echo ": " . $_SESSION['nombre'];
                             ?>
                             <a href="../Servlet/loginOFF.php" style='margin: 20px; color: orangered'>cerrar sesion</a>
                             <?php
@@ -107,7 +107,7 @@ if (isset($_SESSION["autentificado"])) {
                         ?>
                     </div>
                 </div>
-                
+
                 <?php if ($autentificado == "SI" && $idPerfil != 1) { ?>
                     <!-- CARRO -->
                     <div id="cart" class=""style="float: right; padding-top: 20px;">
@@ -122,7 +122,7 @@ if (isset($_SESSION["autentificado"])) {
                         </div>                    
                     </div>
                 <?php } ?>
-                    
+
             </div>
             <!-- MENU -->
             <div class="row" style="padding-left: 10px; padding-right: 10px;">
@@ -179,6 +179,12 @@ if (isset($_SESSION["autentificado"])) {
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="emailUsuarioRepetido"><strong>Repetir E-Mail (*)</strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="emailUsuarioRepetido" name="emailUsuarioRepetido" type="text" placeholder="ejemplo@celeste.cl">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-3 control-label" for="sexo">Sexo (*)</label>
                                             <div class="col-sm-6">
                                                 <div class="col-md-3">
@@ -190,7 +196,7 @@ if (isset($_SESSION["autentificado"])) {
                                             </div>  
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="telefonoUsuario">Telefono (*)</label>
+                                            <label class="col-sm-3 control-label" for="telefonoUsuario">Teléfono (*)</label>
                                             <div class="col-sm-6">
                                                 <input class="form-control" id="telefonoUsuario" name="telefonoUsuario" type="text" placeholder="Ej: 988776655">
                                             </div>

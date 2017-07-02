@@ -24,9 +24,9 @@ $nombreCategoria = $_REQUEST['nombreCategoria'];
             <table id="tabla" class="table">
                 <thead> 
                     <tr> 
-                        <th style="width: 50px;">ID</th> 
+                        <th style="width: 50px;">Id</th> 
                         <th>Nombre</th>
-                        <th style="width: 150px;">Accion</th>
+                        <th style="width: 150px;">Acción</th>
                     </tr> 
                 </thead>
                 <tbody id="tablaSubCategorias">

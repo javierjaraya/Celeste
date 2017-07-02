@@ -14,7 +14,7 @@
                 <tr> 
                     <th>Run</th> 
                     <th>Nombre</th>
-                    <th>Telefono</th>
+                    <th>Teléfono</th>
                     <th>Dirección</th>
                     <th>Acción</th>
                 </tr> 
@@ -65,6 +65,12 @@
                                             <label class="col-sm-4 control-label" for="emailUsuario"><strong>E-Mail</strong></label>
                                             <div class="col-sm-6">
                                                 <input class="form-control" id="emailUsuario" name="emailUsuario" type="text" placeholder="ejemplo@celeste.cl">
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="emailUsuarioRepetido"><strong>Repetir E-Mail (*)</strong></label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" id="emailUsuarioRepetido" name="emailUsuarioRepetido" type="text" placeholder="ejemplo@celeste.cl">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -327,6 +333,7 @@
                 document.getElementById('nombresUsuario').value = data.nombres;
                 document.getElementById('apellidosUsuario').value = data.apellidos;
                 document.getElementById('emailUsuario').value = data.correoElectronico;
+                document.getElementById('emailUsuarioRepetido').value = data.correoElectronico;
                 if (data.sexo.localeCompare("F") == 0) {
                     document.getElementById("sexoF").checked = true;
                 } else {
@@ -361,10 +368,10 @@
                 success: function (result) {
                     var result = eval('(' + result + ')');
                     if (result.errorMsg) {
-                        $('#dg-modela').modal('hide')
+                        $('#dg-modela').modal('hide');                        
                         notificacion(result.errorMsg, 'danger', 'alert-modal');
                     } else {
-                        $('#dg-modela').modal('hide')
+                        $('#dg-modela').modal('hide');
                         notificacion(result.mensaje, 'success', 'alert-modal');
                         cargarUsuarios();
                         // document.location = "administrarUsuarios.php";
