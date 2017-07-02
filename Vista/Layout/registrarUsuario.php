@@ -209,7 +209,7 @@ if (isset($_SESSION["autentificado"])) {
                                 </div>
                             </div>
 
-                            <!-- DIALOGO MODAL-->
+                            <!-- DIALOGO MODAL TERMINOS Y CONDICIONES-->
                             <div class="modal fade bs-example-modal-md" id="dg-modela" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                                 <div class="modal-dialog modal-md">
                                     <div class="modal-content">
@@ -239,7 +239,8 @@ if (isset($_SESSION["autentificado"])) {
                                         </section>
                                     </div>
                                 </div>
-                            </div><!-- END DIALOGO MODAL-->
+                            </div>
+                            <!-- END DIALOGO MODAL-->
 
                             <script type="text/javascript">
                                 function AbreTerminosyCondiciones() {
@@ -250,30 +251,33 @@ if (isset($_SESSION["autentificado"])) {
                                 }
 
                                 function guardarCliente() {
-                                    if (document.getElementById('TerminosyCondiciones').checked) {
-                                        window.scrollTo(0, 0);
+                                    if (document.getElementById('TerminosyCondiciones').checked) {                                       
                                         if (validarUsuario()) {
-                                            console.log('entro');
-
-//                                            $.ajax({
-//                                                type: "POST",
-//                                                url: "../Servlet/administrarUsuario.php",
-//                                                data: $("#fmusuario").serialize(),
-//                                                success: function (result) {
-//                                                    console.log(result);
-//                                                    var result = eval('(' + result + ')');
-//                                                    if (result.errorMsg) {
-//                                                        notificacion(result.errorMsg, 'danger', 'alert');
-//                                                    } else {
-//                                                        notificacion(result.mensaje, 'success', 'alert');
-//                                                        setTimeout(function(){window.location = "iniciarSesion.php";},3000);
-//                                                    }
-//                                                }
-//                                            });
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "../Servlet/administrarUsuario.php",
+                                                data: $("#fmusuario").serialize(),
+                                                success: function (result) {
+                                                    console.log(result);
+                                                    var result = eval('(' + result + ')');
+                                                    if (result.errorMsg) {
+                                                        SubirPagina();
+                                                        notificacion(result.errorMsg, 'danger', 'alert');
+                                                    } else {
+                                                       SubirPagina();
+                                                        notificacion(result.mensaje, 'success', 'alert');
+                                                        setTimeout(function(){window.location = "iniciarSesion.php";},3000);
+                                                    }
+                                                }
+                                            });
                                         }
                                     } else {
+                                        SubirPagina();
                                         notificacion('Primero debe aceptar los términos y condiciones', 'warning', 'alert');
                                     }
+                                }
+                                function SubirPagina(){
+                                    window.scrollTo(0, 0);
                                 }
                             </script>
                             <!--Middle Part End-->
