@@ -25,13 +25,13 @@
             <table id="tabla" class="table">
                 <thead> 
                     <tr>
-                        <th style="">Gráfico</th> 
-                        <th style="width: 50px;">Id</th> 
+                        <th style=""></th> 
+                        <th style="width: 60px;">Id</th> 
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
-                        <th style="width: 150px;">Acción</th>
+                        <th style="width: 80px;">Stock </th>
+                        <th style="width: 80px;">Precio</th>
+                        <th style="width: 100px;">Acción</th>
                     </tr> 
                 </thead>
                 <tbody id="contenidoTabla">

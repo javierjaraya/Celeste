@@ -14,7 +14,7 @@
         </ul>
     </li>
     <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"></i>&nbsp;Estadísticas </a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"></i>&nbsp;Informes </a>
         <ul class="dropdown-menu">
             <li><a href="administrarReportes.php">Reportes</a></li>   
             <li><a href="administrarGrafico.php">Gráficos</a></li>   

@@ -196,23 +196,23 @@ $detalleCompra = $control->getAllDetalle_compraByIDCompra($idCompra);
         <table class="table">
             <tr><td class="td-borde alto-xm ancho-71mm" colspan="5">Datos Generales: </td></tr> 
             <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Fecha Compra:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getFechaCompra() ?></td></tr>
-            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Metodo de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getMetodoDespacho() ?></td></tr>
-            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Direcci&oacute;n de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getDireccionDespacho() ?></td></tr>
-            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Persona que Retira:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getPersonaRetira() ?></td></tr>
+            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Metodo de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . utf8_decode($datosCompra->getMetodoDespacho()) ?></td></tr>
+            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Direcci&oacute;n de Despacho:</td><td class="td-borde ancho-100mm left"><?= " " . utf8_decode($datosCompra->getDireccionDespacho()) ?></td></tr>
+            <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Persona que Retira:</td><td class="td-borde ancho-100mm left"><?= " " . utf8_decode($datosCompra->getPersonaRetira()) ?></td></tr>
             <tr><td class="td-borde fondoClaro alto-xs" colspan="4" style = "text-align: left">Estado:</td><td class="td-borde ancho-100mm left"><?= " " . $datosCompra->getEstado() ?></td></tr>
         </table>
         <div>
             <br>
             <table class="table">
-                <tr><td class="td-borde alto-xm ancho-71mm" colspan="4">Detalle de la compra: </td></tr>                
-                <tr><td class="td-borde fondo ancho-20mm" align="center" valign="top">Id Compra</td><td class="td-borde fondo ancho-30mm" align="center" valign="top">Cantidad</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Precio Unit.</td><td class="td-borde fondo ancho-20mm" align="center" valign="top">Subtotal</td></tr>
+                <tr><td class="td-borde alto-xm ancho-71mm" colspan="5">Detalle de la compra <?= " " . $datosCompra->getIdCompra() ?>: </td></tr>                
+                <tr><td class="td-borde fondo ancho-20mm" align="center" valign="top">Id Producto</td><td class="td-borde fondo ancho-56mm" align="center" valign="top">Producto</td><td class="td-borde fondo ancho-30mm" align="center" valign="top">Cantidad</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Precio Unit.</td><td class="td-borde fondo ancho-20mm" align="center" valign="top">Subtotal</td></tr>
                 <?php
                 $count = 0;
                 $Subtotal = 0;
                 $montoTotalCompra = $control->getMontoTotalCompra($idCompra);
                 foreach ($detalleCompra as $detalle) {
                     $Subtotal = $detalle->getCantidad() * $detalle->getPrecio();
-                    echo '<tr><td class="td-borde alto-xs right" style = "text-align: center">' . $idCompra . '</td><td class="td-borde alto-xs" style = "text-align: center">' . $detalle->getCantidad() . '</td><td class="td-borde alto-xs" style = "text-align: center"> $ ' . $detalle->getPrecio() . '</td><td class="td-borde alto-xs center" style = "text-align: center"> $ ' . $Subtotal . '</td></tr>';
+                    echo '<tr><td class="td-borde alto-xs right" style = "text-align: center">' . $detalle->getIdProducto() . '</td><td class="td-borde alto-xs" style = "text-align: center">' . utf8_decode($detalle->getNombreProducto()) . '</td><td class="td-borde alto-xs" style = "text-align: center">' . $detalle->getCantidad() . '</td><td class="td-borde alto-xs" style = "text-align: center"> $ ' . $detalle->getPrecio() . '</td><td class="td-borde alto-xs center" style = "text-align: center"> $ ' . $Subtotal . '</td></tr>';
                     $count++;
                 }
                 ?>
@@ -223,7 +223,7 @@ $detalleCompra = $control->getAllDetalle_compraByIDCompra($idCompra);
                 <tr><td class="td-borde fondo alto-xs" colspan="4" style = "text-align: right"><strong>Total Compra:</strong></td><td class="td-borde ancho-69mm center"><?= "$ " . $montoTotalCompra ?></td></tr>
             </table>
             <br>
-            <h7 class="" colspan="4" style = "text-align: left;">* Comprobante no v&aacute;lido como boleta</h7>
+            <h7 class="" colspan="4" style = "text-align: left;">* Este documento es solo un comprobante de compra, no es una boleta autorizada por el SII.</h7>
             
         </div>
     </body>

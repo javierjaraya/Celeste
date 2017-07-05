@@ -185,7 +185,7 @@ $ventasDiarias = $control->getVentasPorAno($fechaReporte);
         <img src="../../Files/img/log.png" width="100" height="100" alt="log"/>
         <div>            
             <table class="table">                    
-                <tr><th align="center"><h3>REPORTE<br>VENTAS A&Ntilde;O <?=" ". $fechaReporte ?></h3></th></tr>
+                <tr><th align="center"><h3>REPORTE<br>VENTAS A&Ntilde;O <?= " " . $fechaReporte ?></h3></th></tr>
             </table>
         </div>
         <div>
@@ -196,31 +196,53 @@ $ventasDiarias = $control->getVentasPorAno($fechaReporte);
         <br>
         <div>
             <table class="table">
-                <tr><td class="td-borde alto-xm ancho-71mm" colspan="8">DETALLE DE VENTAS DEL A&Ntilde;O <?= " ".$fechaReporte ?></td></tr>                
-                <tr><td class="td-borde fondo ancho-10mm" align="center" valign="top">Id Venta</td><td class="td-borde fondo ancho-30mm" align="center" valign="top">Fecha Venta</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Estado</td><td class="td-borde fondo ancho-20mm" align="center" valign="top">Metodo Despacho</td><td class="td-borde fondo ancho-100mm" align="center" valign="top">Direcci&oacute;n Despacho</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Monto Total</td></tr>
+                <tr><td class="td-borde alto-xm ancho-71mm" colspan="8">DETALLE DE VENTAS DEL A&Ntilde;O <?= " " . $fechaReporte ?></td></tr>                
+                <tr>
+                    <td class="td-borde fondo ancho-10mm" align="center" valign="top">Id Venta</td>
+                    <td class="td-borde fondo ancho-20mm" align="center" valign="top">Run</td>
+                    <td class="td-borde fondo ancho-62mm" align="center" valign="top">Nombre Cliente</td>
+                    <td class="td-borde fondo ancho-62mm" align="center" valign="top">Nombre Producto</td>                    
+                    <td class="td-borde fondo ancho-25mm" align="center" valign="top">Precio</td>
+                    <td class="td-borde fondo ancho-23mm" align="center" valign="top">Cantidad</td>
+                    <td class="td-borde fondo ancho-23mm" align="center" valign="top">Subtotal</td>
+                </tr>
                 <?php
                 $count = 0;
-                $totalVentasDelDia = 0;
+                $totalVentasDelAno = 0;
                 $montoTotalCompra = 0;
                 foreach ($ventasDiarias as $venta) {
+                    $detalle_venta = $control->getAllDetalle_compraByIDCompra($venta->getIdCompra());
                     $montoTotalCompra = $control->getMontoTotalCompra($venta->getIdCompra());
-                    echo '<tr><td class="td-borde alto-xs right" style = "text-align: left">' . $venta->getIdCompra() . '</td><td class="td-borde alto-xs" style = "text-align: left">' . $venta->getFechaCompra() . '</td><td class="td-borde alto-xs" style = "text-align: left">' . $venta->getEstado() . '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $venta->getMetodoDespacho() . '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $venta->getDireccionDespacho() . '</td><td class="td-borde alto-xs center" style = "text-align: left"> $' . $montoTotalCompra . '</td></tr>';
-                    $count++;
-                    $totalVentasDelDia = $totalVentasDelDia + $montoTotalCompra;
-                }
-                if ($count < 36) {
-                    $resto = 36 - $count;
-                    for ($i = 0; $i < $resto; $i++) {
-                        echo '<tr><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td></tr>';
+                    $usuario = $control->getUsuarioByID($venta->getRun());
+                    $nombreCliente = utf8_decode($usuario->getNombres()) . " " . utf8_decode($usuario->getApellidos());
+                    foreach ($detalle_venta as $detalle) {
+                        $Subtotal = $detalle->getCantidad() * $detalle->getPrecio();
+                        echo '<tr><td class="td-borde alto-xs right" style = "text-align: left">' . $venta->getIdCompra() .
+                        '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $venta->getRun() .
+                        '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $nombreCliente .
+                        '</td><td class="td-borde alto-xs" style = "text-align: left">' . utf8_decode($detalle->getNombreProducto()) .
+                        '</td><td class="td-borde alto-xs" style = "text-align: left">' . $detalle->getPrecio() .
+                        '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $detalle->getCantidad() .
+                        '</td><td class="td-borde alto-xs center" style = "text-align: left">' . $Subtotal . '</td></tr>';
+                        $count++;
                     }
+                    $totalVentasDelAno = $totalVentasDelAno + $montoTotalCompra;
                 }
-              
+                 if ($count == 0) {
+                    echo '<tr><td class="td-borde alto-xs center"  colspan="7" style = "text-align: center">No hay datos para mostrar</td></tr>';
+                }
+//                if ($count < 36) {
+//                    $resto = 36 - $count;
+//                    for ($i = 0; $i < $resto; $i++) {
+//                        echo '<tr><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td><td class="td-borde alto-xs"></td></tr>';
+//                    }
+//                }
                 ?>
 
             </table>
             <br>
             <table class="table">
-                <tr><td class="td-borde fondo alto-xs" colspan="4" style = "text-align: right"><strong>Total Ventas del A&ntilde;o:</strong></td><td class="td-borde ancho-69mm center"><?= "$ ".$totalVentasDelDia ?></td></tr>
+                <tr><td class="td-borde fondo alto-xs" colspan="4" style = "text-align: right"><strong>Total Ventas del A&ntilde;o:</strong></td><td class="td-borde ancho-69mm center"><?= "$ " . $totalVentasDelAno ?></td></tr>
             </table>
         </div>
     </body>
