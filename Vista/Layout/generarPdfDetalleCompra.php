@@ -204,7 +204,7 @@ $detalleCompra = $control->getAllDetalle_compraByIDCompra($idCompra);
         <div>
             <br>
             <table class="table">
-                <tr><td class="td-borde alto-xm ancho-71mm" colspan="5">Detalle de la compra <?= " " . $datosCompra->getIdCompra() ?>: </td></tr>                
+                <tr><td class="td-borde alto-xm ancho-71mm" colspan="5">Detalle de la compra Nro. <?= " " . $datosCompra->getIdCompra() ?>: </td></tr>                
                 <tr><td class="td-borde fondo ancho-20mm" align="center" valign="top">Id Producto</td><td class="td-borde fondo ancho-56mm" align="center" valign="top">Producto</td><td class="td-borde fondo ancho-30mm" align="center" valign="top">Cantidad</td><td class="td-borde fondo ancho-25mm" align="center" valign="top">Precio Unit.</td><td class="td-borde fondo ancho-20mm" align="center" valign="top">Subtotal</td></tr>
                 <?php
                 $count = 0;
